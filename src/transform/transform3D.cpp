@@ -1,0 +1,69 @@
+#include "transform3D.hpp"
+
+Transform3D Transform3D::from_rotation(
+    radf const angle_rad, UnitVec<vec3f> const &u_axis)
+{
+  auto const angle = angle_rad.value;
+  auto const axis = u_axis.unwrap();
+  auto const c = std::cos(angle);
+  auto const s = std::sin(angle);
+  auto const t = 1 - c;
+  // clang-format off
+  auto const rotation_matrix = mat3f::from_rows({
+    c + t * pow2(axis.x), t * axis.x * axis.y - s * axis.z, t * axis.x * axis.z + s * axis.y,
+    t * axis.x * axis.y + s * axis.z, c + t * pow2(axis.y), t * axis.y * axis.z - s * axis.x,
+    t * axis.x * axis.z - s * axis.y, t * axis.y * axis.z + s * axis.x, c + t * pow2(axis.z)
+  });
+  // clang-format on
+
+  return {
+    .matrix = rotation_matrix, .translation = vec3f{0, 0, 0}
+  };
+}
+
+Transform3D Transform3D::from_scale(vec3f const &scale)
+{
+  return {
+    .matrix = mat3f::diagonal(scale), .translation = vec3f{0, 0, 0}
+  };
+}
+
+Transform3D Transform3D::from_scale(float const scale)
+{
+  return {
+    .matrix = mat3f::diagonal(scale), .translation = vec3f{0, 0, 0}
+  };
+}
+
+Transform3D Transform3D::from_translation(vec3f const &v)
+{
+  return { .matrix = mat3f::diagonal(1.0), .translation = v };
+}
+
+Transform3D Transform3D::inverse() const
+{
+  return { .matrix = ::inverse(matrix), .translation = -translation };
+}
+
+mat4f Transform3D::as_mat4() const
+{
+  // clang-format off
+  return mat4f::from_rows({
+    matrix[0, 0], matrix[0, 1], matrix[0, 2], translation.x,
+    matrix[0, 1], matrix[1, 1], matrix[1, 2], translation.y,
+    matrix[0, 2], matrix[1, 2], matrix[2, 2], translation.z,
+    0, 0, 0, 1
+  });
+  // clang-format on
+}
+
+Transform3D operator*(Transform3D const &lhs, Transform3D const &rhs)
+{
+  return { .matrix = lhs.matrix * rhs.matrix,
+    .translation = lhs.translation + rhs.translation };
+}
+
+vec3f operator*(Transform3D const &lhs, vec3f const &rhs)
+{
+  return lhs.matrix * rhs + lhs.translation;
+}
