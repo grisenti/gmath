@@ -5,6 +5,7 @@
 #include "vector/vec3.hpp"
 #include "vector/vec4.hpp"
 #include "vector/vecn.hpp"
+#include "vector/unit_vector.hpp"
 
 template <typename T>
 Vec3<T> extend(Vec2<T> const &v, T z = {})
@@ -61,3 +62,7 @@ VecN<N - 1, T> truncate(VecN<N, T> const &v)
     res[i] = v[i];
   return res;
 }
+
+using u_vec2f = UnitVec<vec2f>;
+using u_vec3f = UnitVec<vec3f>;
+using u_vec4f = UnitVec<vec4f>;
