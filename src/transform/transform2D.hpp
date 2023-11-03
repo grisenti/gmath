@@ -6,7 +6,7 @@
 #include "vector/vec2.hpp"
 #include "units.hpp"
 
-/// affine 2D transformation
+/// Affine 2D transformation
 struct Transform2D
 {
   mat2f matrix = mat2f::diagonal(1.f);
@@ -23,6 +23,13 @@ struct Transform2D
   mat3f as_mat3() const;
 };
 
+/// Combines transformations, with rhs being applied first and lhs
+/// second.
 Transform2D operator*(Transform2D const &lhs, Transform2D const &rhs);
 
+/// Transforms vector rhs by the transformation lhs.
+/// This operation is equivalent to:
+/// @code
+/// auto const v = truncate(lhs.as_mat3() * vec3f{ rhs.x, rhs.y, 1 });
+/// @endcode
 vec2f operator*(Transform2D const &lhs, vec2f const &rhs);
