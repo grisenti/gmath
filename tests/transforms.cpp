@@ -26,3 +26,22 @@ TEST_CASE("Transform2D_non_uniform_scale")
   auto const result = transform * v;
   REQUIRE(result == vec2f{ 2, -3 });
 }
+
+TEST_CASE("Transform2D_translation")
+{
+  auto const transform = Transform2D::from_translation({ 1, -1 });
+  auto const v = vec2f{ 1, 1 };
+  auto const result = transform * v;
+  REQUIRE(result == vec2f{ 2, 0 });
+}
+
+TEST_CASE("Transform2D_inverse")
+{
+  auto const transform = Transform2D::from_rotation(degf{ 45 })
+                         * Transform2D::from_translation({ 1, 1 })
+                         * Transform2D::from_scale({ 3, 5 });
+  auto const v = vec2f{ 1, 1 };
+  auto const v1 = transform.inverse() * transform * v;
+  REQUIRE(v1.x == Catch::Approx(1));
+  REQUIRE(v1.y == Catch::Approx(1));
+}
