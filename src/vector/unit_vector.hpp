@@ -9,31 +9,36 @@ class UnitVec
 {
 public:
   /// Creates a UnitVec assuming v is already normalized.
-  static UnitVec create_unchecked(V const &v)
+  static UnitVec create_unchecked(auto &&...args)
   {
-    return { v };
+    return UnitVec{ V{ std::forward<decltype(args)>(args)... } };
   }
 
-  // NOLINT: implicit conversion is intended (makes passing a standard Vec
-  // to a function expecting a unit vector simple).
-  UnitVec(V const &v) : value(normalize(v))
+  /// creates a UnitVec from the given values, ensuring that the underlying
+  /// vector is normalized.
+  static UnitVec normalize(auto &&...args)
   {
+    return UnitVec{ ::normalize(V{ std::forward<decltype(args)>(args)... }) };
   }
 
   // NOLINT: implicit conversion is intended. A UnitVec can be used everywhere
   // a standard Vec can.
   operator V() const
   {
-    return value;
+    return _value;
   }
 
   /// @returns The underlying normalized vector.
   V unwrap() const
   {
-    return value;
+    return _value;
   }
 
 private:
+  UnitVec(V const &v) : _value{ v }
+  {
+  }
+
   // invariant: the value is always normalized.
-  V value;
+  V _value;
 };

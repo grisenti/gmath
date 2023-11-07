@@ -49,8 +49,8 @@ TEST_CASE("Transform2D_inverse")
 
 TEST_CASE("Transform3D_x_axis_rotation")
 {
-  auto const transform
-      = Transform3D::from_rotation(degf{ 90 }, vec3f{ 1, 0, 0 });
+  auto const transform = Transform3D::from_rotation(
+      degf{ 90 }, u_vec3f::create_unchecked(1.f, 0.f, 0.f));
   auto const v = vec3f{ 0, 1, 0 };
   auto const result = transform * v;
   REQUIRE_THAT(result.x, Catch::Matchers::WithinAbs(0, 0.0001));
@@ -60,8 +60,8 @@ TEST_CASE("Transform3D_x_axis_rotation")
 
 TEST_CASE("Transform3D_z_axis_rotation")
 {
-  auto const transform
-      = Transform3D::from_rotation(degf{ 90 }, vec3f{ 0, 0, 1 });
+  auto const transform = Transform3D::from_rotation(
+      degf{ 90 }, u_vec3f::create_unchecked(0.f, 0.f, 1.f));
   auto const v = vec3f{ 1, 0, 0 };
   auto const result = transform * v;
   REQUIRE_THAT(result.x, Catch::Matchers::WithinAbs(0, 0.0001));
@@ -71,8 +71,8 @@ TEST_CASE("Transform3D_z_axis_rotation")
 
 TEST_CASE("Transform3D_y_axis_rotation")
 {
-  auto const transform
-      = Transform3D::from_rotation(degf{ 90 }, vec3f{ 0, 1, 0 });
+  auto const transform = Transform3D::from_rotation(
+      degf{ 90 }, u_vec3f::create_unchecked(0.f, 1.f, 0.f));
   auto const v = vec3f{ 1, 0, 0 };
   auto const result = transform * v;
   REQUIRE_THAT(result.x, Catch::Matchers::WithinAbs(0, 0.0001));
@@ -82,8 +82,8 @@ TEST_CASE("Transform3D_y_axis_rotation")
 
 TEST_CASE("Transform3D_rotation_by_arbitrary_axis")
 {
-  auto const transform
-      = Transform3D::from_rotation(degf{ 90 }, vec3f{ 2, -3, 4 });
+  auto const transform = Transform3D::from_rotation(
+      degf{ 90 }, u_vec3f::normalize(2.f, -3.f, 4.f));
   auto const v = vec3f{ 1, 5, 2 };
   auto const result = transform * v;
   REQUIRE(result.x == Catch::Approx(-5.17290));
@@ -117,10 +117,10 @@ TEST_CASE("Transform3D_translation")
 
 TEST_CASE("Transform3D_inverse")
 {
-  auto const transform
-      = Transform3D::from_rotation(degf{ 45 }, vec3f{ 1, 1, 1 })
-        * Transform3D::from_translation({ 1, 1, 1 })
-        * Transform3D::from_scale({ 3, 5, 7 });
+  auto const transform = Transform3D::from_rotation(
+                             degf{ 45 }, u_vec3f::normalize(1.f, 1.f, 1.f))
+                         * Transform3D::from_translation({ 1, 1, 1 })
+                         * Transform3D::from_scale({ 3, 5, 7 });
   auto const v = vec3f{ 1, 1, 1 };
   auto const v1 = transform.inverse() * transform * v;
   REQUIRE(v1.x == Catch::Approx(1));
