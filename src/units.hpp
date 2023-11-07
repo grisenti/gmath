@@ -7,17 +7,33 @@ template <typename T>
 struct Radians;
 
 template <typename T>
-struct Degrees
+class Unit
 {
-  T value;
+public:
+  explicit constexpr Unit(T value) : _value(value)
+  {
+  }
 
-  explicit Degrees(T value) : value(value)
+  constexpr T value() const
+  {
+    return _value;
+  }
+
+private:
+  T _value;
+};
+
+template <typename T>
+class Degrees : public Unit<T>
+{
+public:
+  explicit constexpr Degrees(T value) : Unit<T>(value)
   {
   }
 
   // NOLINT: degrees and radians can be used interchangeably.
   constexpr Degrees(Radians<T> rad)
-      : value(rad.value * T{ 180 } / std::numbers::pi_v<T>)
+      : Unit<T>(rad.value() * T{ 180 } / std::numbers::pi_v<T>)
   {
   }
 };
@@ -25,17 +41,16 @@ struct Degrees
 using degf = Degrees<float>;
 
 template <typename T>
-struct Radians
+struct Radians : public Unit<T>
 {
-  T value;
-
-  explicit Radians(T value) : value(value)
+public:
+  explicit Radians(T value) : Unit<T>(value)
   {
   }
 
   // NOLINT: degrees and radians can be used interchangeably.
   constexpr Radians(Degrees<T> deg)
-      : value(deg.value * std::numbers::pi_v<T> / T{ 180 })
+      : Unit<T>(deg.value() * std::numbers::pi_v<T> / T{ 180 })
   {
   }
 };

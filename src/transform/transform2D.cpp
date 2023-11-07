@@ -10,7 +10,7 @@ Transform2D Transform2D::IDENTITY = Transform2D{
 
 Transform2D Transform2D::from_rotation(radf const angle)
 {
-  auto const angle_v = angle.value;
+  auto const angle_v = angle.value();
   // clang-format off
   return { mat2f::from_rows({
       std::cos(angle_v), -std::sin(angle_v),

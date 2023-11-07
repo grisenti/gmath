@@ -3,7 +3,7 @@
 Transform3D Transform3D::from_rotation(
     radf const angle_rad, UnitVec<vec3f> const &u_axis)
 {
-  auto const angle = angle_rad.value;
+  auto const angle = angle_rad.value();
   auto const axis = u_axis.unwrap();
   auto const c = std::cos(angle);
   auto const s = std::sin(angle);
