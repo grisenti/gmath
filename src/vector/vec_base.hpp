@@ -13,25 +13,25 @@ template <size_t N, typename T>
 struct BaseVector
 {
   using type_class = VectorTag;
-  using value_type = T;
+  using component_type = T;
   static constexpr size_t size = N;
 };
 
 template <typename V>
 concept Vec = requires(V const &cr_vec, V vec) {
-  typename V::value_type;
+  typename V::component_type;
   V::size;
   {
     cr_vec[0]
-  } -> std::same_as<typename V::value_type>;
+  } -> std::same_as<typename V::component_type>;
   {
     vec[0]
-  } -> std::same_as<typename V::value_type &>;
+  } -> std::same_as<typename V::component_type &>;
 } && std::same_as<typename V::type_class, VectorTag>;
 
 /// The type of V's components
 template <Vec V>
-using ComponentT = typename V::value_type;
+using ComponentT = typename V::component_type;
 
 template <Vec V>
   requires std::equality_comparable<ComponentT<V>>
