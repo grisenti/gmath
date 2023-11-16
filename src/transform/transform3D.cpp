@@ -60,7 +60,7 @@ mat4f Transform3D::as_mat4() const
 Transform3D operator*(Transform3D const &lhs, Transform3D const &rhs)
 {
   return { .matrix = lhs.matrix * rhs.matrix,
-    .translation = lhs.translation + rhs.translation };
+    .translation = lhs.translation + lhs.matrix * rhs.translation };
 }
 
 Vec3f operator*(Transform3D const &lhs, Vec3f const &rhs)

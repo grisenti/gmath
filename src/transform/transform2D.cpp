@@ -57,7 +57,7 @@ mat3f Transform2D::as_mat3() const
 Transform2D operator*(Transform2D const &lhs, Transform2D const &rhs)
 {
   return { .matrix = lhs.matrix * rhs.matrix,
-    .translation = rhs.translation + lhs.translation };
+    .translation = lhs.matrix * rhs.translation + lhs.translation };
 }
 
 Vec2f operator*(Transform2D const &lhs, Vec2f const &rhs)
