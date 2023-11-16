@@ -27,7 +27,7 @@ concept Vec = requires(V const &cr_vec, V vec) {
   {
     vec[0]
   } -> std::same_as<typename V::value_type &>;
-};
+} && std::same_as<typename V::type_class, VectorTag>;
 
 template <Vec T>
 struct Elem
