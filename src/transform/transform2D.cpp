@@ -15,7 +15,7 @@ Transform2D Transform2D::from_rotation(Radf const angle)
   return { mat2f::from_rows({
       std::cos(angle_v), -std::sin(angle_v),
       std::sin(angle_v), std::cos(angle_v)
-  })};
+  }), Vec2f{0, 0}};
   // clang-format on
 }
 
