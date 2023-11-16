@@ -62,5 +62,14 @@ Transform2D operator*(Transform2D const &lhs, Transform2D const &rhs)
 
 Vec2f operator*(Transform2D const &lhs, Vec2f const &rhs)
 {
-  return lhs.matrix * rhs + lhs.translation;
+  return lhs.matrix * rhs;
+}
+
+Point2f operator*(Transform2D const &lhs, Point2f const &rhs)
+{
+  auto const x = lhs.matrix[0, 0] * rhs.x + lhs.matrix[0, 1] * rhs.y
+                 + lhs.translation.x;
+  auto const y = lhs.matrix[1, 0] * rhs.x + lhs.matrix[1, 1] * rhs.y
+                 + lhs.translation.y;
+  return { x, y };
 }

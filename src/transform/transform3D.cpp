@@ -65,5 +65,16 @@ Transform3D operator*(Transform3D const &lhs, Transform3D const &rhs)
 
 Vec3f operator*(Transform3D const &lhs, Vec3f const &rhs)
 {
-  return lhs.matrix * rhs + lhs.translation;
+  return lhs.matrix * rhs;
+}
+
+Point3f operator*(Transform3D const &lhs, Point3f const &rhs)
+{
+  auto const x = lhs.matrix[0, 0] * rhs.x + lhs.matrix[0, 1] * rhs.y
+                 + lhs.matrix[0, 2] * rhs.z + lhs.translation.x;
+  auto const y = lhs.matrix[1, 0] * rhs.x + lhs.matrix[1, 1] * rhs.y
+                 + lhs.matrix[1, 2] * rhs.z + lhs.translation.y;
+  auto const z = lhs.matrix[2, 0] * rhs.x + lhs.matrix[2, 1] * rhs.y
+                 + lhs.matrix[2, 2] * rhs.z + lhs.translation.z;
+  return { x, y, z };
 }

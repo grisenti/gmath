@@ -5,6 +5,7 @@
 #include "matrix/mat3.hpp"
 #include "vector/vec2.hpp"
 #include "units.hpp"
+#include "geometry/point.hpp"
 
 /// Affine 2D transformation
 struct Transform2D
@@ -30,6 +31,9 @@ Transform2D operator*(Transform2D const &lhs, Transform2D const &rhs);
 /// Transforms vector rhs by the transformation lhs.
 /// This operation is equivalent to:
 /// @code
-/// auto const v = truncate(lhs.as_mat3() * Vec3f{ rhs.x, rhs.y, 1 });
+/// auto const v = truncate(lhs.as_mat3() * Vec3f{ rhs.x, rhs.y, 0 });
 /// @endcode
 Vec2f operator*(Transform2D const &lhs, Vec2f const &rhs);
+
+/// Transforms point rhs by the transformation lhs.
+Point2f operator*(Transform2D const &lhs, Point2f const &rhs);

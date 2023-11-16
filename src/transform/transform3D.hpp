@@ -6,6 +6,7 @@
 #include "vector/vec3.hpp"
 #include "vector/unit_vector.hpp"
 #include "units.hpp"
+#include "geometry/point.hpp"
 
 /// affine 3D transformation
 struct Transform3D
@@ -29,3 +30,6 @@ Transform3D operator*(Transform3D const &lhs, Transform3D const &rhs);
 
 /// transforms vector `rhs` by the transformation `lhs`
 Vec3f operator*(Transform3D const &lhs, Vec3f const &rhs);
+
+/// Transforms point @param rhs by the transformation @param lhs.
+Point3f operator*(Transform3D const &lhs, Point3f const &rhs);
