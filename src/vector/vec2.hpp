@@ -1,7 +1,6 @@
 #pragma once
 
 #include "vec_base.hpp"
-#include "vecn.hpp"
 
 template <typename T>
 struct Vec2 : BaseVector<2, T>
