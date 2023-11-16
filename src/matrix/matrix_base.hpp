@@ -123,7 +123,7 @@ Matrix<R1, C2, T> constexpr operator*(
 }
 
 template <size_t R, size_t C, Numeric T, Vec V>
-  requires(V::size == C) && std::same_as<ElemT<V>, T>
+  requires(V::size == C) && std::same_as<ComponentT<V>, T>
 V constexpr operator*(Matrix<R, C, T> const &lhs, V const &rhs)
 {
   auto res = V{};

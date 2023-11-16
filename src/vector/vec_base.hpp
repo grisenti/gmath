@@ -29,17 +29,12 @@ concept Vec = requires(V const &cr_vec, V vec) {
   } -> std::same_as<typename V::value_type &>;
 } && std::same_as<typename V::type_class, VectorTag>;
 
-template <Vec T>
-struct Elem
-{
-  using type = typename T::value_type;
-};
+/// The type of V's components
+template <Vec V>
+using ComponentT = typename V::value_type;
 
 template <Vec V>
-using ElemT = typename Elem<V>::type;
-
-template <Vec V>
-  requires std::equality_comparable<ElemT<V>>
+  requires std::equality_comparable<ComponentT<V>>
 bool constexpr operator==(V const &lhs, V const &rhs)
 {
   auto equal = true;
@@ -65,7 +60,7 @@ V constexpr &operator-=(V &lhs, V const &rhs)
 }
 
 template <Vec V>
-V constexpr &operator*=(V &lhs, ElemT<V> const k)
+V constexpr &operator*=(V &lhs, ComponentT<V> const k)
 {
   for (size_t i = 0; i < V::size; ++i)
     lhs[i] *= k;
@@ -82,7 +77,7 @@ V constexpr operator-(V const &rhs)
 }
 
 template <Vec V>
-V constexpr operator*(V const &lhs, ElemT<V> k)
+V constexpr operator*(V const &lhs, ComponentT<V> k)
 {
   V ret;
   for (size_t i = 0; i < V::size; ++i)
@@ -91,7 +86,7 @@ V constexpr operator*(V const &lhs, ElemT<V> k)
 }
 
 template <Vec V>
-V constexpr operator*(ElemT<V> k, V const &rhs)
+V constexpr operator*(ComponentT<V> k, V const &rhs)
 {
   V ret;
   for (size_t i = 0; i < V::size; ++i)
@@ -100,7 +95,7 @@ V constexpr operator*(ElemT<V> k, V const &rhs)
 }
 
 template <Vec V>
-V constexpr operator/(V const &lhs, ElemT<V> const k)
+V constexpr operator/(V const &lhs, ComponentT<V> const k)
 {
   V ret;
   for (size_t i = 0; i < V::size; ++i)
@@ -127,27 +122,27 @@ V constexpr operator-(V const &lhs, V const &rhs)
 }
 
 template <Vec V>
-  requires(std::floating_point<ElemT<V>>)
-ElemT<V> constexpr length(V const &v)
+  requires(std::floating_point<ComponentT<V>>)
+ComponentT<V> constexpr length(V const &v)
 {
-  ElemT<V> ret = {};
+  ComponentT<V> ret = {};
   for (size_t i = 0; i < V::size; ++i)
     ret += pow2(v[i]);
   return std::sqrt(ret);
 }
 
 template <Vec V>
-  requires(std::floating_point<ElemT<V>>)
-ElemT<V> constexpr distance(V const &lhs, V const &rhs)
+  requires(std::floating_point<ComponentT<V>>)
+ComponentT<V> constexpr distance(V const &lhs, V const &rhs)
 {
-  ElemT<V> ret = {};
+  ComponentT<V> ret = {};
   for (size_t i = 0; i < V::size; ++i)
     ret += pow2(lhs[i] - rhs[i]);
   return std::sqrt(ret);
 }
 
 template <Vec V>
-  requires(std::floating_point<ElemT<V>>)
+  requires(std::floating_point<ComponentT<V>>)
 V constexpr normalize(V const &v)
 {
   auto const l = length(v);
@@ -158,9 +153,9 @@ V constexpr normalize(V const &v)
 }
 
 template <Vec V>
-ElemT<V> constexpr dot(V const &lhs, V const &rhs)
+ComponentT<V> constexpr dot(V const &lhs, V const &rhs)
 {
-  ElemT<V> ret{ 0 };
+  ComponentT<V> ret{ 0 };
   for (size_t i = 0; i < V::size; ++i)
     ret += lhs[i] * rhs[i];
   return ret;
@@ -176,7 +171,7 @@ bool constexpr in_range(V const &v, V const &a, V const &b)
 }
 
 template <Vec V>
-  requires(std::floating_point<ElemT<V>>)
+  requires(std::floating_point<ComponentT<V>>)
 V project(V const &a, V const &b)
 {
   return b * (dot(a, b) / dot(b, b));
@@ -189,7 +184,7 @@ V project_no_division(V const &a, V const &b)
 }
 
 template <Vec V>
-  requires(std::floating_point<ElemT<V>>)
+  requires(std::floating_point<ComponentT<V>>)
 V reject(V const &a, V const &b)
 {
   return a - project(a, b);

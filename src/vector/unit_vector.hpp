@@ -4,7 +4,7 @@
 
 /// Type safe wrapper for a unit vector.
 template <Vec V>
-  requires(std::floating_point<ElemT<V>>)
+  requires(std::floating_point<ComponentT<V>>)
 class UnitVec
 {
 public:

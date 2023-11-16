@@ -17,7 +17,7 @@ struct Vec4 : BaseVector<4, T>
   }
 
   template <Vec V>
-    requires(V::size == 4) && std::same_as<ElemT<V>, T>
+    requires(V::size == 4) && std::same_as<ComponentT<V>, T>
   Vec4(V const &v) : x(v[0]), y(v[1]), z(v[2]), w(v[3])
   {
   }
@@ -33,7 +33,7 @@ struct Vec4 : BaseVector<4, T>
   }
 
   template <Vec V>
-    requires(V::size == 4) && std::same_as<ElemT<V>, T>
+    requires(V::size == 4) && std::same_as<ComponentT<V>, T>
   operator V() const
   {
     return { x, y, z, w };
