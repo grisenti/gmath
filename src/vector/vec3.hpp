@@ -39,9 +39,9 @@ struct Vec3 : BaseVector<3, T>
   }
 };
 
-using vec3f = Vec3<float>;
-using vec3i = Vec3<int>;
-using vec3u = Vec3<unsigned>;
+using Vec3f = Vec3<float>;
+using Vec3i = Vec3<int>;
+using Vec3u = Vec3<unsigned>;
 
 template <Vec V>
   requires Numeric<ComponentT<V>> && (V::size == 3)

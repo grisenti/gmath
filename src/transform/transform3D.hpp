@@ -11,14 +11,14 @@
 struct Transform3D
 {
   mat3f matrix;
-  vec3f translation;
+  Vec3f translation;
 
   static Transform3D IDENTITY;
 
-  static Transform3D from_rotation(radf angle, UnitVec<vec3f> const &axis);
-  static Transform3D from_scale(vec3f const &scale);
+  static Transform3D from_rotation(Radf angle, UnitVec<Vec3f> const &axis);
+  static Transform3D from_scale(Vec3f const &scale);
   static Transform3D from_scale(float scale);
-  static Transform3D from_translation(vec3f const &v);
+  static Transform3D from_translation(Vec3f const &v);
 
   Transform3D inverse() const;
   mat4f as_mat4() const;
@@ -28,4 +28,4 @@ struct Transform3D
 Transform3D operator*(Transform3D const &lhs, Transform3D const &rhs);
 
 /// transforms vector `rhs` by the transformation `lhs`
-vec3f operator*(Transform3D const &lhs, vec3f const &rhs);
+Vec3f operator*(Transform3D const &lhs, Vec3f const &rhs);

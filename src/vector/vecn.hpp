@@ -23,8 +23,8 @@ struct VecN
 };
 
 template <size_t N>
-using vecnf = VecN<N, float>;
+using VecNf = VecN<N, float>;
 template <size_t N>
-using vecni = VecN<N, int>;
+using VecNi = VecN<N, int>;
 template <size_t N>
-using vecnu = VecN<N, unsigned>;
+using VecNu = VecN<N, unsigned>;

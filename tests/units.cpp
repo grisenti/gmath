@@ -4,16 +4,16 @@
 
 TEST_CASE("degrees_to_radians")
 {
-  auto const deg = degf{ 180 };
-  auto const expected = radf{ std::numbers::pi_v<float> };
-  auto const result = radf{ deg };
+  auto const deg = Degf{ 180 };
+  auto const expected = Radf{ std::numbers::pi_v<float> };
+  auto const result = Radf{ deg };
   REQUIRE(result.value() == Catch::Approx(expected.value()));
 }
 
 TEST_CASE("radians_to_degrees")
 {
-  auto const rad = radf{ std::numbers::pi_v<float> };
-  auto const expected = degf{ 180 };
-  auto const result = degf{ rad };
+  auto const rad = Radf{ std::numbers::pi_v<float> };
+  auto const expected = Degf{ 180 };
+  auto const result = Degf{ rad };
   REQUIRE(result.value() == Catch::Approx(expected.value()));
 }

@@ -39,6 +39,6 @@ struct Vec2 : BaseVector<2, T>
   }
 };
 
-using vec2f = Vec2<float>;
-using vec2i = Vec2<int>;
-using vec2u = Vec2<unsigned>;
+using Vec2f = Vec2<float>;
+using Vec2i = Vec2<int>;
+using Vec2u = Vec2<unsigned>;

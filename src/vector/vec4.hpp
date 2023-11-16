@@ -40,6 +40,6 @@ struct Vec4 : BaseVector<4, T>
   }
 };
 
-using vec4f = Vec4<float>;
-using vec4i = Vec4<int>;
-using vec4u = Vec4<unsigned>;
+using Vec4f = Vec4<float>;
+using Vec4i = Vec4<int>;
+using Vec4u = Vec4<unsigned>;

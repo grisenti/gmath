@@ -38,7 +38,7 @@ public:
   }
 };
 
-using degf = Degrees<float>;
+using Degf = Degrees<float>;
 
 template <typename T>
 struct Radians : public Unit<T>
@@ -55,4 +55,4 @@ public:
   }
 };
 
-using radf = Radians<float>;
+using Radf = Radians<float>;

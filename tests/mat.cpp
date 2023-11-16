@@ -93,9 +93,9 @@ TEST_CASE("square_matrix_from_row_values")
 TEST_CASE("square_matrix_from_row_vectors")
 {
   auto const m = mat3<int>::from_row_vecs({
-      vec3i{1,  2, 3},
-      vec3i{ 4, 5, 6},
-      vec3i{ 7, 8, 9}
+      Vec3i{1,  2, 3},
+      Vec3i{ 4, 5, 6},
+      Vec3i{ 7, 8, 9}
   });
   REQUIRE(m[0, 0] == 1);
   REQUIRE(m[0, 1] == 2);
@@ -129,9 +129,9 @@ TEST_CASE("non_square_matrix_row_values")
 TEST_CASE("non_square_matrix_from_row_vectors")
 {
   auto const m = Matrix<3, 4, int>::from_row_vecs({
-      vec4i{1,  2,  3, 4},
-      vec4i{ 5, 6,  7, 8},
-      vec4i{ 9, 10, 0, 0}
+      Vec4i{1,  2,  3, 4},
+      Vec4i{ 5, 6,  7, 8},
+      Vec4i{ 9, 10, 0, 0}
   });
   REQUIRE(m[0, 0] == 1);
   REQUIRE(m[0, 1] == 2);
@@ -164,9 +164,9 @@ TEST_CASE("square_matrix_from_column_values")
 TEST_CASE("square_matrix_from_column_vectors")
 {
   auto const m = mat3<int>::from_column_vecs({
-      vec3i{1,  2, 3},
-      vec3i{ 4, 5, 6},
-      vec3i{ 7, 8, 9}
+      Vec3i{1,  2, 3},
+      Vec3i{ 4, 5, 6},
+      Vec3i{ 7, 8, 9}
   });
   REQUIRE(m[0, 0] == 1);
   REQUIRE(m[0, 1] == 4);
@@ -200,10 +200,10 @@ TEST_CASE("non_square_matrix_from_column_values")
 TEST_CASE("non_square_matrix_from_column_vectors")
 {
   auto const m = Matrix<3, 4, int>::from_column_vecs({
-      vec3i{1,   2,  3 },
-      vec3i{ 4,  5,  6 },
-      vec3i{ 7,  8,  9 },
-      vec3i{ 10, 11, 12}
+      Vec3i{1,   2,  3 },
+      Vec3i{ 4,  5,  6 },
+      Vec3i{ 7,  8,  9 },
+      Vec3i{ 10, 11, 12}
   });
   REQUIRE(m[0, 0] == 1);
   REQUIRE(m[1, 0] == 2);
@@ -222,17 +222,17 @@ TEST_CASE("non_square_matrix_from_column_vectors")
 TEST_CASE("matrix_get_row")
 {
   auto const m = mat3<int>::from_rows({ 1, 2, 3, 4, 5, 6, 7, 8, 9 });
-  REQUIRE(vec3i{ m.row(0) } == vec3i{ 1, 2, 3 });
-  REQUIRE(vec3i{ m.row(1) } == vec3i{ 4, 5, 6 });
-  REQUIRE(vec3i{ m.row(2) } == vec3i{ 7, 8, 9 });
+  REQUIRE(Vec3i{ m.row(0) } == Vec3i{ 1, 2, 3 });
+  REQUIRE(Vec3i{ m.row(1) } == Vec3i{ 4, 5, 6 });
+  REQUIRE(Vec3i{ m.row(2) } == Vec3i{ 7, 8, 9 });
 }
 
 TEST_CASE("matrix_get_column")
 {
   auto const m = mat3<int>::from_rows({ 1, 2, 3, 4, 5, 6, 7, 8, 9 });
-  REQUIRE(vec3i{ m.column(0) } == vec3i{ 1, 4, 7 });
-  REQUIRE(vec3i{ m.column(1) } == vec3i{ 2, 5, 8 });
-  REQUIRE(vec3i{ m.column(2) } == vec3i{ 3, 6, 9 });
+  REQUIRE(Vec3i{ m.column(0) } == Vec3i{ 1, 4, 7 });
+  REQUIRE(Vec3i{ m.column(1) } == Vec3i{ 2, 5, 8 });
+  REQUIRE(Vec3i{ m.column(2) } == Vec3i{ 3, 6, 9 });
 }
 
 TEST_CASE("square_matrix_multiplication")
@@ -240,9 +240,9 @@ TEST_CASE("square_matrix_multiplication")
   auto const m1 = mat3<int>::from_rows({ 1, 3, 5, 9, 0, 20, 4, 2, 3 });
   auto const m2 = mat3<int>::from_rows({ 4, 3, 9, 2, 0, 3, 2, 7, 50 });
   auto const result = m1 * m2;
-  REQUIRE(vec3i{ result.row(0) } == vec3i{ 20, 38, 268 });
-  REQUIRE(vec3i{ result.row(1) } == vec3i{ 76, 167, 1081 });
-  REQUIRE(vec3i{ result.row(2) } == vec3i{ 26, 33, 192 });
+  REQUIRE(Vec3i{ result.row(0) } == Vec3i{ 20, 38, 268 });
+  REQUIRE(Vec3i{ result.row(1) } == Vec3i{ 76, 167, 1081 });
+  REQUIRE(Vec3i{ result.row(2) } == Vec3i{ 26, 33, 192 });
 }
 
 TEST_CASE("non_square_matrix_multiplication")
@@ -251,15 +251,15 @@ TEST_CASE("non_square_matrix_multiplication")
       = Matrix<3, 4, int>::from_rows({ 1, 3, 5, 9, 0, 20, 4, 2, 3, 1, 2, 3 });
   auto const m2 = Matrix<4, 2, int>::from_rows({ 4, 3, 9, 2, 0, 3, 2, 7 });
   auto const result = m1 * m2;
-  REQUIRE(vec2i{ result.row(0) } == vec2i{ 49, 87 });
-  REQUIRE(vec2i{ result.row(1) } == vec2i{ 184, 66 });
-  REQUIRE(vec2i{ result.row(2) } == vec2i{ 27, 38 });
+  REQUIRE(Vec2i{ result.row(0) } == Vec2i{ 49, 87 });
+  REQUIRE(Vec2i{ result.row(1) } == Vec2i{ 184, 66 });
+  REQUIRE(Vec2i{ result.row(2) } == Vec2i{ 27, 38 });
 }
 
 TEST_CASE("square_matrix_vector_multiplication")
 {
   auto const m1 = mat3f::diagonal({ 1, 2, 3 });
-  auto const v1 = vec3f{ 1, 2, 3 };
+  auto const v1 = Vec3f{ 1, 2, 3 };
   auto const v2 = m1 * v1;
   REQUIRE(v2.x == 1);
   REQUIRE(v2.y == 4);
@@ -269,7 +269,7 @@ TEST_CASE("square_matrix_vector_multiplication")
 TEST_CASE("non_square_matrix_vector_multiplication")
 {
   auto const m1 = Matrix<3, 4, int>::diagonal({ 1, 2, 3 });
-  auto const v1 = vec4i{ 1, 2, 3, 4 };
+  auto const v1 = Vec4i{ 1, 2, 3, 4 };
   auto const v2 = m1 * v1;
   REQUIRE(v2.x == 1);
   REQUIRE(v2.y == 4);
@@ -281,18 +281,18 @@ TEST_CASE("inline_transpose")
 {
   auto m1 = mat3<int>::from_rows({ 1, 2, 3, 4, 5, 6, 7, 8, 9 });
   m1.transpose();
-  REQUIRE(vec3i{ m1.row(0) } == vec3i{ 1, 4, 7 });
-  REQUIRE(vec3i{ m1.row(1) } == vec3i{ 2, 5, 8 });
-  REQUIRE(vec3i{ m1.row(2) } == vec3i{ 3, 6, 9 });
+  REQUIRE(Vec3i{ m1.row(0) } == Vec3i{ 1, 4, 7 });
+  REQUIRE(Vec3i{ m1.row(1) } == Vec3i{ 2, 5, 8 });
+  REQUIRE(Vec3i{ m1.row(2) } == Vec3i{ 3, 6, 9 });
 }
 
 TEST_CASE("transpose_matrix")
 {
   auto const m1 = mat3<int>::from_rows({ 1, 2, 3, 4, 5, 6, 7, 8, 9 });
   auto const m2 = transpose(m1);
-  REQUIRE(vec3i{ m2.row(0) } == vec3i{ 1, 4, 7 });
-  REQUIRE(vec3i{ m2.row(1) } == vec3i{ 2, 5, 8 });
-  REQUIRE(vec3i{ m2.row(2) } == vec3i{ 3, 6, 9 });
+  REQUIRE(Vec3i{ m2.row(0) } == Vec3i{ 1, 4, 7 });
+  REQUIRE(Vec3i{ m2.row(1) } == Vec3i{ 2, 5, 8 });
+  REQUIRE(Vec3i{ m2.row(2) } == Vec3i{ 3, 6, 9 });
 }
 
 TEST_CASE("transpose_non_square")
@@ -300,9 +300,9 @@ TEST_CASE("transpose_non_square")
   auto const m1 = Matrix<3, 4, int>::from_rows(
       { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 });
   auto const m2 = transpose(m1);
-  REQUIRE(vec4i{ m2.column(0) } == vec4i{ 1, 2, 3, 4 });
-  REQUIRE(vec4i{ m2.column(1) } == vec4i{ 5, 6, 7, 8 });
-  REQUIRE(vec4i{ m2.column(2) } == vec4i{ 9, 10, 11, 12 });
+  REQUIRE(Vec4i{ m2.column(0) } == Vec4i{ 1, 2, 3, 4 });
+  REQUIRE(Vec4i{ m2.column(1) } == Vec4i{ 5, 6, 7, 8 });
+  REQUIRE(Vec4i{ m2.column(2) } == Vec4i{ 9, 10, 11, 12 });
 }
 
 TEST_CASE("matrix_3x3_determinant")

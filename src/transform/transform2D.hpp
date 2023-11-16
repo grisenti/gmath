@@ -10,14 +10,14 @@
 struct Transform2D
 {
   mat2f matrix = mat2f::diagonal(1.f);
-  vec2f translation = vec2f{ 0, 0 };
+  Vec2f translation = Vec2f{ 0, 0 };
 
   static Transform2D IDENTITY;
 
-  static Transform2D from_rotation(radf angle);
-  static Transform2D from_scale(vec2f const &scale);
+  static Transform2D from_rotation(Radf angle);
+  static Transform2D from_scale(Vec2f const &scale);
   static Transform2D from_scale(float scale);
-  static Transform2D from_translation(vec2f const &v);
+  static Transform2D from_translation(Vec2f const &v);
 
   Transform2D inverse() const;
   mat3f as_mat3() const;
@@ -30,6 +30,6 @@ Transform2D operator*(Transform2D const &lhs, Transform2D const &rhs);
 /// Transforms vector rhs by the transformation lhs.
 /// This operation is equivalent to:
 /// @code
-/// auto const v = truncate(lhs.as_mat3() * vec3f{ rhs.x, rhs.y, 1 });
+/// auto const v = truncate(lhs.as_mat3() * Vec3f{ rhs.x, rhs.y, 1 });
 /// @endcode
-vec2f operator*(Transform2D const &lhs, vec2f const &rhs);
+Vec2f operator*(Transform2D const &lhs, Vec2f const &rhs);

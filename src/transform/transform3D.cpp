@@ -1,7 +1,7 @@
 #include "transform3D.hpp"
 
 Transform3D Transform3D::from_rotation(
-    radf const angle_rad, UnitVec<vec3f> const &u_axis)
+    Radf const angle_rad, UnitVec<Vec3f> const &u_axis)
 {
   auto const angle = angle_rad.value();
   auto const axis = u_axis.unwrap();
@@ -17,25 +17,25 @@ Transform3D Transform3D::from_rotation(
   // clang-format on
 
   return {
-    .matrix = rotation_matrix, .translation = vec3f{0, 0, 0}
+    .matrix = rotation_matrix, .translation = Vec3f{0, 0, 0}
   };
 }
 
-Transform3D Transform3D::from_scale(vec3f const &scale)
+Transform3D Transform3D::from_scale(Vec3f const &scale)
 {
   return {
-    .matrix = mat3f::diagonal(scale), .translation = vec3f{0, 0, 0}
+    .matrix = mat3f::diagonal(scale), .translation = Vec3f{0, 0, 0}
   };
 }
 
 Transform3D Transform3D::from_scale(float const scale)
 {
   return {
-    .matrix = mat3f::diagonal(scale), .translation = vec3f{0, 0, 0}
+    .matrix = mat3f::diagonal(scale), .translation = Vec3f{0, 0, 0}
   };
 }
 
-Transform3D Transform3D::from_translation(vec3f const &v)
+Transform3D Transform3D::from_translation(Vec3f const &v)
 {
   return { .matrix = mat3f::diagonal(1.0), .translation = v };
 }
@@ -63,7 +63,7 @@ Transform3D operator*(Transform3D const &lhs, Transform3D const &rhs)
     .translation = lhs.translation + rhs.translation };
 }
 
-vec3f operator*(Transform3D const &lhs, vec3f const &rhs)
+Vec3f operator*(Transform3D const &lhs, Vec3f const &rhs)
 {
   return lhs.matrix * rhs + lhs.translation;
 }

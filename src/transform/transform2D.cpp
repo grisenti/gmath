@@ -5,10 +5,10 @@
 #include "vec.hpp"
 
 Transform2D Transform2D::IDENTITY = Transform2D{
-  .matrix = mat2f::diagonal(0.f), .translation = vec2f{0, 0}
+  .matrix = mat2f::diagonal(0.f), .translation = Vec2f{0, 0}
 };
 
-Transform2D Transform2D::from_rotation(radf const angle)
+Transform2D Transform2D::from_rotation(Radf const angle)
 {
   auto const angle_v = angle.value();
   // clang-format off
@@ -19,21 +19,21 @@ Transform2D Transform2D::from_rotation(radf const angle)
   // clang-format on
 }
 
-Transform2D Transform2D::from_scale(vec2f const &scale)
+Transform2D Transform2D::from_scale(Vec2f const &scale)
 {
   return {
-    .matrix = mat2f::diagonal(scale), .translation = vec2f{0, 0}
+    .matrix = mat2f::diagonal(scale), .translation = Vec2f{0, 0}
   };
 }
 
 Transform2D Transform2D::from_scale(float scale)
 {
   return {
-    .matrix = mat2f::diagonal(scale), .translation = vec2f{0, 0}
+    .matrix = mat2f::diagonal(scale), .translation = Vec2f{0, 0}
   };
 }
 
-Transform2D Transform2D::from_translation(const vec2f &v)
+Transform2D Transform2D::from_translation(const Vec2f &v)
 {
   return { .matrix = mat2f::diagonal(1.0), .translation = v };
 }
@@ -60,7 +60,7 @@ Transform2D operator*(Transform2D const &lhs, Transform2D const &rhs)
     .translation = rhs.translation + lhs.translation };
 }
 
-vec2f operator*(Transform2D const &lhs, vec2f const &rhs)
+Vec2f operator*(Transform2D const &lhs, Vec2f const &rhs)
 {
   return lhs.matrix * rhs + lhs.translation;
 }

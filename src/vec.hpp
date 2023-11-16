@@ -63,6 +63,6 @@ VecN<N - 1, T> truncate(VecN<N, T> const &v)
   return res;
 }
 
-using u_vec2f = UnitVec<vec2f>;
-using u_vec3f = UnitVec<vec3f>;
-using u_vec4f = UnitVec<vec4f>;
+using UVec2f = UnitVec<Vec2f>;
+using UVec3f = UnitVec<Vec3f>;
+using UVec4f = UnitVec<Vec4f>;
