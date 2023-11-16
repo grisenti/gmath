@@ -4,11 +4,8 @@
 #include "vecn.hpp"
 
 template <typename T>
-struct Vec2
+struct Vec2 : BaseVector<2, T>
 {
-  using value_type = T;
-  static constexpr size_t size = 2;
-
   T x;
   T y;
 

@@ -5,8 +5,9 @@
 template <size_t N, typename T>
 struct VecN
 {
-  static constexpr size_t size = N;
+  using type_class = VectorTag;
   using value_type = T;
+  static constexpr size_t size = N;
 
   T values[N];
 

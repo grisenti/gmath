@@ -3,11 +3,8 @@
 #include "vec_base.hpp"
 
 template <typename T>
-struct Vec3
+struct Vec3 : BaseVector<3, T>
 {
-  using value_type = T;
-  static constexpr size_t size = 3;
-
   T x;
   T y;
   T z;

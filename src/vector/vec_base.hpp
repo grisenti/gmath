@@ -3,6 +3,20 @@
 #include "base.hpp"
 #include <cmath>
 
+/// Marker type for vectors
+struct VectorTag
+{
+};
+
+/// Base class meant to remove duplicated code in the various Vec structs
+template <size_t N, typename T>
+struct BaseVector
+{
+  using type_class = VectorTag;
+  using value_type = T;
+  static constexpr size_t size = N;
+};
+
 template <typename V>
 concept Vec = requires(V const &cr_vec, V vec) {
   typename V::value_type;
@@ -35,7 +49,6 @@ bool constexpr operator==(V const &lhs, V const &rhs)
 }
 
 template <Vec V>
-  requires Numeric<ElemT<V>>
 V constexpr &operator+=(V &lhs, V const &rhs)
 {
   for (size_t i = 0; i < V::size; ++i)
