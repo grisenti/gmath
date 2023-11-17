@@ -23,11 +23,15 @@ struct Vec3 : BaseVector<3, T>
 
   T operator[](size_t i) const
   {
+    static_assert(std::is_standard_layout_v<Vec3<T>>,
+        "Vec3 must be standard layout for operator[] to work");
     return (&x)[i];
   }
 
   T &operator[](size_t i)
   {
+    static_assert(std::is_standard_layout_v<Vec3<T>>,
+        "Vec3 must be standard layout for operator[] to work");
     return (&x)[i];
   }
 

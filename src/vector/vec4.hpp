@@ -24,11 +24,15 @@ struct Vec4 : BaseVector<4, T>
 
   T operator[](size_t i) const
   {
+    static_assert(std::is_standard_layout_v<Vec4<T>>,
+        "Vec4 must be standard layout for operator[] to work");
     return (&x)[i];
   }
 
   T &operator[](size_t i)
   {
+    static_assert(std::is_standard_layout_v<Vec4<T>>,
+        "Vec4 must be standard layout for operator[] to work");
     return (&x)[i];
   }
 
