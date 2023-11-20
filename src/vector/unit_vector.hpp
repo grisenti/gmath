@@ -42,3 +42,75 @@ private:
   // invariant: the value is always normalized.
   V _value;
 };
+
+template <Vec V>
+UnitVec<V> constexpr operator-(UnitVec<V> const &rhs)
+{
+  return UnitVec<V>::create_unchecked(-rhs.unwrap());
+}
+
+template <Vec V>
+auto constexpr operator+(UnitVec<V> const &lhs, V const &rhs)
+{
+  return lhs.unwrap() + rhs;
+}
+
+template <Vec V>
+auto constexpr operator+(V const &lhs, UnitVec<V> const &rhs)
+{
+  return lhs + rhs.unwrap();
+}
+
+template <Vec V>
+auto constexpr operator+(UnitVec<V> const &lhs, UnitVec<V> const &rhs)
+{
+  return lhs.unwrap() + rhs.unwrap();
+}
+
+template <Vec V>
+V constexpr operator-(UnitVec<V> const &lhs, V const &rhs)
+{
+  return lhs.unwrap() - rhs;
+}
+
+template <Vec V>
+V constexpr operator-(V const &lhs, UnitVec<V> const &rhs)
+{
+  return lhs - rhs.unwrap();
+}
+
+template <Vec V>
+V constexpr operator-(UnitVec<V> const &lhs, UnitVec<V> const &rhs)
+{
+  return lhs.unwrap() - rhs.unwrap();
+}
+
+template <Vec V>
+ComponentT<V> constexpr dot(V const &lhs, UnitVec<V> const &rhs)
+{
+  return dot(lhs, rhs.unwrap());
+}
+
+template <Vec V>
+ComponentT<V> constexpr dot(UnitVec<V> const &lhs, V const &rhs)
+{
+  return dot(lhs.unwrap(), rhs);
+}
+
+template <Vec V>
+ComponentT<V> constexpr dot(UnitVec<V> const &lhs, UnitVec<V> const &rhs)
+{
+  return dot(lhs.unwrap(), rhs.unwrap());
+}
+
+template <Vec V>
+V project(V const &a, UnitVec<V> const &b)
+{
+  return project_no_division(a, b.unwrap());
+}
+
+template <Vec V>
+V reject(V const &a, UnitVec<V> const &b)
+{
+  return reject_no_division(a, b.unwrap());
+}
