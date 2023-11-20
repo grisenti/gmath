@@ -11,14 +11,14 @@ public:
   /// Creates a UnitVec assuming v is already normalized.
   static UnitVec create_unchecked(auto &&...args)
   {
-    return UnitVec{ V{ std::forward<decltype(args)>(args)... } };
+    return UnitVec{ V(std::forward<decltype(args)>(args)...) };
   }
 
   /// creates a UnitVec from the given values, ensuring that the underlying
   /// vector is normalized.
   static UnitVec normalize(auto &&...args)
   {
-    return UnitVec{ ::normalize(V{ std::forward<decltype(args)>(args)... }) };
+    return UnitVec{ ::normalize(V(std::forward<decltype(args)>(args)...)) };
   }
 
   // NOLINT: implicit conversion is intended. A UnitVec can be used everywhere
