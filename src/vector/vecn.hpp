@@ -1,6 +1,8 @@
 #pragma once
 
-#include "vec_base.hpp"
+#include "vec2.hpp"
+#include "vec3.hpp"
+#include "vec4.hpp"
 
 template <size_t N, typename T>
 struct VecN
@@ -22,9 +24,29 @@ struct VecN
   }
 };
 
-template <size_t N>
-using VecNf = VecN<N, Real>;
-template <size_t N>
-using VecNi = VecN<N, int>;
-template <size_t N>
-using VecNu = VecN<N, unsigned>;
+template <size_t N, typename T>
+struct VectorOfT
+{
+  using type = VecN<N, T>;
+};
+
+template <typename T>
+struct VectorOfT<2, T>
+{
+  using type = Vec2<T>;
+};
+
+template <typename T>
+struct VectorOfT<3, T>
+{
+  using type = Vec3<T>;
+};
+
+template <typename T>
+struct VectorOfT<4, T>
+{
+  using type = Vec4<T>;
+};
+
+template <size_t N, typename T>
+using VectorOf = VectorOfT<N, T>::type;
