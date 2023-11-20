@@ -29,7 +29,7 @@ public:
   }
 
   /// @returns The underlying normalized vector.
-  V unwrap() const
+  V const &unwrap() const
   {
     return _value;
   }
