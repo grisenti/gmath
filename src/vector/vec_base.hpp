@@ -68,6 +68,14 @@ V constexpr &operator*=(V &lhs, ComponentT<V> const k)
 }
 
 template <Vec V>
+V constexpr &operator/=(V &lhs, ComponentT<V> const k)
+{
+  for (size_t i = 0; i < V::size; ++i)
+    lhs[i] /= k;
+  return lhs;
+}
+
+template <Vec V>
 V constexpr operator-(V const &rhs)
 {
   V ret;
