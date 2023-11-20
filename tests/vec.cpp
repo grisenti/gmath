@@ -113,3 +113,9 @@ TEST_CASE("vector_extend")
   Vec4i expected{ 1, 2, 3, 7 };
   REQUIRE(extend(v1, 7) == expected);
 }
+
+TEST_CASE("octahedral_vector_construction_and_access")
+{
+  auto const v = OctahedralVector{ UVec3f::normalize(1, 1, 1) };
+  REQUIRE(length(v.into_unit_vec3().unwrap()) == Catch::Approx(1));
+}

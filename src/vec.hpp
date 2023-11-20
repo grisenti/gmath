@@ -6,6 +6,7 @@
 #include "vector/vec4.hpp"
 #include "vector/vecn.hpp"
 #include "vector/unit_vector.hpp"
+#include "vector/octahedral_vector.hpp"
 
 template <typename T>
 Vec3<T> extend(Vec2<T> const &v, T z = {})
