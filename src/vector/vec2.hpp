@@ -42,6 +42,6 @@ struct Vec2 : BaseVector<2, T>
   }
 };
 
-using Vec2f = Vec2<float>;
+using Vec2f = Vec2<Real>;
 using Vec2i = Vec2<int>;
 using Vec2u = Vec2<unsigned>;

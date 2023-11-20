@@ -4,8 +4,8 @@
 
 template <typename T>
 using mat4 = Matrix<4, 4, T>;
-using mat4f = mat4<float>;
+using mat4f = mat4<Real>;
 
-float det(mat4f const &M);
+Real det(mat4f const &M);
 
 mat4f inverse(mat4f const &M);

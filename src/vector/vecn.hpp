@@ -23,7 +23,7 @@ struct VecN
 };
 
 template <size_t N>
-using VecNf = VecN<N, float>;
+using VecNf = VecN<N, Real>;
 template <size_t N>
 using VecNi = VecN<N, int>;
 template <size_t N>

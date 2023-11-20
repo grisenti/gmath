@@ -26,7 +26,7 @@ Transform2D Transform2D::from_scale(Vec2f const &scale)
   };
 }
 
-Transform2D Transform2D::from_scale(float scale)
+Transform2D Transform2D::from_scale(Real scale)
 {
   return {
     .matrix = mat2f::diagonal(scale), .translation = Vec2f{0, 0}

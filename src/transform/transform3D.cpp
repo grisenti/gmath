@@ -28,7 +28,7 @@ Transform3D Transform3D::from_scale(Vec3f const &scale)
   };
 }
 
-Transform3D Transform3D::from_scale(float const scale)
+Transform3D Transform3D::from_scale(Real const scale)
 {
   return {
     .matrix = mat3f::diagonal(scale), .translation = Vec3f{0, 0, 0}

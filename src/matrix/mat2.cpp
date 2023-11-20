@@ -1,6 +1,6 @@
 #include "mat2.hpp"
 
-float det(mat2f const &M)
+Real det(mat2f const &M)
 {
   return M[0, 0] * M[1, 1] - M[0, 1] * M[1, 0];
 }

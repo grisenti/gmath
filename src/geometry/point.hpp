@@ -13,7 +13,7 @@ struct Point2
   bool operator<=>(Point2 const &rhs) const = default;
 };
 
-using Point2f = Point2<float>;
+using Point2f = Point2<Real>;
 using Point2i = Point2<int>;
 
 template <typename T>
@@ -38,7 +38,7 @@ struct Point3
   bool operator<=>(Point3 const &rhs) const = default;
 };
 
-using Point3f = Point3<float>;
+using Point3f = Point3<Real>;
 using Point3i = Point3<int>;
 
 template <typename T>

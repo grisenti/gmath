@@ -18,7 +18,7 @@ struct Transform3D
 
   static Transform3D from_rotation(Radf angle, UnitVec<Vec3f> const &axis);
   static Transform3D from_scale(Vec3f const &scale);
-  static Transform3D from_scale(float scale);
+  static Transform3D from_scale(Real scale);
   static Transform3D from_translation(Vec3f const &v);
 
   Transform3D inverse() const;

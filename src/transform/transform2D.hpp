@@ -10,14 +10,14 @@
 /// Affine 2D transformation
 struct Transform2D
 {
-  mat2f matrix = mat2f::diagonal(1.f);
-  Vec2f translation = Vec2f{ 0, 0 };
+  mat2f matrix = mat2f::diagonal(1._r);
+  Vec2f translation = Vec2f{ 0._r, 0._r };
 
   static Transform2D IDENTITY;
 
   static Transform2D from_rotation(Radf angle);
   static Transform2D from_scale(Vec2f const &scale);
-  static Transform2D from_scale(float scale);
+  static Transform2D from_scale(Real scale);
   static Transform2D from_translation(Vec2f const &v);
 
   Transform2D inverse() const;

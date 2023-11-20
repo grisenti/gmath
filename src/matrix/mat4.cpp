@@ -5,7 +5,7 @@
 // Both implementations are taken from "Foundations of Game Engine Development
 // Volume 1 Mathematics" by Eric Lengyel.
 
-float det(mat4f const &M)
+Real det(mat4f const &M)
 {
   auto const a = truncate(M.column(0));
   auto const b = truncate(M.column(1));
