@@ -168,7 +168,6 @@ TEST_CASE("Transform3D_skew_vector")
       Degf{ 45 }, UVec3f::normalize(1, 0, 0), UVec3f::normalize(0, 1, 0));
   auto const v = Vec3f{ 0, 1, 0 };
   auto const result = transform * v;
-  std::cout << result;
   REQUIRE(result.x == Catch::Approx(1));
   REQUIRE(result.y == Catch::Approx(1));
   REQUIRE_THAT(result.z, Catch::Matchers::WithinAbs(0, 0.0001));
