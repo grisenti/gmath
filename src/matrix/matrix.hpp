@@ -119,7 +119,7 @@ Matrix<R1, C2, T> constexpr operator*(
 }
 
 template <size_t R, size_t C, Numeric T, ColumnMatrix V>
-  requires(V::SIZE == C) && std::same_as<ComponentT<V>, T>
+  requires(V::SIZE == R) && std::same_as<ComponentT<V>, T>
 ModifiableEquivalentT<V> constexpr operator*(
     Matrix<R, C, T> const &lhs, V const &rhs)
 {
@@ -131,14 +131,14 @@ ModifiableEquivalentT<V> constexpr operator*(
 }
 
 template <size_t R, size_t C, Numeric T, RowMatrix V>
-  requires(V::SIZE == R) && std::same_as<ComponentT<V>, T>
+  requires(V::SIZE == C) && std::same_as<ComponentT<V>, T>
 ModifiableEquivalentT<V> constexpr operator*(
     V const &lhs, Matrix<R, C, T> const &rhs)
 {
   auto res = ModifiableEquivalentT<V>{};
   for (size_t j = 0; j < C; ++j)
     for (size_t i = 0; i < R; ++i)
-      res[i] += lhs[i] * rhs[i, j];
+      res[j] += lhs[j] * rhs[i, j];
   return res;
 }
 

@@ -268,7 +268,7 @@ TEST_CASE("square_matrix_vector_multiplication")
 
 TEST_CASE("non_square_matrix_vector_multiplication")
 {
-  auto const m1 = Matrix<3, 4, int>::diagonal({ 1, 2, 3 });
+  auto const m1 = Matrix<4, 3, int>::diagonal({ 1, 2, 3 });
   auto const v1 = Vec4i{ 1, 2, 3, 4 };
   auto const v2 = m1 * v1;
   REQUIRE(v2.x == 1);
