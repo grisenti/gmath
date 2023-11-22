@@ -210,3 +210,18 @@ TEST_CASE("Transform3D_inverse")
   REQUIRE(v1.y == Catch::Approx(1));
   REQUIRE(v1.z == Catch::Approx(1));
 }
+
+TEST_CASE("Transform3D_normals")
+{
+  auto const transform = Transform3D::from_rotation(
+                             Degf{ 45 }, UVec3f::normalize(1.f, 1.f, 1.f))
+                         * Transform3D::from_translation({ 1, 1, 1 })
+                         * Transform3D::from_scale({ 3, 5, 7 });
+  auto const n = Normal3f{ 1, 1, 1 };
+  auto const n_res = n * transform;
+  auto const v = Vec3f{ 1, 1, 1 };
+  auto const v_res = transpose(transform.matrix) * v;
+  REQUIRE(n_res.x == Catch::Approx(v_res.x));
+  REQUIRE(n_res.y == Catch::Approx(v_res.y));
+  REQUIRE(n_res.z == Catch::Approx(v_res.z));
+}
