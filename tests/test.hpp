@@ -4,7 +4,7 @@
 #include "vec.hpp"
 #include "mat.hpp"
 
-template <Vec V>
+template <Vector V>
 std::ostream &operator<<(std::ostream &out, V const &v)
 {
   out << "(";

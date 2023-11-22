@@ -15,7 +15,7 @@ struct Vec3 : BaseVector<3, T>
   {
   }
 
-  template <Vec V>
+  template <Vector V>
     requires(V::size == 3) && std::same_as<ComponentT<V>, T>
   Vec3(V const &v) : x(v[0]), y(v[1]), z(v[2])
   {
@@ -35,7 +35,7 @@ struct Vec3 : BaseVector<3, T>
     return (&x)[i];
   }
 
-  template <Vec V>
+  template <Vector V>
     requires(V::size == 3) && std::same_as<ComponentT<V>, T>
   operator V() const
   {
@@ -47,7 +47,7 @@ using Vec3f = Vec3<Real>;
 using Vec3i = Vec3<int>;
 using Vec3u = Vec3<unsigned>;
 
-template <Vec V>
+template <Vector V>
   requires Numeric<ComponentT<V>> && (V::size == 3)
 V constexpr cross(V const &lhs, V const &rhs)
 {
@@ -60,7 +60,7 @@ V constexpr cross(V const &lhs, V const &rhs)
   // clang-format on
 }
 
-template <Vec V>
+template <Vector V>
   requires Numeric<ComponentT<V>> && (V::size == 3)
 V constexpr scalar_triple_product(V const &a, V const &b, V const &c)
 {

@@ -3,11 +3,16 @@
 #include "vec_base.hpp"
 
 /// Type safe wrapper for a unit vector.
-template <Vec V>
+template <Vector V>
   requires(std::floating_point<ComponentT<V>>)
 class UnitVec
 {
 public:
+  using type_class = VectorTag;
+  using component_type = ComponentT<V>;
+  static constexpr size_t size = V::size;
+  using modifiable_equivalent = V;
+
   /// Creates a UnitVec assuming v is already normalized.
   static UnitVec create_unchecked(auto &&...args)
   {
@@ -22,7 +27,7 @@ public:
   }
 
   // NOLINT: implicit conversion is intended. A UnitVec can be used everywhere
-  // a standard Vec can.
+  // a standard Vector can.
   operator V() const
   {
     return _value;
@@ -34,6 +39,11 @@ public:
     return _value;
   }
 
+  component_type operator[](size_t i) const
+  {
+    return _value[i];
+  }
+
 private:
   UnitVec(V const &v) : _value{ v }
   {
@@ -42,75 +52,3 @@ private:
   // invariant: the value is always normalized.
   V _value;
 };
-
-template <Vec V>
-UnitVec<V> constexpr operator-(UnitVec<V> const &rhs)
-{
-  return UnitVec<V>::create_unchecked(-rhs.unwrap());
-}
-
-template <Vec V>
-auto constexpr operator+(UnitVec<V> const &lhs, V const &rhs)
-{
-  return lhs.unwrap() + rhs;
-}
-
-template <Vec V>
-auto constexpr operator+(V const &lhs, UnitVec<V> const &rhs)
-{
-  return lhs + rhs.unwrap();
-}
-
-template <Vec V>
-auto constexpr operator+(UnitVec<V> const &lhs, UnitVec<V> const &rhs)
-{
-  return lhs.unwrap() + rhs.unwrap();
-}
-
-template <Vec V>
-V constexpr operator-(UnitVec<V> const &lhs, V const &rhs)
-{
-  return lhs.unwrap() - rhs;
-}
-
-template <Vec V>
-V constexpr operator-(V const &lhs, UnitVec<V> const &rhs)
-{
-  return lhs - rhs.unwrap();
-}
-
-template <Vec V>
-V constexpr operator-(UnitVec<V> const &lhs, UnitVec<V> const &rhs)
-{
-  return lhs.unwrap() - rhs.unwrap();
-}
-
-template <Vec V>
-ComponentT<V> constexpr dot(V const &lhs, UnitVec<V> const &rhs)
-{
-  return dot(lhs, rhs.unwrap());
-}
-
-template <Vec V>
-ComponentT<V> constexpr dot(UnitVec<V> const &lhs, V const &rhs)
-{
-  return dot(lhs.unwrap(), rhs);
-}
-
-template <Vec V>
-ComponentT<V> constexpr dot(UnitVec<V> const &lhs, UnitVec<V> const &rhs)
-{
-  return dot(lhs.unwrap(), rhs.unwrap());
-}
-
-template <Vec V>
-V project(V const &a, UnitVec<V> const &b)
-{
-  return project_no_division(a, b.unwrap());
-}
-
-template <Vec V>
-V reject(V const &a, UnitVec<V> const &b)
-{
-  return reject_no_division(a, b.unwrap());
-}

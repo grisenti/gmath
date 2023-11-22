@@ -1,14 +1,15 @@
 #pragma once
 
 #include "base.hpp"
+#include "matrix/matrix_base.hpp"
 #include <cmath>
 
 /// Marker type for vectors
-struct VectorTag
+struct VectorTag : ColumnMatrixTag
 {
 };
 
-/// Base class meant to remove duplicated code in the various Vec structs
+/// Base class meant to remove duplicated code in the various Vector structs
 template <size_t N, typename T>
 struct BaseVector
 {
@@ -18,22 +19,23 @@ struct BaseVector
 };
 
 template <typename V>
-concept Vec = requires(V const &cr_vec, V vec) {
-  typename V::component_type;
-  V::size;
-  {
-    cr_vec[0]
-  } -> std::same_as<typename V::component_type>;
-  {
-    vec[0]
-  } -> std::same_as<typename V::component_type &>;
-} && std::same_as<typename V::type_class, VectorTag>;
+concept ModifiableVector = ModifiableColumnMatrix<V>
+                           && std::same_as<typename V::type_class, VectorTag>;
 
-/// The type of V's components
-template <Vec V>
-using ComponentT = typename V::component_type;
+template <typename V>
+concept ConstVector
+    = ConstColumnMatrix<V> && std::same_as<typename V::type_class, VectorTag>;
 
-template <Vec V>
+template <typename V>
+concept Vector = ModifiableVector<V> || ConstVector<V>;
+
+template <typename V1, typename V2>
+concept VectorCompatible
+    = Vector<V1> && Vector<V2> && std::same_as<ComponentT<V1>, ComponentT<V2>>
+      && (V1::size == V2::size)
+      && std::same_as<ModifiableEquivalentT<V1>, ModifiableEquivalentT<V2>>;
+
+template <Vector V>
   requires std::equality_comparable<ComponentT<V>>
 bool constexpr operator==(V const &lhs, V const &rhs)
 {
@@ -43,23 +45,25 @@ bool constexpr operator==(V const &lhs, V const &rhs)
   return equal;
 }
 
-template <Vec V>
-V constexpr &operator+=(V &lhs, V const &rhs)
+template <ModifiableVector V1, Vector V2>
+  requires VectorCompatible<V1, V2>
+V1 constexpr &operator+=(V1 &lhs, V2 const &rhs)
 {
-  for (size_t i = 0; i < V::size; ++i)
+  for (size_t i = 0; i < V1::size; ++i)
     lhs[i] += rhs[i];
   return lhs;
 }
 
-template <Vec V>
-V constexpr &operator-=(V &lhs, V const &rhs)
+template <ModifiableVector V1, Vector V2>
+  requires VectorCompatible<V1, V2>
+V1 constexpr &operator-=(V1 &lhs, V2 const &rhs)
 {
-  for (size_t i = 0; i < V::size; ++i)
+  for (size_t i = 0; i < V1::size; ++i)
     lhs[i] -= rhs[i];
   return lhs;
 }
 
-template <Vec V>
+template <ModifiableVector V>
 V constexpr &operator*=(V &lhs, ComponentT<V> const k)
 {
   for (size_t i = 0; i < V::size; ++i)
@@ -67,7 +71,7 @@ V constexpr &operator*=(V &lhs, ComponentT<V> const k)
   return lhs;
 }
 
-template <Vec V>
+template <ModifiableVector V>
 V constexpr &operator/=(V &lhs, ComponentT<V> const k)
 {
   for (size_t i = 0; i < V::size; ++i)
@@ -75,61 +79,64 @@ V constexpr &operator/=(V &lhs, ComponentT<V> const k)
   return lhs;
 }
 
-template <Vec V>
-V constexpr operator-(V const &rhs)
+template <Vector V>
+ModifiableEquivalentT<V> constexpr operator-(V const &rhs)
 {
-  V ret;
+  ModifiableEquivalentT<V> ret;
   for (size_t i = 0; i < V::size; ++i)
     ret[i] = -rhs[i];
   return ret;
 }
 
-template <Vec V>
-V constexpr operator*(V const &lhs, ComponentT<V> k)
+template <Vector V>
+ModifiableEquivalentT<V> constexpr operator*(V const &lhs, ComponentT<V> k)
 {
-  V ret;
+  ModifiableEquivalentT<V> ret;
   for (size_t i = 0; i < V::size; ++i)
     ret[i] = lhs[i] * k;
   return ret;
 }
 
-template <Vec V>
-V constexpr operator*(ComponentT<V> k, V const &rhs)
+template <Vector V>
+ModifiableEquivalentT<V> constexpr operator*(ComponentT<V> k, V const &rhs)
 {
-  V ret;
+  ModifiableEquivalentT<V> ret;
   for (size_t i = 0; i < V::size; ++i)
     ret[i] = rhs[i] * k;
   return ret;
 }
 
-template <Vec V>
-V constexpr operator/(V const &lhs, ComponentT<V> const k)
+template <Vector V>
+ModifiableEquivalentT<V> constexpr operator/(
+    V const &lhs, ComponentT<V> const k)
 {
-  V ret;
+  ModifiableEquivalentT<V> ret;
   for (size_t i = 0; i < V::size; ++i)
     ret[i] = lhs[i] / k;
   return ret;
 }
 
-template <Vec V>
-V constexpr operator+(V const &lhs, V const &rhs)
+template <Vector V1, Vector V2>
+  requires VectorCompatible<V1, V2>
+ModifiableEquivalentT<V1> constexpr operator+(V1 const &lhs, V2 const &rhs)
 {
-  V ret;
-  for (size_t i = 0; i < V::size; ++i)
+  ModifiableEquivalentT<V1> ret;
+  for (size_t i = 0; i < V1::size; ++i)
     ret[i] = lhs[i] + rhs[i];
   return ret;
 }
 
-template <Vec V>
-V constexpr operator-(V const &lhs, V const &rhs)
+template <Vector V1, Vector V2>
+  requires VectorCompatible<V1, V2>
+ModifiableEquivalentT<V1> constexpr operator-(V1 const &lhs, V2 const &rhs)
 {
-  V ret;
-  for (size_t i = 0; i < V::size; ++i)
+  ModifiableEquivalentT<V1> ret;
+  for (size_t i = 0; i < V1::size; ++i)
     ret[i] = lhs[i] - rhs[i];
   return ret;
 }
 
-template <Vec V>
+template <Vector V>
   requires(std::floating_point<ComponentT<V>>)
 ComponentT<V> constexpr length(V const &v)
 {
@@ -139,17 +146,17 @@ ComponentT<V> constexpr length(V const &v)
   return std::sqrt(ret);
 }
 
-template <Vec V>
-  requires(std::floating_point<ComponentT<V>>)
-ComponentT<V> constexpr distance(V const &lhs, V const &rhs)
+template <Vector V1, Vector V2>
+  requires VectorCompatible<V1, V2> && std::floating_point<ComponentT<V1>>
+ComponentT<V1> constexpr distance(V1 const &lhs, V2 const &rhs)
 {
-  ComponentT<V> ret = {};
-  for (size_t i = 0; i < V::size; ++i)
+  ComponentT<V1> ret = {};
+  for (size_t i = 0; i < V1::size; ++i)
     ret += pow2(lhs[i] - rhs[i]);
   return std::sqrt(ret);
 }
 
-template <Vec V>
+template <Vector V>
   requires(std::floating_point<ComponentT<V>>)
 V constexpr normalize(V const &v)
 {
@@ -160,16 +167,17 @@ V constexpr normalize(V const &v)
   return ret;
 }
 
-template <Vec V>
-ComponentT<V> constexpr dot(V const &lhs, V const &rhs)
+template <Vector V1, Vector V2>
+  requires VectorCompatible<V1, V2>
+ComponentT<V1> constexpr dot(V1 const &lhs, V2 const &rhs)
 {
-  ComponentT<V> ret{ 0 };
-  for (size_t i = 0; i < V::size; ++i)
+  ComponentT<V1> ret{ 0 };
+  for (size_t i = 0; i < V1::size; ++i)
     ret += lhs[i] * rhs[i];
   return ret;
 }
 
-template <Vec V>
+template <Vector V>
 bool constexpr in_range(V const &v, V const &a, V const &b)
 {
   bool ret = true;
@@ -178,28 +186,30 @@ bool constexpr in_range(V const &v, V const &a, V const &b)
   return ret;
 }
 
-template <Vec V>
-  requires(std::floating_point<ComponentT<V>>)
-V project(V const &a, V const &b)
+template <Vector V1, Vector V2>
+  requires VectorCompatible<V1, V2> && std::floating_point<ComponentT<V1>>
+auto project(V1 const &a, V2 const &b)
 {
   return b * (dot(a, b) / dot(b, b));
 }
 
-template <Vec V>
-V project_no_division(V const &a, V const &b)
+template <Vector V1, Vector V2>
+  requires VectorCompatible<V1, V2> && std::floating_point<ComponentT<V1>>
+auto project_no_division(V1 const &a, V2 const &b)
 {
   return b * (dot(a, b));
 }
 
-template <Vec V>
-  requires(std::floating_point<ComponentT<V>>)
-V reject(V const &a, V const &b)
+template <Vector V1, Vector V2>
+  requires VectorCompatible<V1, V2> && std::floating_point<ComponentT<V1>>
+auto reject(V1 const &a, V2 const &b)
 {
   return a - project(a, b);
 }
 
-template <Vec V>
-V reject_no_division(V const &a, V const &b)
+template <Vector V1, Vector V2>
+  requires VectorCompatible<V1, V2> && std::floating_point<ComponentT<V1>>
+auto reject_no_division(V1 const &a, V2 const &b)
 {
   return a - project_no_division(a, b);
 }

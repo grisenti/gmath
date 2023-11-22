@@ -4,141 +4,94 @@
 #include <array>
 
 #include "base.hpp"
-#include "vector/vec_base.hpp"
-#include "vector/vecn.hpp"
 
-/// column major matrix
-template <size_t R, size_t C, typename T>
-struct Matrix
+struct Matrix1DTag
 {
-  using RowVec = VectorOf<C, T>;
-  using ColumnVec = VectorOf<R, T>;
-
-  T values[R * C];
-
-  static constexpr Matrix diagonal(T const diagonal)
-  {
-    auto res = Matrix{};
-    for (size_t j = 0; j < C; ++j)
-      for (size_t i = 0; i < R; ++i)
-        res[i, j] = i == j ? diagonal : 0;
-    return res;
-  }
-
-  static constexpr Matrix diagonal(VectorOf<std::min(R, C), T> diagonal)
-  {
-    auto res = Matrix{};
-    for (size_t j = 0; j < C; ++j)
-      for (size_t i = 0; i < R; ++i)
-        res[i, j] = i == j ? diagonal[i] : 0;
-    return res;
-  }
-
-  static constexpr Matrix from_rows(std::array<T, C * R> const &rows)
-  {
-    auto res = Matrix{};
-    for (size_t i = 0; i < R; ++i)
-      for (size_t j = 0; j < C; ++j)
-        res[i, j] = rows[i * C + j];
-    return res;
-  }
-
-  static constexpr Matrix from_row_vecs(std::array<RowVec, R> const &rows)
-  {
-    auto res = Matrix{};
-    for (size_t i = 0; i < R; ++i)
-      for (size_t j = 0; j < C; ++j)
-        res[i, j] = rows[i][j];
-    return res;
-  }
-
-  static constexpr Matrix from_columns(std::array<T, C * R> const &cols)
-  {
-    auto res = Matrix{};
-    for (size_t i = 0; i < C * R; ++i)
-      res.values[i] = cols[i];
-    return res;
-  }
-
-  static constexpr Matrix from_column_vecs(
-      std::array<ColumnVec, C> const &cols)
-  {
-    auto res = Matrix{};
-    for (size_t i = 0; i < R; ++i)
-      for (size_t j = 0; j < C; ++j)
-        res[i, j] = cols[j][i];
-    return res;
-  }
-
-  Matrix constexpr &transpose()
-    requires(R == C)
-  {
-    for (size_t i = 0; i < R; ++i)
-      for (size_t j = i; j < R; ++j)
-        std::swap(values[j + i * R], values[i + j * R]);
-    return *this;
-  }
-
-  T constexpr &operator[](size_t i, size_t j)
-  {
-    assert(i < R && j < C);
-    return values[i + j * R];
-  }
-
-  T constexpr operator[](size_t i, size_t j) const
-  {
-    assert(i < R && j < C);
-    return values[i + j * R];
-  }
-
-  RowVec constexpr row(size_t i) const
-  {
-    auto res = RowVec{};
-    for (size_t j = 0; j < C; ++j)
-      res[j] = values[i + j * R];
-    return res;
-  }
-
-  ColumnVec constexpr column(size_t j) const
-  {
-    auto res = ColumnVec{};
-    for (size_t i = 0; i < R; ++i)
-      res[i] = values[i + j * R];
-    return res;
-  }
 };
 
-template <size_t R1, size_t C1, size_t C2, Numeric T>
-Matrix<R1, C2, T> constexpr operator*(
-    Matrix<R1, C1, T> const &lhs, Matrix<C1, C2, T> const &rhs)
-{
-  auto res = Matrix<R1, C2, T>::diagonal(0);
-  for (size_t i = 0; i < R1; ++i)
-    for (size_t j = 0; j < C2; ++j)
-      for (size_t k = 0; k < C1; ++k)
-      {
-        res[i, j] += lhs[i, k] * rhs[k, j];
-      }
-  return res;
-}
+template <typename M>
+concept ModifiableMatrix1D = requires(M const &cr_mat, M mat) {
+  typename M::component_type;
+  M::size;
+  M{};
+  {
+    cr_mat[0]
+  } -> std::same_as<typename M::component_type>;
+  {
+    mat[0]
+  } -> std::same_as<typename M::component_type &>;
+} && std::is_base_of_v<Matrix1DTag, typename M::type_class>;
 
-template <size_t R, size_t C, Numeric T, Vec V>
-  requires(V::size == C) && std::same_as<ComponentT<V>, T>
-V constexpr operator*(Matrix<R, C, T> const &lhs, V const &rhs)
-{
-  auto res = V{};
-  for (size_t j = 0; j < C; ++j)
-    for (size_t i = 0; i < R; ++i)
-      res[i] += lhs[i, j] * rhs[j];
-  return res;
-}
+template <typename M>
+concept ConstMatrix1D = requires(M const &cr_mat, M mat) {
+  typename M::component_type;
+  typename M::modifiable_equivalent;
+  M::size;
+  {
+    cr_mat[0]
+  } -> std::same_as<typename M::component_type>;
+} && ModifiableMatrix1D<typename M::modifiable_equivalent> && std::same_as<typename M::component_type, typename M::modifiable_equivalent::component_type> && (M::size == M::modifiable_equivalent::size) && std::is_base_of_v<Matrix1DTag, typename M::type_class>;
 
-template <size_t R, size_t C, typename T>
-Matrix<C, R, T> constexpr transpose(Matrix<R, C, T> const &mat)
+template <typename M>
+concept Matrix1D = ConstMatrix1D<M> || ModifiableMatrix1D<M>;
+
+struct RowMatrixTag : Matrix1DTag
 {
-  auto res = Matrix<C, R, T>::diagonal(0);
-  for (size_t j = 0; j < C; ++j)
-    for (size_t i = 0; i < R; ++i)
-      res[j, i] = mat[i, j];
-  return res;
-}
+};
+
+struct ColumnMatrixTag : Matrix1DTag
+{
+};
+
+template <typename M>
+concept ModifiableRowMatrix
+    = ModifiableMatrix1D<M>
+      && std::is_base_of_v<RowMatrixTag, typename M::type_class>;
+
+template <typename M>
+concept ModifiableColumnMatrix
+    = ModifiableMatrix1D<M>
+      && std::is_base_of_v<ColumnMatrixTag, typename M::type_class>;
+
+template <typename M>
+concept ConstRowMatrix
+    = ConstMatrix1D<M>
+      && std::is_base_of_v<RowMatrixTag, typename M::type_class>;
+
+template <typename M>
+concept ConstColumnMatrix
+    = ConstMatrix1D<M>
+      && std::is_base_of_v<ColumnMatrixTag, typename M::type_class>;
+
+template <typename M>
+concept RowMatrix
+    = Matrix1D<M> && std::is_base_of_v<RowMatrixTag, typename M::type_class>;
+
+template <typename M>
+concept ColumnMatrix
+    = Matrix1D<M>
+      && std::is_base_of_v<ColumnMatrixTag, typename M::type_class>;
+
+template <Matrix1D M>
+struct ModifiableEquivalent
+{
+};
+
+template <ConstMatrix1D M>
+struct ModifiableEquivalent<M>
+{
+  using type = typename M::modifiable_equivalent;
+};
+
+template <ModifiableMatrix1D M>
+struct ModifiableEquivalent<M>
+{
+  using type = M;
+};
+
+template <typename T>
+using ModifiableEquivalentT = ModifiableEquivalent<T>::type;
+
+/// The type of V's components
+template <Matrix1D M>
+using ComponentT = typename M::component_type;

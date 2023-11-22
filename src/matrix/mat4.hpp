@@ -1,6 +1,6 @@
 #pragma once
 
-#include "matrix_base.hpp"
+#include "matrix.hpp"
 
 template <typename T>
 using mat4 = Matrix<4, 4, T>;
