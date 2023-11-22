@@ -6,6 +6,7 @@
 #include "vector/vec2.hpp"
 #include "units.hpp"
 #include "geometry/point.hpp"
+#include "vector/unit_vector.hpp"
 
 /// Affine 2D transformation
 struct Transform2D
@@ -19,6 +20,8 @@ struct Transform2D
   static Transform2D from_scale(Vec2f const &scale);
   static Transform2D from_scale(Real scale);
   static Transform2D from_translation(Vec2f const &v);
+  static Transform2D from_skew(Radf angle, UnitVec<Vec2f> const &direction,
+      UnitVec<Vec2f> const &perpendicular);
 
   Transform2D inverse() const;
   mat3f as_mat3() const;

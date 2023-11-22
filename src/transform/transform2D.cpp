@@ -38,6 +38,25 @@ Transform2D Transform2D::from_translation(const Vec2f &v)
   return { .matrix = mat2f::diagonal(1.0), .translation = v };
 }
 
+Transform2D Transform2D::from_skew(Radf angle, const UnitVec<Vec2f> &direction,
+    const UnitVec<Vec2f> &perpendicular)
+{
+  auto const a = direction.unwrap();
+  auto const b = perpendicular.unwrap();
+  auto const t = std::tan(angle.value());
+  auto const x = b.x * t;
+  auto const y = b.y * t;
+  // clang-format off
+  auto const skew_matrix = mat2f::from_rows({
+    a.x * x + 1, a.x * y,
+    a.y * x, a.y * y + 1
+  });
+  // clang-format on
+  return {
+    .matrix = skew_matrix, .translation = Vec2f{0, 0}
+  };
+}
+
 Transform2D Transform2D::inverse() const
 {
   return { .matrix = ::inverse(matrix), .translation = -translation };

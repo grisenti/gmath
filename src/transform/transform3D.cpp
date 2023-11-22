@@ -40,6 +40,27 @@ Transform3D Transform3D::from_translation(Vec3f const &v)
   return { .matrix = mat3f::diagonal(1.0), .translation = v };
 }
 
+Transform3D Transform3D::from_skew(Radf angle, const UnitVec<Vec3f> &direction,
+    const UnitVec<Vec3f> &perpendicular)
+{
+  auto const a = direction.unwrap();
+  auto const b = perpendicular.unwrap();
+  auto const t = std::tan(angle.value());
+  auto const x = b.x * t;
+  auto const y = b.y * t;
+  auto const z = b.z * t;
+  // clang-format off
+  auto const skew_matrix = mat3f::from_rows({
+    a.x * x + 1, a.x * y, a.x * z,
+    a.y * x, a.y * y + 1, a.y * z,
+    a.z * x, a.z * y, a.z * z + 1
+  });
+  // clang-format on
+  return {
+    .matrix = skew_matrix, .translation = Vec3f{0, 0, 0}
+  };
+}
+
 Transform3D Transform3D::inverse() const
 {
   return { .matrix = ::inverse(matrix), .translation = -translation };

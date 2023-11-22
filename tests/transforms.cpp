@@ -36,6 +36,16 @@ TEST_CASE("Transform2D_translation")
   REQUIRE(result == Point2f{ 2, 0 });
 }
 
+TEST_CASE("Transform2D_skew_vector")
+{
+  auto const transform = Transform2D::from_skew(
+      Degf{ 45 }, UVec2f::normalize(1, 0), UVec2f::normalize(0, 1));
+  auto const v = Vec2f{ 0, 1 };
+  auto const result = transform * v;
+  REQUIRE(result.x == Catch::Approx(1));
+  REQUIRE(result.y == Catch::Approx(1));
+}
+
 TEST_CASE("Transform2D_vectors_are_not_translated")
 {
   auto const transform = Transform2D::from_translation({ 1, -1 });
@@ -150,6 +160,18 @@ TEST_CASE("Transform3D_translates_points")
   auto const p = Point3f{ 1, 1, 1 };
   auto const result = transform * p;
   REQUIRE(result == Point3f{ 2, 0, 2 });
+}
+
+TEST_CASE("Transform3D_skew_vector")
+{
+  auto const transform = Transform3D::from_skew(
+      Degf{ 45 }, UVec3f::normalize(1, 0, 0), UVec3f::normalize(0, 1, 0));
+  auto const v = Vec3f{ 0, 1, 0 };
+  auto const result = transform * v;
+  std::cout << result;
+  REQUIRE(result.x == Catch::Approx(1));
+  REQUIRE(result.y == Catch::Approx(1));
+  REQUIRE_THAT(result.z, Catch::Matchers::WithinAbs(0, 0.0001));
 }
 
 TEST_CASE("Transform3D_combine_transformations_on_vectors")

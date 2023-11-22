@@ -4,6 +4,7 @@
 #include "matrix/mat3.hpp"
 #include "matrix/mat4.hpp"
 #include "vector/vec3.hpp"
+#include "vector/normal3.hpp"
 #include "vector/unit_vector.hpp"
 #include "units.hpp"
 #include "geometry/point.hpp"
@@ -20,6 +21,8 @@ struct Transform3D
   static Transform3D from_scale(Vec3f const &scale);
   static Transform3D from_scale(Real scale);
   static Transform3D from_translation(Vec3f const &v);
+  static Transform3D from_skew(Radf angle, UnitVec<Vec3f> const &direction,
+      UnitVec<Vec3f> const &perpendicular);
 
   Transform3D inverse() const;
   mat4f as_mat4() const;
