@@ -36,3 +36,6 @@ Vec3f operator*(Transform3D const &lhs, Vec3f const &rhs);
 
 /// Transforms point @param rhs by the transformation @param lhs.
 Point3f operator*(Transform3D const &lhs, Point3f const &rhs);
+
+/// Transforms the normal @param rhs by the transformation @param lhs.
+Normal3f operator*(Normal3f const &lhs, Transform3D const &rhs);

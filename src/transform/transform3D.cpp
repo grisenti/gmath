@@ -93,3 +93,8 @@ Point3f operator*(Transform3D const &lhs, Point3f const &rhs)
 {
   return lhs.matrix * rhs + lhs.translation;
 }
+
+Normal3f operator*(Normal3f const &lhs, Transform3D const &rhs)
+{
+  return lhs * rhs.matrix;
+}
