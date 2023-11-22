@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vec3.hpp"
+#include "vector/vec3.hpp"
 
 struct NormalTag : RowMatrixTag
 {
