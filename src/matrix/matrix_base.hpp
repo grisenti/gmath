@@ -11,26 +11,26 @@ struct Matrix1DTag
 
 template <typename M>
 concept ModifiableMatrix1D = requires(M const &cr_mat, M mat) {
-  typename M::component_type;
-  M::size;
+  typename M::ComponentType;
+  M::SIZE;
   M{};
   {
     cr_mat[0]
-  } -> std::same_as<typename M::component_type>;
+  } -> std::same_as<typename M::ComponentType>;
   {
     mat[0]
-  } -> std::same_as<typename M::component_type &>;
-} && std::is_base_of_v<Matrix1DTag, typename M::type_class>;
+  } -> std::same_as<typename M::ComponentType &>;
+} && std::is_base_of_v<Matrix1DTag, typename M::TypeClass>;
 
 template <typename M>
 concept ConstMatrix1D = requires(M const &cr_mat, M mat) {
-  typename M::component_type;
-  typename M::modifiable_equivalent;
-  M::size;
+  typename M::ComponentType;
+  typename M::ModifiableEquivalent;
+  M::SIZE;
   {
     cr_mat[0]
-  } -> std::same_as<typename M::component_type>;
-} && ModifiableMatrix1D<typename M::modifiable_equivalent> && std::same_as<typename M::component_type, typename M::modifiable_equivalent::component_type> && (M::size == M::modifiable_equivalent::size) && std::is_base_of_v<Matrix1DTag, typename M::type_class>;
+  } -> std::same_as<typename M::ComponentType>;
+} && ModifiableMatrix1D<typename M::ModifiableEquivalent> && std::same_as<typename M::ComponentType, typename M::ModifiableEquivalent::ComponentType> && (M::SIZE == M::ModifiableEquivalent::SIZE) && std::is_base_of_v<Matrix1DTag, typename M::TypeClass>;
 
 template <typename M>
 concept Matrix1D = ConstMatrix1D<M> || ModifiableMatrix1D<M>;
@@ -46,31 +46,30 @@ struct ColumnMatrixTag : Matrix1DTag
 template <typename M>
 concept ModifiableRowMatrix
     = ModifiableMatrix1D<M>
-      && std::is_base_of_v<RowMatrixTag, typename M::type_class>;
+      && std::is_base_of_v<RowMatrixTag, typename M::TypeClass>;
 
 template <typename M>
 concept ModifiableColumnMatrix
     = ModifiableMatrix1D<M>
-      && std::is_base_of_v<ColumnMatrixTag, typename M::type_class>;
+      && std::is_base_of_v<ColumnMatrixTag, typename M::TypeClass>;
 
 template <typename M>
 concept ConstRowMatrix
     = ConstMatrix1D<M>
-      && std::is_base_of_v<RowMatrixTag, typename M::type_class>;
+      && std::is_base_of_v<RowMatrixTag, typename M::TypeClass>;
 
 template <typename M>
 concept ConstColumnMatrix
     = ConstMatrix1D<M>
-      && std::is_base_of_v<ColumnMatrixTag, typename M::type_class>;
+      && std::is_base_of_v<ColumnMatrixTag, typename M::TypeClass>;
 
 template <typename M>
 concept RowMatrix
-    = Matrix1D<M> && std::is_base_of_v<RowMatrixTag, typename M::type_class>;
+    = Matrix1D<M> && std::is_base_of_v<RowMatrixTag, typename M::TypeClass>;
 
 template <typename M>
 concept ColumnMatrix
-    = Matrix1D<M>
-      && std::is_base_of_v<ColumnMatrixTag, typename M::type_class>;
+    = Matrix1D<M> && std::is_base_of_v<ColumnMatrixTag, typename M::TypeClass>;
 
 template <Matrix1D M>
 struct ModifiableEquivalent
@@ -80,18 +79,18 @@ struct ModifiableEquivalent
 template <ConstMatrix1D M>
 struct ModifiableEquivalent<M>
 {
-  using type = typename M::modifiable_equivalent;
+  using Type = typename M::ModifiableEquivalent;
 };
 
 template <ModifiableMatrix1D M>
 struct ModifiableEquivalent<M>
 {
-  using type = M;
+  using Type = M;
 };
 
 template <typename T>
-using ModifiableEquivalentT = ModifiableEquivalent<T>::type;
+using ModifiableEquivalentT = ModifiableEquivalent<T>::Type;
 
 /// The type of V's components
 template <Matrix1D M>
-using ComponentT = typename M::component_type;
+using ComponentT = typename M::ComponentType;

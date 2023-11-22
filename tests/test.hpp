@@ -8,7 +8,7 @@ template <Vector V>
 std::ostream &operator<<(std::ostream &out, V const &v)
 {
   out << "(";
-  for (size_t i = 0; i < V::size; ++i)
+  for (size_t i = 0; i < V::SIZE; ++i)
     out << v[i] << ", ";
   out << ")";
   return out;

@@ -7,9 +7,9 @@
 template <size_t N, typename T>
 struct VecN
 {
-  using type_class = VectorTag;
-  using component_type = T;
-  static constexpr size_t size = N;
+  using TypeClass = VectorTag;
+  using ComponentType = T;
+  static constexpr size_t SIZE = N;
 
   T values[N];
 
@@ -27,26 +27,26 @@ struct VecN
 template <size_t N, typename T>
 struct VectorOfT
 {
-  using type = VecN<N, T>;
+  using Type = VecN<N, T>;
 };
 
 template <typename T>
 struct VectorOfT<2, T>
 {
-  using type = Vec2<T>;
+  using Type = Vec2<T>;
 };
 
 template <typename T>
 struct VectorOfT<3, T>
 {
-  using type = Vec3<T>;
+  using Type = Vec3<T>;
 };
 
 template <typename T>
 struct VectorOfT<4, T>
 {
-  using type = Vec4<T>;
+  using Type = Vec4<T>;
 };
 
 template <size_t N, typename T>
-using VectorOf = VectorOfT<N, T>::type;
+using VectorOf = VectorOfT<N, T>::Type;

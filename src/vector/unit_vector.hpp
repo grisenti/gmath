@@ -8,10 +8,10 @@ template <Vector V>
 class UnitVec
 {
 public:
-  using type_class = VectorTag;
-  using component_type = ComponentT<V>;
-  static constexpr size_t size = V::size;
-  using modifiable_equivalent = V;
+  using TypeClass = VectorTag;
+  using ComponentType = ComponentT<V>;
+  static constexpr size_t SIZE = V::SIZE;
+  using ModifiableEquivalent = V;
 
   /// Creates a UnitVec assuming v is already normalized.
   static UnitVec create_unchecked(auto &&...args)
@@ -39,7 +39,7 @@ public:
     return _value;
   }
 
-  component_type operator[](size_t i) const
+  ComponentType operator[](size_t i) const
   {
     return _value[i];
   }

@@ -16,7 +16,7 @@ struct Vec3 : BaseVector<3, T>
   }
 
   template <Vector V>
-    requires(V::size == 3) && std::same_as<ComponentT<V>, T>
+    requires(V::SIZE == 3) && std::same_as<ComponentT<V>, T>
   Vec3(V const &v) : x(v[0]), y(v[1]), z(v[2])
   {
   }
@@ -36,7 +36,7 @@ struct Vec3 : BaseVector<3, T>
   }
 
   template <Vector V>
-    requires(V::size == 3) && std::same_as<ComponentT<V>, T>
+    requires(V::SIZE == 3) && std::same_as<ComponentT<V>, T>
   operator V() const
   {
     return { x, y, z };
@@ -48,7 +48,7 @@ using Vec3i = Vec3<int>;
 using Vec3u = Vec3<unsigned>;
 
 template <Vector V>
-  requires Numeric<ComponentT<V>> && (V::size == 3)
+  requires Numeric<ComponentT<V>> && (V::SIZE == 3)
 V constexpr cross(V const &lhs, V const &rhs)
 {
   // clang-format off
@@ -61,7 +61,7 @@ V constexpr cross(V const &lhs, V const &rhs)
 }
 
 template <Vector V>
-  requires Numeric<ComponentT<V>> && (V::size == 3)
+  requires Numeric<ComponentT<V>> && (V::SIZE == 3)
 V constexpr scalar_triple_product(V const &a, V const &b, V const &c)
 {
   return dot(cross(a, b), c);

@@ -11,16 +11,16 @@ struct PointTag : ColumnMatrixTag
 template <size_t N, typename T>
 struct PointBase
 {
-  using type_class = PointTag;
-  using component_type = T;
-  static constexpr size_t size = N;
+  using TypeClass = PointTag;
+  using ComponentType = T;
+  static constexpr size_t SIZE = N;
 
   bool operator<=>(PointBase const &rhs) const = default;
 };
 
 template <typename P>
 concept Point = ModifiableMatrix1D<P>
-                && std::is_base_of_v<PointTag, typename P::type_class>;
+                && std::is_base_of_v<PointTag, typename P::TypeClass>;
 
 template <typename T>
 struct Point2 : PointBase<2, T>
@@ -88,29 +88,29 @@ using Point3f = Point3<Real>;
 using Point3i = Point3<int>;
 
 template <Point P, Vector V>
-  requires(P::size == V::size) && std::same_as<ComponentT<P>, ComponentT<V>>
+  requires(P::SIZE == V::SIZE) && std::same_as<ComponentT<P>, ComponentT<V>>
 P operator+(P const &lhs, V const &rhs)
 {
   auto res = P{};
-  for (size_t i = 0; i < P::size; ++i)
+  for (size_t i = 0; i < P::SIZE; ++i)
     res[i] = lhs[i] + rhs[i];
   return res;
 }
 
 template <Point P, Vector V>
-  requires(P::size == V::size) && std::same_as<ComponentT<P>, ComponentT<V>>
+  requires(P::SIZE == V::SIZE) && std::same_as<ComponentT<P>, ComponentT<V>>
 P &operator+=(P &lhs, V const &rhs)
 {
-  for (size_t i = 0; i < P::size; ++i)
+  for (size_t i = 0; i < P::SIZE; ++i)
     lhs[i] += rhs[i];
   return lhs;
 }
 
 template <Point P>
-VectorOf<P::size, ComponentT<P>> operator-(P const &lhs, P const &rhs)
+VectorOf<P::SIZE, ComponentT<P>> operator-(P const &lhs, P const &rhs)
 {
-  auto res = VectorOf<P::size, ComponentT<P>>{};
-  for (size_t i = 0; i < P::size; ++i)
+  auto res = VectorOf<P::SIZE, ComponentT<P>>{};
+  for (size_t i = 0; i < P::SIZE; ++i)
     res[i] = lhs[i] - rhs[i];
   return res;
 }
