@@ -2,6 +2,7 @@
 
 #include "mat.hpp"
 #include "vec.hpp"
+#include "geometry/normal3.hpp"
 
 static void is_identity(mat3f const &M)
 {
@@ -275,6 +276,16 @@ TEST_CASE("non_square_matrix_vector_multiplication")
   REQUIRE(v2.y == 4);
   REQUIRE(v2.z == 9);
   REQUIRE(v2.w == 0);
+}
+
+TEST_CASE("row_matrix_mul_square_matrix")
+{
+  auto const m1 = mat3<int>::from_columns({ 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+  auto const n1 = Normal3<int>{ 1, 1, 1 };
+  auto const v2 = n1 * m1;
+  REQUIRE(v2.x == 6);
+  REQUIRE(v2.y == 15);
+  REQUIRE(v2.z == 24);
 }
 
 TEST_CASE("inline_transpose")
