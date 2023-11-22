@@ -138,7 +138,7 @@ ModifiableEquivalentT<V> constexpr operator*(
   auto res = ModifiableEquivalentT<V>{};
   for (size_t j = 0; j < C; ++j)
     for (size_t i = 0; i < R; ++i)
-      res[i] += rhs[i] * lhs[i, j];
+      res[i] += lhs[i] * rhs[i, j];
   return res;
 }
 
