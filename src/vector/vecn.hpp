@@ -7,7 +7,7 @@
 template <size_t N, typename T>
 struct VecN
 {
-  using TypeClass = VectorTag;
+  using TypeClass = ColumnVectorTag;
   using ComponentType = T;
   static constexpr size_t SIZE = N;
 

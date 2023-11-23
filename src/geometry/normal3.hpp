@@ -2,7 +2,7 @@
 
 #include "vector/vec3.hpp"
 
-struct NormalTag : RowMatrixTag
+struct NormalTag : RowVectorTag
 {
 };
 

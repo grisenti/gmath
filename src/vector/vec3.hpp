@@ -3,7 +3,7 @@
 #include "vec_base.hpp"
 
 template <typename T>
-struct Vec3 : BaseVector<3, T>
+struct Vec3 : BaseColumnVector<3, T>
 {
   T x;
   T y;

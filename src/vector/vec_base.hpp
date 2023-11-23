@@ -4,27 +4,50 @@
 #include "matrix/matrix_base.hpp"
 #include <cmath>
 
-/// Marker type for vectors
-struct VectorTag : ColumnMatrixTag
+/// Marker type for column vectors
+struct ColumnVectorTag : ColumnMatrixTag
 {
 };
 
 /// Base class meant to remove duplicated code in the various Vector structs
 template <size_t N, typename T>
-struct BaseVector
+struct BaseColumnVector
 {
-  using TypeClass = VectorTag;
+  using TypeClass = ColumnVectorTag;
   using ComponentType = T;
   static constexpr size_t SIZE = N;
 };
 
-template <typename V>
-concept ModifiableVector = ModifiableColumnMatrix<V>
-                           && std::same_as<typename V::TypeClass, VectorTag>;
+/// Marker type for row vectors
+struct RowVectorTag : RowMatrixTag
+{
+};
 
 template <typename V>
-concept ConstVector
-    = ConstColumnMatrix<V> && std::same_as<typename V::TypeClass, VectorTag>;
+concept ModifiableColumnVector
+    = ModifiableColumnMatrix<V>
+      && std::derived_from<typename V::TypeClass, ColumnVectorTag>;
+
+template <typename V>
+concept ConstColumnVector
+    = ConstColumnMatrix<V>
+      && std::derived_from<typename V::TypeClass, ColumnVectorTag>;
+
+template <typename V>
+concept ModifiableRowVector
+    = ModifiableRowMatrix<V>
+      && std::derived_from<typename V::TypeClass, RowVectorTag>;
+
+template <typename V>
+concept ConstRowVector
+    = ConstRowMatrix<V>
+      && std::derived_from<typename V::TypeClass, RowVectorTag>;
+
+template <typename V>
+concept ModifiableVector = ModifiableColumnVector<V> || ModifiableRowVector<V>;
+
+template <typename V>
+concept ConstVector = ConstColumnVector<V> || ConstRowVector<V>;
 
 template <typename V>
 concept Vector = ModifiableVector<V> || ConstVector<V>;
@@ -33,6 +56,7 @@ template <typename V1, typename V2>
 concept VectorCompatible
     = Vector<V1> && Vector<V2> && std::same_as<ComponentT<V1>, ComponentT<V2>>
       && (V1::SIZE == V2::SIZE)
+      && std::same_as<typename V1::TypeClass, typename V2::TypeClass>
       && std::same_as<ModifiableEquivalentT<V1>, ModifiableEquivalentT<V2>>;
 
 template <Vector V>
