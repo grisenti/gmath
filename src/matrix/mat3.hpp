@@ -8,4 +8,6 @@ using mat3f = mat3<Real>;
 
 Real det(mat3f const &M);
 
+mat3f adj(mat3f const &M);
+
 mat3f inverse(mat3f const &M);

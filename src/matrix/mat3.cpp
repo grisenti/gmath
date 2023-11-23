@@ -8,6 +8,21 @@ Real det(mat3f const &M)
          - M[0, 1] * M[1, 0] * M[2, 2] - M[0, 2] * M[1, 1] * M[2, 0];
 }
 
+mat3f adj(mat3f const &M)
+{
+  auto const a = M.column(0);
+  auto const b = M.column(1);
+  auto const c = M.column(2);
+
+  // clang-format off
+  return mat3f::from_row_vecs({
+      cross(b, c),
+      cross(c, a),
+      cross(a, b),
+  });
+  // clang-format on
+}
+
 mat3f inverse(mat3f const &M)
 {
   auto const a = M.column(0);

@@ -323,6 +323,15 @@ TEST_CASE("matrix_3x3_determinant")
   REQUIRE(result == Catch::Approx(-12));
 }
 
+TEST_CASE("matrix_3x3_adjugate")
+{
+  auto const m1 = mat3f::from_rows({ 1, 2, 3, 3, 2, 1, 2, 1, 3 });
+  auto const m2 = adj(m1);
+  REQUIRE(m2.row(0) == Vec3f{ 5, -3, -4 });
+  REQUIRE(m2.row(1) == Vec3f{ -7, -3, 8 });
+  REQUIRE(m2.row(2) == Vec3f{ -1, 3, -4 });
+}
+
 TEST_CASE("matrix_3x3_inverse")
 {
   auto const m1 = mat3f::from_rows({ 4, 7, 14, 5, 20, 4, 0, 10, 6 });
