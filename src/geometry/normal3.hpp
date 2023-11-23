@@ -75,14 +75,14 @@ ComponentT<V> dot(V const &lhs, Normal3<T> const &rhs)
 
 template <typename T, Vector V>
   requires std::is_same_v<T, ComponentT<V>> && (V::SIZE == 3)
-ComponentT<V> cross(Normal3<T> const &lhs, V const &rhs)
+Normal3<T> cross(Normal3<T> const &lhs, V const &rhs)
 {
-  return cross(lhs.as_vec3(), rhs);
+  return Normal3<T>::cross(lhs.as_vec3(), rhs);
 }
 
 template <typename T, Vector V>
   requires std::is_same_v<T, ComponentT<V>> && (V::SIZE == 3)
-ComponentT<V> cross(V const &lhs, Normal3<T> const &rhs)
+Normal3<T> cross(V const &lhs, Normal3<T> const &rhs)
 {
-  return cross(lhs, rhs.as_vec3());
+  return Normal3<T>::cross(lhs, rhs.as_vec3());
 }
