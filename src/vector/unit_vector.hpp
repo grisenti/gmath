@@ -8,7 +8,7 @@ template <Vector V>
 class UnitVec
 {
 public:
-  using TypeClass = ColumnVectorTag;
+  using TypeClass = typename V::TypeClass;
   using ComponentType = ComponentT<V>;
   static constexpr size_t SIZE = V::SIZE;
   using ModifiableEquivalent = V;
