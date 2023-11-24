@@ -59,9 +59,13 @@ template <typename V>
 concept Vector = ModifiableVector<V> || ConstVector<V>;
 
 template <typename V1, typename V2>
-concept VectorCompatible
+concept VectorCompatibleWeak
     = Vector<V1> && Vector<V2> && std::same_as<ComponentT<V1>, ComponentT<V2>>
-      && (V1::SIZE == V2::SIZE)
+      && (V1::SIZE == V2::SIZE);
+
+template <typename V1, typename V2>
+concept VectorCompatible
+    = VectorCompatibleWeak<V1, V2>
       && std::same_as<typename V1::TypeClass, typename V2::TypeClass>
       && std::same_as<ModifiableEquivalentT<V1>, ModifiableEquivalentT<V2>>;
 
@@ -197,14 +201,24 @@ V constexpr normalize(V const &v)
   return ret;
 }
 
+/// @returns The dot product of the two vectors. It does not require that the
+/// two vectors have the same type class. It is used to implement dot product
+/// between vectors and normals.
 template <Vector V1, Vector V2>
-  requires VectorCompatible<V1, V2>
-ComponentT<V1> constexpr dot(V1 const &lhs, V2 const &rhs)
+  requires VectorCompatibleWeak<V1, V2>
+ComponentT<V1> weak_dot(V1 const &lhs, V2 const &rhs)
 {
   ComponentT<V1> ret{ 0 };
   for (size_t i = 0; i < V1::SIZE; ++i)
     ret += lhs[i] * rhs[i];
   return ret;
+}
+
+template <Vector V1, Vector V2>
+  requires VectorCompatible<V1, V2>
+ComponentT<V1> constexpr dot(V1 const &lhs, V2 const &rhs)
+{
+  return weak_dot(lhs, rhs);
 }
 
 template <Vector V>
