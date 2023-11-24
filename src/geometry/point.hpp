@@ -84,6 +84,18 @@ struct Point3 : PointBase<3, T>
   bool operator<=>(Point3 const &rhs) const = default;
 };
 
+template <typename T>
+Vec3<T> constexpr as_vec3(Point3<T> const &p)
+{
+  return Vec3<T>{ p.x, p.y, p.z };
+}
+
+template <typename T>
+Vec4<T> constexpr as_vec4(Point3<T> const &p)
+{
+  return Vec4<T>{ p.x, p.y, p.z, 1 };
+}
+
 using Point3f = Point3<Real>;
 using Point3i = Point3<int>;
 
