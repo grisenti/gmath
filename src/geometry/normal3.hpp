@@ -57,6 +57,12 @@ struct Normal3
 
 using Normal3f = Normal3<Real>;
 
+template <typename T>
+Vec3<T> as_vec3(Normal3<T> const &n)
+{
+  return { n.x, n.y, n.z };
+}
+
 template <Vector V1, Vector V2>
   requires(Normal<V1> || Normal<V2>) && VectorCompatibleWeak<V1, V2>
 ComponentT<V1> dot(V1 const &lhs, V2 const &rhs)
