@@ -48,8 +48,8 @@ using Vec3i = Vec3<int>;
 using Vec3u = Vec3<unsigned>;
 
 template <Vector V1, Vector V2>
-  requires VectorCompatible<V1, V2> && (V1::SIZE == 3)
-ModifiableEquivalentT<V1> constexpr cross(V1 const &lhs, V2 const &rhs)
+  requires VectorCompatibleWeak<V1, V2> && (V1::SIZE == 3)
+Vec3<ComponentT<V1>> constexpr cross(V1 const &lhs, V2 const &rhs)
 {
   // clang-format off
   return {
