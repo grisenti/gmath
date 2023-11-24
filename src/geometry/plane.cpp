@@ -12,7 +12,7 @@ NormalizedPlane NormalizedPlane::from_plane(const Plane &plane)
     plane.d / l };
 }
 
-Real distance(NormalizedPlane const &plane, Point3f const &point)
+Real signed_distance(NormalizedPlane const &plane, Point3f const &point)
 {
   return dot(as_vec3(point), plane.normal) + plane.d;
 }

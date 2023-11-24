@@ -24,4 +24,4 @@ struct NormalizedPlane
   Real d;
 };
 
-Real distance(NormalizedPlane const &plane, Point3f const &point);
+Real signed_distance(NormalizedPlane const &plane, Point3f const &point);
