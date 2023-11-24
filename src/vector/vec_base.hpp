@@ -44,6 +44,12 @@ concept ConstRowVector
       && std::derived_from<typename V::TypeClass, RowVectorTag>;
 
 template <typename V>
+concept RowVector = ModifiableRowVector<V> || ConstRowVector<V>;
+
+template <typename V>
+concept ColumnVector = ModifiableColumnVector<V> || ConstColumnVector<V>;
+
+template <typename V>
 concept ModifiableVector = ModifiableColumnVector<V> || ModifiableRowVector<V>;
 
 template <typename V>
