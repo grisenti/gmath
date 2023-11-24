@@ -1,10 +1,15 @@
 #pragma once
 
 #include "vector/vec3.hpp"
+#include "vector/vecn.hpp"
 
 struct NormalTag : RowVectorTag
 {
 };
+
+template <typename N>
+concept Normal
+    = RowVector<N> && std::derived_from<typename N::TypeClass, NormalTag>;
 
 template <typename T>
 struct Normal3
@@ -17,7 +22,10 @@ struct Normal3
   T y;
   T z;
 
-  static Normal3 cross(Vec3<T> const &lhs, Vec3<T> const &rhs)
+  template <Vector V1, Vector V2>
+    requires VectorCompatibleWeak<V1, V2> && std::same_as<ComponentT<V1>, T>
+             && (V1::SIZE == 3)
+  static Normal3 cross(V1 const &lhs, V2 const &rhs)
   {
     return ::cross(lhs, rhs);
   }
@@ -45,44 +53,13 @@ struct Normal3
         "Normal3 must be standard layout for operator[] to work");
     return (&x)[i];
   }
-
-  Vec3<T> const &as_vec3() const
-  {
-    static_assert(std::is_standard_layout_v<Vec3<T>>,
-        "Vec3 must be standard layout for Normal3::as_vec3() to work");
-    static_assert(std::is_standard_layout_v<Normal3<T>>,
-        "Normal3 must be standard layout for Normal3::as_vec3() to work");
-
-    return reinterpret_cast<Vec3<T> const &>(*this);
-  }
 };
 
 using Normal3f = Normal3<Real>;
 
-template <typename T, Vector V>
-  requires std::is_same_v<T, ComponentT<V>> && (V::SIZE == 3)
-ComponentT<V> dot(Normal3<T> const &lhs, V const &rhs)
+template <Vector V1, Vector V2>
+  requires(Normal<V1> || Normal<V2>) && VectorCompatibleWeak<V1, V2>
+ComponentT<V1> dot(V1 const &lhs, V2 const &rhs)
 {
-  return dot(lhs.as_vec3(), rhs);
-}
-
-template <typename T, Vector V>
-  requires std::is_same_v<T, ComponentT<V>> && (V::SIZE == 3)
-ComponentT<V> dot(V const &lhs, Normal3<T> const &rhs)
-{
-  return dot(lhs, rhs.as_vec3());
-}
-
-template <typename T, Vector V>
-  requires std::is_same_v<T, ComponentT<V>> && (V::SIZE == 3)
-Normal3<T> cross(Normal3<T> const &lhs, V const &rhs)
-{
-  return Normal3<T>::cross(lhs.as_vec3(), rhs);
-}
-
-template <typename T, Vector V>
-  requires std::is_same_v<T, ComponentT<V>> && (V::SIZE == 3)
-Normal3<T> cross(V const &lhs, Normal3<T> const &rhs)
-{
-  return Normal3<T>::cross(lhs, rhs.as_vec3());
+  return weak_dot(lhs, rhs);
 }
