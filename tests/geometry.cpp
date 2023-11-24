@@ -53,7 +53,8 @@ TEST_CASE("distance_point_plane")
   auto const normal = Normal3f{ 1, 1, 1 };
   Plane plane{ normal, 0 };
   auto const normalized_plane = NormalizedPlane::from_plane(plane);
-  Point3f point{ 1, 1, 1 };
-  auto const result = signed_distance(normalized_plane, point);
-  REQUIRE(result == Catch::Approx(length(Vec3f{ 1, 1, 1 })));
+  auto const l = length(Vec3f{ 1, 1, 1 });
+  REQUIRE(signed_distance(normalized_plane, { 1, 1, 1 }) == Catch::Approx(l));
+  REQUIRE(
+      signed_distance(normalized_plane, { -1, -1, -1 }) == Catch::Approx(-l));
 }
