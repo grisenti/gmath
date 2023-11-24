@@ -15,12 +15,6 @@ struct Vec3 : BaseColumnVector<3, T>
   {
   }
 
-  template <Vector V>
-    requires(V::SIZE == 3) && std::same_as<ComponentT<V>, T>
-  Vec3(V const &v) : x(v[0]), y(v[1]), z(v[2])
-  {
-  }
-
   T operator[](size_t i) const
   {
     static_assert(std::is_standard_layout_v<Vec3<T>>,
@@ -33,13 +27,6 @@ struct Vec3 : BaseColumnVector<3, T>
     static_assert(std::is_standard_layout_v<Vec3<T>>,
         "Vec3 must be standard layout for operator[] to work");
     return (&x)[i];
-  }
-
-  template <Vector V>
-    requires(V::SIZE == 3) && std::same_as<ComponentT<V>, T>
-  operator V() const
-  {
-    return { x, y, z };
   }
 };
 
