@@ -58,3 +58,42 @@ TEST_CASE("distance_point_plane")
   REQUIRE(
       signed_distance(normalized_plane, { -1, -1, -1 }) == Catch::Approx(-l));
 }
+
+TEST_CASE("intersect_planes")
+{
+  auto const p1 = Plane{
+    {1, 0, 0},
+    -3
+  };
+  auto const p2 = Plane{
+    {0, 1, 0},
+    -3
+  };
+  auto const p3 = Plane{
+    {0, 0, 1},
+    -3
+  };
+  auto const result = intersection_point(p1, p2, p3);
+  REQUIRE(result.has_value());
+  REQUIRE(result->x == Catch::Approx(3));
+  REQUIRE(result->y == Catch::Approx(3));
+  REQUIRE(result->z == Catch::Approx(3));
+}
+
+TEST_CASE("non_intersecting_planes_do_not_intersect")
+{
+  auto const p1 = Plane{
+    {1, 0, 0},
+    0
+  };
+  auto const p2 = Plane{
+    {1, 0, 0},
+    1
+  };
+  auto const p3 = Plane{
+    {1, 0, 0},
+    2
+  };
+  auto const result = intersection_point(p1, p2, p3);
+  REQUIRE(!result.has_value());
+}

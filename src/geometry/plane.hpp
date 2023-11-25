@@ -1,5 +1,7 @@
 #pragma once
 
+#include <optional>
+
 #include "normal3.hpp"
 #include "vector/unit_vector.hpp"
 #include "point.hpp"
@@ -9,6 +11,10 @@ struct Plane
   Normal3f normal;
   Real d;
 };
+
+/// returns the intersection point between the three planes (if there is one).
+std::optional<Point3f> intersection_point(
+    Plane const &p1, Plane const &p2, Plane const &p3);
 
 struct NormalizedPlane
 {
