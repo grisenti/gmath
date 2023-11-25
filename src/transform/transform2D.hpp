@@ -16,11 +16,11 @@ struct Transform2D
 
   static Transform2D IDENTITY;
 
-  static Transform2D from_rotation(Radf angle);
-  static Transform2D from_scale(Vec2f const &scale);
-  static Transform2D from_scale(Real scale);
-  static Transform2D from_translation(Vec2f const &v);
-  static Transform2D from_skew(Radf angle, UnitVec<Vec2f> const &direction,
+  static Transform2D rotate(Radf angle);
+  static Transform2D scale(Vec2f const &scale);
+  static Transform2D scale(Real scale);
+  static Transform2D translate(Vec2f const &v);
+  static Transform2D skew(Radf angle, UnitVec<Vec2f> const &direction,
       UnitVec<Vec2f> const &perpendicular);
 
   Transform2D inverse() const;

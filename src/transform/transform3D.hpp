@@ -18,13 +18,13 @@ struct Transform3D
 
   static Transform3D IDENTITY;
 
-  static Transform3D from_rotation(Radf angle, UnitVec<Vec3f> const &axis);
-  static Transform3D from_scale(Vec3f const &scale);
-  static Transform3D from_scale(Real scale);
-  static Transform3D from_translation(Vec3f const &v);
-  static Transform3D from_skew(Radf angle, UnitVec<Vec3f> const &direction,
+  static Transform3D rotate(Radf angle, UnitVec<Vec3f> const &axis);
+  static Transform3D scale(Vec3f const &scale);
+  static Transform3D scale(Real scale);
+  static Transform3D translate(Vec3f const &v);
+  static Transform3D skew(Radf angle, UnitVec<Vec3f> const &direction,
       UnitVec<Vec3f> const &perpendicular);
-  static Transform3D reflection(NormalizedPlane const &plane);
+  static Transform3D reflect(NormalizedPlane const &plane);
 
   Transform3D inverse() const;
   mat4f as_mat4() const;

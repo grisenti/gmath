@@ -8,7 +8,7 @@ Transform2D Transform2D::IDENTITY = Transform2D{
   .matrix = mat2f::diagonal(0.f), .translation = Vec2f{0, 0}
 };
 
-Transform2D Transform2D::from_rotation(Radf const angle)
+Transform2D Transform2D::rotate(Radf angle)
 {
   auto const angle_v = angle.value();
   // clang-format off
@@ -19,26 +19,26 @@ Transform2D Transform2D::from_rotation(Radf const angle)
   // clang-format on
 }
 
-Transform2D Transform2D::from_scale(Vec2f const &scale)
+Transform2D Transform2D::scale(Vec2f const &scale)
 {
   return {
     .matrix = mat2f::diagonal(scale), .translation = Vec2f{0, 0}
   };
 }
 
-Transform2D Transform2D::from_scale(Real scale)
+Transform2D Transform2D::scale(Real scale)
 {
   return {
     .matrix = mat2f::diagonal(scale), .translation = Vec2f{0, 0}
   };
 }
 
-Transform2D Transform2D::from_translation(const Vec2f &v)
+Transform2D Transform2D::translate(const Vec2f &v)
 {
   return { .matrix = mat2f::diagonal(1.0), .translation = v };
 }
 
-Transform2D Transform2D::from_skew(Radf angle, const UnitVec<Vec2f> &direction,
+Transform2D Transform2D::skew(Radf angle, const UnitVec<Vec2f> &direction,
     const UnitVec<Vec2f> &perpendicular)
 {
   auto const a = direction.unwrap();

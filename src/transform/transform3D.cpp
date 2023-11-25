@@ -1,12 +1,11 @@
 #include "transform3D.hpp"
 
-Transform3D Transform3D::from_rotation(
-    Radf const angle_rad, UnitVec<Vec3f> const &u_axis)
+Transform3D Transform3D::rotate(Radf const angle, UnitVec<Vec3f> const &u_axis)
 {
-  auto const angle = angle_rad.value();
+  auto const angle_v = angle.value();
   auto const axis = u_axis.unwrap();
-  auto const c = std::cos(angle);
-  auto const s = std::sin(angle);
+  auto const c = std::cos(angle_v);
+  auto const s = std::sin(angle_v);
   auto const t = 1 - c;
   // clang-format off
   auto const rotation_matrix = mat3f::from_rows({
@@ -21,26 +20,26 @@ Transform3D Transform3D::from_rotation(
   };
 }
 
-Transform3D Transform3D::from_scale(Vec3f const &scale)
+Transform3D Transform3D::scale(Vec3f const &scale)
 {
   return {
     .matrix = mat3f::diagonal(scale), .translation = Vec3f{0, 0, 0}
   };
 }
 
-Transform3D Transform3D::from_scale(Real const scale)
+Transform3D Transform3D::scale(Real scale)
 {
   return {
     .matrix = mat3f::diagonal(scale), .translation = Vec3f{0, 0, 0}
   };
 }
 
-Transform3D Transform3D::from_translation(Vec3f const &v)
+Transform3D Transform3D::translate(Vec3f const &v)
 {
   return { .matrix = mat3f::diagonal(1.0), .translation = v };
 }
 
-Transform3D Transform3D::from_skew(Radf angle, const UnitVec<Vec3f> &direction,
+Transform3D Transform3D::skew(Radf angle, const UnitVec<Vec3f> &direction,
     const UnitVec<Vec3f> &perpendicular)
 {
   auto const a = direction.unwrap();
@@ -61,7 +60,7 @@ Transform3D Transform3D::from_skew(Radf angle, const UnitVec<Vec3f> &direction,
   };
 }
 
-Transform3D Transform3D::reflection(NormalizedPlane const &plane)
+Transform3D Transform3D::reflect(NormalizedPlane const &plane)
 {
   auto const &n = plane.normal.unwrap();
   auto const d = plane.d;
