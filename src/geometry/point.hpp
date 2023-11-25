@@ -61,6 +61,11 @@ struct Point3 : PointBase<3, T>
   T y;
   T z;
 
+  static Point3<T> from_vec3(Vec3<T> const &v)
+  {
+    return { v.x, v.y, v.z };
+  }
+
   Point3() = default;
 
   Point3(T x, T y, T z) : x(x), y(y), z(z)
