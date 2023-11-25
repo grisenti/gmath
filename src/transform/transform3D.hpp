@@ -8,6 +8,7 @@
 #include "vector/unit_vector.hpp"
 #include "units.hpp"
 #include "geometry/point.hpp"
+#include "geometry/plane.hpp"
 
 /// affine 3D transformation
 struct Transform3D
@@ -23,6 +24,7 @@ struct Transform3D
   static Transform3D from_translation(Vec3f const &v);
   static Transform3D from_skew(Radf angle, UnitVec<Vec3f> const &direction,
       UnitVec<Vec3f> const &perpendicular);
+  static Transform3D reflection(NormalizedPlane const &plane);
 
   Transform3D inverse() const;
   mat4f as_mat4() const;

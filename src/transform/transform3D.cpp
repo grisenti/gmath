@@ -61,6 +61,20 @@ Transform3D Transform3D::from_skew(Radf angle, const UnitVec<Vec3f> &direction,
   };
 }
 
+Transform3D Transform3D::reflection(NormalizedPlane const &plane)
+{
+  auto const &n = plane.normal.unwrap();
+  auto const d = plane.d;
+  // clang-format off
+  auto const reflection_matrix = mat3f::from_rows({
+      1 - 2 * pow2(n.x), -2 * n.x * n.y, -2 * n.x * n.z,
+      -2 * n.y * n.x, 1 - 2 * pow2(n.y), -2 * n.y * n.z,
+      -2 * n.z * n.x, -2 * n.z * n.y, 1 - 2 * pow2(n.z)
+  });
+  // clang-format on
+  return { .matrix = reflection_matrix, .translation = as_vec3(-2 * d * n) };
+}
+
 Transform3D Transform3D::inverse() const
 {
   return { .matrix = ::inverse(matrix), .translation = -translation };

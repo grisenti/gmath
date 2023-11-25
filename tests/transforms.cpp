@@ -173,6 +173,20 @@ TEST_CASE("Transform3D_skew_vector")
   REQUIRE_THAT(result.z, Catch::Matchers::WithinAbs(0, 0.0001));
 }
 
+TEST_CASE("Transform3D_reflect_vector")
+{
+  auto const plane = NormalizedPlane::from_plane(Plane{
+      {1, 1, 1},
+      0
+  });
+  auto const transform = Transform3D::reflection(plane);
+  auto const v = Vec3f{ 1, 1, 1 };
+  auto const result = transform * v;
+  REQUIRE(result.x == Catch::Approx(-1));
+  REQUIRE(result.y == Catch::Approx(-1));
+  REQUIRE(result.z == Catch::Approx(-1));
+}
+
 TEST_CASE("Transform3D_combine_transformations_on_vectors")
 {
   auto const transform = Transform3D::from_scale({ 3, 5, 7 })
