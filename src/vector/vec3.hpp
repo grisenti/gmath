@@ -50,7 +50,7 @@ Vec3<ComponentT<V1>> constexpr cross(V1 const &lhs, V2 const &rhs)
 template <Vector V1, Vector V2, Vector V3>
   requires VectorCompatible<V1, V2> && VectorCompatible<V2, V3>
            && (V1::SIZE == 3)
-ModifiableEquivalentT<V1> constexpr scalar_triple_product(
+ComponentT<V1> constexpr scalar_triple_product(
     V1 const &a, V2 const &b, V3 const &c)
 {
   return dot(cross(a, b), c);
