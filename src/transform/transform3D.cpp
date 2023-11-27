@@ -111,3 +111,8 @@ Normal3f operator*(Normal3f const &lhs, Transform3D const &rhs)
 {
   return lhs * rhs.matrix;
 }
+
+Plane operator*(Plane const &lhs, Transform3D const &rhs)
+{
+  return { lhs.normal * rhs.matrix, lhs.d + dot(lhs.normal, rhs.translation) };
+}
