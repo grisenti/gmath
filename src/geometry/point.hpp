@@ -3,6 +3,8 @@
 #include "matrix/matrix_base.hpp"
 #include "vector/vec2.hpp"
 #include "vector/vec3.hpp"
+#include "vector/vec4.hpp"
+#include "vector/vecn.hpp"
 
 struct PointTag : ColumnMatrixTag
 {
@@ -111,6 +113,16 @@ P operator+(P const &lhs, V const &rhs)
   auto res = P{};
   for (size_t i = 0; i < P::SIZE; ++i)
     res[i] = lhs[i] + rhs[i];
+  return res;
+}
+
+template <Point P, Vector V>
+  requires(P::SIZE == V::SIZE) && std::same_as<ComponentT<P>, ComponentT<V>>
+P operator-(P const &lhs, V const &rhs)
+{
+  auto res = P{};
+  for (size_t i = 0; i < P::SIZE; ++i)
+    res[i] = lhs[i] - rhs[i];
   return res;
 }
 
