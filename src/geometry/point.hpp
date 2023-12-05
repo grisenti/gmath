@@ -30,9 +30,9 @@ struct Point2 : PointBase<2, T>
   T x;
   T y;
 
-  Point2() = default;
+  constexpr Point2() = default;
 
-  Point2(T x, T y) : x(x), y(y)
+  constexpr Point2(T x, T y) : x(x), y(y)
   {
   }
 
@@ -68,9 +68,9 @@ struct Point3 : PointBase<3, T>
     return { v.x, v.y, v.z };
   }
 
-  Point3() = default;
+  constexpr Point3() = default;
 
-  Point3(T x, T y, T z) : x(x), y(y), z(z)
+  constexpr Point3(T x, T y, T z) : x(x), y(y), z(z)
   {
   }
 
