@@ -52,3 +52,10 @@ private:
   // invariant: the value is always normalized.
   V _value;
 };
+
+template <Vector V>
+UnitVec<V> operator-(UnitVec<V> const &v)
+{
+  // negating a unit vector does not change its length
+  UnitVec<V>::create_unchecked(-v.unwrap());
+}
