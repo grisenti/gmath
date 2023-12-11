@@ -3,6 +3,13 @@
 #include "transform/transform2D.hpp"
 #include "transform/transform3D.hpp"
 
+TEST_CASE("Transform2D_identity")
+{
+  auto const v = Vec2f{ 1, 1 };
+  auto const result = Transform2D::IDENTITY * v;
+  REQUIRE(result == v);
+}
+
 TEST_CASE("Transform2D_rotation")
 {
   auto const transform = Transform2D::rotate(Degf{ 90 });
@@ -84,6 +91,13 @@ TEST_CASE("Transform2D_inverse")
   auto const v1 = transform.inverse() * transform * v;
   REQUIRE(v1.x == Catch::Approx(1));
   REQUIRE(v1.y == Catch::Approx(1));
+}
+
+TEST_CASE("Transform3D_identity")
+{
+  auto const v = Vec3f{ 1, 1, 1 };
+  auto const result = Transform3D::IDENTITY * v;
+  REQUIRE(result == v);
 }
 
 TEST_CASE("Transform3D_x_axis_rotation")
