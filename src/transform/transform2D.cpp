@@ -4,8 +4,8 @@
 
 #include "vec.hpp"
 
-Transform2D Transform2D::IDENTITY = Transform2D{
-  .matrix = mat2f::diagonal(0.f), .translation = Vec2f{0, 0}
+Transform2D const Transform2D::IDENTITY = Transform2D{
+  .matrix = mat2f::diagonal(1.f), .translation = Vec2f{0, 0}
 };
 
 Transform2D Transform2D::rotate(Radf angle)

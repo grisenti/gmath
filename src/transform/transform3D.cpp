@@ -1,5 +1,9 @@
 #include "transform3D.hpp"
 
+Transform3D const Transform3D::IDENTITY = Transform3D{
+  .matrix = mat3f::diagonal(1.f), .translation = Vec3f{0, 0, 0}
+};
+
 Transform3D Transform3D::rotate(Radf const angle, UnitVec<Vec3f> const &u_axis)
 {
   auto const angle_v = angle.value();

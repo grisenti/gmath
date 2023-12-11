@@ -14,7 +14,7 @@ struct Transform2D
   mat2f matrix = mat2f::diagonal(1._r);
   Vec2f translation = Vec2f{ 0._r, 0._r };
 
-  static Transform2D IDENTITY;
+  static Transform2D const IDENTITY;
 
   static Transform2D rotate(Radf angle);
   static Transform2D scale(Vec2f const &scale);

@@ -16,7 +16,7 @@ struct Transform3D
   mat3f matrix;
   Vec3f translation;
 
-  static Transform3D IDENTITY;
+  static Transform3D const IDENTITY;
 
   static Transform3D rotate(Radf angle, UnitVec<Vec3f> const &axis);
   static Transform3D scale(Vec3f const &scale);
