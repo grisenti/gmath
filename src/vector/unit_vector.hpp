@@ -56,6 +56,6 @@ private:
 template <Vector V>
 UnitVec<V> operator-(UnitVec<V> const &v)
 {
-  // negating a unit vector does not change its length
+  // negating a unit vector does not change its absolute length
   return UnitVec<V>::create_unchecked(-v.unwrap());
 }
