@@ -40,11 +40,16 @@ public:
 
 using Degf = Degrees<Real>;
 
+Degf constexpr operator""_deg(long double x)
+{
+  return Degf(static_cast<Real>(x));
+}
+
 template <typename T>
 struct Radians : public Unit<T>
 {
 public:
-  explicit Radians(T value) : Unit<T>(value)
+  explicit constexpr Radians(T value) : Unit<T>(value)
   {
   }
 
@@ -56,3 +61,8 @@ public:
 };
 
 using Radf = Radians<Real>;
+
+Radf constexpr operator""_rad(long double x)
+{
+  return Degf(static_cast<Real>(x));
+}
