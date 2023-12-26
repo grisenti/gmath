@@ -30,6 +30,14 @@ TEST_CASE("subtract_vector_from_point")
   REQUIRE(result == expected);
 }
 
+TEST_CASE("point_distance")
+{
+  Point2f p1{ 1, 1 };
+  Point2f p2{ 2, 2 };
+  auto const result = distance(p1, p2);
+  REQUIRE(result == Catch::Approx(std::sqrt(2)));
+}
+
 TEST_CASE("correct_creation_of_normalized_plane_from_plane")
 {
   auto const normal = Normal3f{ 1, 1, 1 };

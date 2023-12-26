@@ -143,3 +143,9 @@ VectorOf<P::SIZE, ComponentT<P>> operator-(P const &lhs, P const &rhs)
     res[i] = lhs[i] - rhs[i];
   return res;
 }
+
+template <Point P>
+ComponentT<P> distance(P const &lhs, P const &rhs)
+{
+  return length(lhs - rhs);
+}
