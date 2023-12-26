@@ -180,16 +180,6 @@ ComponentT<V> constexpr length(V const &v)
   return std::sqrt(ret);
 }
 
-template <Vector V1, Vector V2>
-  requires VectorCompatible<V1, V2> && std::floating_point<ComponentT<V1>>
-ComponentT<V1> constexpr distance(V1 const &lhs, V2 const &rhs)
-{
-  ComponentT<V1> ret = {};
-  for (size_t i = 0; i < V1::SIZE; ++i)
-    ret += pow2(lhs[i] - rhs[i]);
-  return std::sqrt(ret);
-}
-
 template <Vector V>
   requires(std::floating_point<ComponentT<V>>)
 V constexpr normalize(V const &v)

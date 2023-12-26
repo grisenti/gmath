@@ -69,15 +69,6 @@ TEST_CASE("vector_length")
   REQUIRE(result == expected);
 }
 
-TEST_CASE("vector_distance")
-{
-  Vec3f v1{ 5, 0, 100 };
-  Vec3f v2{ 4.2f, 5.3f, 6.9f };
-  auto const result = distance(v1, v2);
-  auto const expected = Catch::Approx(93.254168808);
-  REQUIRE(result == expected);
-}
-
 TEST_CASE("vector_normalize")
 {
   Vec3f v1{ 2.59f, 50.90f, 0 };
