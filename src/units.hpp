@@ -10,7 +10,7 @@ public:
   constexpr Unit() : _value(0)
   {
   }
-  
+
   explicit constexpr Unit(T value) : _value(value)
   {
   }
@@ -47,6 +47,11 @@ public:
 using Degf = Degrees<Real>;
 
 Degf constexpr operator""_deg(long double x)
+{
+  return Degf(static_cast<Real>(x));
+}
+
+Degf constexpr operator""_deg(unsigned long long x)
 {
   return Degf(static_cast<Real>(x));
 }
