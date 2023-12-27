@@ -74,3 +74,18 @@ Radf constexpr operator""_rad(long double x)
 {
   return Degf(static_cast<Real>(x));
 }
+
+inline Real sin(Radf rad)
+{
+  return std::sin(rad.value());
+}
+
+inline Real cos(Radf rad)
+{
+  return std::cos(rad.value());
+}
+
+inline Real tan(Radf rad)
+{
+  return std::tan(rad.value());
+}
