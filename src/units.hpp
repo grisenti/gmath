@@ -10,6 +10,10 @@ template <typename T>
 class Unit
 {
 public:
+  constexpr Unit() : _value(0)
+  {
+  }
+  
   explicit constexpr Unit(T value) : _value(value)
   {
   }
@@ -27,6 +31,8 @@ template <typename T>
 class Degrees : public Unit<T>
 {
 public:
+  constexpr Degrees() = default;
+
   explicit constexpr Degrees(T value) : Unit<T>(value)
   {
   }
@@ -49,6 +55,8 @@ template <typename T>
 struct Radians : public Unit<T>
 {
 public:
+  constexpr Radians() = default;
+
   explicit constexpr Radians(T value) : Unit<T>(value)
   {
   }
