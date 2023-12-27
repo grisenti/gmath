@@ -2,6 +2,7 @@
 
 #include "geometry/point.hpp"
 #include "geometry/plane.hpp"
+#include "geometry/line.hpp"
 
 TEST_CASE("direction_from_pair_of_points")
 {
@@ -95,4 +96,15 @@ TEST_CASE("non_intersecting_planes_do_not_intersect")
   };
   auto const result = intersection_point(p1, p2, p3);
   REQUIRE(!result.has_value());
+}
+
+TEST_CASE("normalized_line_from_line")
+{
+  auto const dir = Vec3f{ 1, 1, 1 };
+  auto const l = length(dir);
+  auto const moment = Normal3f{ 1, 1, 1 };
+  auto const line = Line{ dir, moment };
+  auto const normalized_line = NormalizedLine::from_line(line);
+  REQUIRE(length(normalized_line.direction) == Catch::Approx(1.0));
+  REQUIRE(length(normalized_line.moment) == Catch::Approx(length(moment) / l));
 }
