@@ -4,9 +4,6 @@
 #include <numbers>
 
 template <typename T>
-struct Radians;
-
-template <typename T>
 class Unit
 {
 public:
@@ -26,6 +23,9 @@ public:
 private:
   T _value;
 };
+
+template <typename T>
+struct Radians;
 
 template <typename T>
 class Degrees : public Unit<T>
