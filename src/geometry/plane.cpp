@@ -11,7 +11,7 @@ std::optional<Point3f> intersection_point(
   auto const det = dot(n1xn2, n3);
   if (std::abs(det) > std::numeric_limits<Real>::epsilon())
   {
-    return Point3f::from_vec3(
+    return as_point3(
         (cross(n3, n2) * p1.d + cross(n1, n3) * p2.d - n1xn2 * p3.d) / det);
   }
   return std::nullopt;
