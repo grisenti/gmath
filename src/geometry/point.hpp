@@ -56,6 +56,13 @@ struct Point2 : PointBase<2, T>
 using Point2f = Point2<Real>;
 using Point2i = Point2<int>;
 
+template <Matrix1D M>
+  requires(M::SIZE == 2)
+Point2<ComponentT<M>> constexpr as_point2(M const &m)
+{
+  return { m[0], m[1] };
+}
+
 template <typename T>
 struct Point3 : PointBase<3, T>
 {
@@ -101,6 +108,13 @@ template <typename T>
 Vec4<T> constexpr as_vec4(Point3<T> const &p)
 {
   return Vec4<T>{ p.x, p.y, p.z, 1 };
+}
+
+template <Matrix1D M>
+  requires(M::SIZE == 3)
+Point3<ComponentT<M>> constexpr as_point3(M const &m)
+{
+  return { m[0], m[1], m[2] };
 }
 
 using Point3f = Point3<Real>;
