@@ -7,6 +7,8 @@ struct Line
 {
   Vec3f direction;
   Normal3f moment;
+
+  bool operator==(Line const &rhs) const = default;
 };
 
 struct NormalizedLine
@@ -18,6 +20,8 @@ struct NormalizedLine
   /// Creates a NormalizedLine from a Line dividing both the direction and
   /// moment by the length of the direction.
   static NormalizedLine from_line(Line const &line);
+
+  bool operator==(NormalizedLine const &rhs) const = default;
 
   UnitVec<Vec3f> direction;
   Normal3f moment;

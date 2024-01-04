@@ -10,6 +10,8 @@ struct Plane
 {
   Normal3f normal;
   Real d;
+
+  bool operator==(Plane const &rhs) const = default;
 };
 
 /// returns the intersection point between the three planes (if there is one).
@@ -25,6 +27,8 @@ struct NormalizedPlane
   /// Creates a NormalizedPlane from a Plane dividing both the normal and d by
   /// the length of the normal.
   static NormalizedPlane from_plane(Plane const &plane);
+
+  bool operator==(NormalizedPlane const &rhs) const = default;
 
   UnitVec<Normal3f> normal;
   Real d;
