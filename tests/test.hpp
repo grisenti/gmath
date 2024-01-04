@@ -8,9 +8,13 @@ template <Vector V>
 std::ostream &operator<<(std::ostream &out, V const &v)
 {
   out << "(";
-  for (size_t i = 0; i < V::SIZE; ++i)
-    out << v[i] << ", ";
-  out << ")";
+  if constexpr (V::SIZE > 0)
+  {
+    out << v[0];
+    for (size_t i = 1; i < V::SIZE; ++i)
+      out << ", " << v[i];
+    out << ")";
+  }
   return out;
 }
 
