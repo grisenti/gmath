@@ -10,7 +10,7 @@ inline Line join(Point3f const &p1, Point3f const &p2)
   return { p2 - p1, Normal3f::cross(as_vec3(p1), as_vec3(p2)) };
 }
 
-Plane join(Line const &L, Point3f const &p)
+inline Plane join(Line const &L, Point3f const &p)
 {
   return {
     Normal3f{L.direction.y * p.z - L.direction.z * p.y + L.moment.x,
@@ -20,17 +20,17 @@ Plane join(Line const &L, Point3f const &p)
   };
 }
 
-Plane join(Point3f const &p, Line const &L)
+inline Plane join(Point3f const &p, Line const &L)
 {
   return join(L, p);
 }
 
-Plane join(Point3f const &p1, Point3f const &p2, Point3f const &p3)
+inline Plane join(Point3f const &p1, Point3f const &p2, Point3f const &p3)
 {
   return join(join(p1, p2), p3);
 }
 
-Line meet(Plane const &f, Plane const &g)
+inline Line meet(Plane const &f, Plane const &g)
 {
   return {
     Vec3f{f.normal.y * g.normal.z - f.normal.z * g.normal.y,
@@ -42,7 +42,7 @@ Line meet(Plane const &f, Plane const &g)
   };
 }
 
-HPoint3f meet(Line const &L, Plane const &f)
+inline HPoint3f meet(Line const &L, Plane const &f)
 {
   auto const [fx, fy, fz] = f.normal;
   auto const [mx, my, mz] = L.moment;
@@ -57,12 +57,12 @@ HPoint3f meet(Line const &L, Plane const &f)
   // clang-format on
 }
 
-HPoint3f meet(Plane const &f, Line const &L)
+inline HPoint3f meet(Plane const &f, Line const &L)
 {
-  meet(L, f);
+  return meet(L, f);
 }
 
-HPoint3f meet(Plane const &p1, Plane const &p2, Plane const &p3)
+inline HPoint3f meet(Plane const &p1, Plane const &p2, Plane const &p3)
 {
   return meet(meet(p1, p2), p3);
 }
