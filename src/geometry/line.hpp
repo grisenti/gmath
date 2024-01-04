@@ -21,6 +21,12 @@ struct NormalizedLine
   /// moment by the length of the direction.
   static NormalizedLine from_line(Line const &line);
 
+  // NOLINT: normalized lines are lines
+  operator Line() const
+  {
+    return { direction, moment };
+  }
+
   bool operator==(NormalizedLine const &rhs) const = default;
 
   UnitVec<Vec3f> direction;

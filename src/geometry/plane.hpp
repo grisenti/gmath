@@ -28,6 +28,12 @@ struct NormalizedPlane
   /// the length of the normal.
   static NormalizedPlane from_plane(Plane const &plane);
 
+  // NOLINT: normalized planes are planes
+  operator Plane() const
+  {
+    return { normal, d };
+  }
+
   bool operator==(NormalizedPlane const &rhs) const = default;
 
   UnitVec<Normal3f> normal;
