@@ -1,8 +1,16 @@
 #include "test.hpp"
 
-#include "geometry/point.hpp"
-#include "geometry/plane.hpp"
-#include "geometry/line.hpp"
+#include "geometry.hpp"
+
+std::ostream &operator<<(std::ostream &os, Line const &l)
+{
+  return os << "{" << l.direction << " | " << l.moment << "}";
+}
+
+std::ostream &operator<<(std::ostream &os, Plane const &p)
+{
+  return os << "[" << p.normal << " | " << p.d << "]";
+}
 
 TEST_CASE("direction_from_pair_of_points")
 {
@@ -107,4 +115,93 @@ TEST_CASE("normalized_line_from_line")
   auto const normalized_line = NormalizedLine::from_line(line);
   REQUIRE(length(normalized_line.direction) == Catch::Approx(1.0));
   REQUIRE(length(normalized_line.moment) == Catch::Approx(length(moment) / l));
+}
+
+TEST_CASE("joint_two_points")
+{
+  auto const p1 = Point3f{ 1, 0, 1 };
+  auto const p2 = Point3f{ 1, 0, 2 };
+  auto const result = NormalizedLine::from_line(join(p1, p2));
+  auto const expected = NormalizedLine::from_line({
+      {0,  0,  1},
+      { 0, -1, 0}
+  });
+  REQUIRE(result == expected);
+}
+
+TEST_CASE("join_line_point")
+{
+  auto const p = Point3f{ 1, 0, 1 };
+  auto const l = Line{
+    {0,  0, 1},
+    { 0, 1, 0}
+  };
+  auto const result = NormalizedPlane::from_plane(join(l, p));
+  auto const expected = NormalizedPlane::from_plane(Plane{
+      {0, 1, 0},
+      0
+  });
+  REQUIRE(result == expected);
+}
+
+TEST_CASE("join_point_point_point")
+{
+  auto const p1 = Point3f{ -1, 1, 1 };
+  auto const p2 = Point3f{ 1, 1, 1 };
+  auto const p3 = Point3f{ 0, 1, -1 };
+  auto const result = NormalizedPlane::from_plane(join(p1, p2, p3));
+  auto const expected = NormalizedPlane::from_plane(Plane{
+      {0, 1, 0},
+      -1
+  });
+  REQUIRE(result == expected);
+}
+
+TEST_CASE("meet_plane_plane")
+{
+  auto const p1 = Plane{
+    {1, 0, 0},
+    0
+  };
+  auto const p2 = Plane{
+    {0, 1, 0},
+    0
+  };
+  auto const result = NormalizedLine::from_line(meet(p1, p2));
+  auto const expected = NormalizedLine::from_line(Line{
+      {0,  0, 1},
+      { 0, 0, 0}
+  });
+  REQUIRE(result == expected);
+}
+
+TEST_CASE("meet_line_plane")
+{
+  auto const p = Plane{
+    {0, 0, 1},
+    0
+  };
+  auto const l = join(Point3f{ 1, 0, 0 }, Point3f{ 1, 0, 1 });
+  auto const result = Point3f::from_homogeneous_point(meet(l, p));
+  auto const expected = Point3f{ 1, 0, 0 };
+  REQUIRE(result == expected);
+}
+
+TEST_CASE("meet_plane_plane_plane")
+{
+  auto const p1 = Plane{
+    {1, 0, 0},
+    -1
+  };
+  auto const p2 = Plane{
+    {0, 1, 0},
+    -1
+  };
+  auto const p3 = Plane{
+    {0, 0, 1},
+    -1
+  };
+  auto const result = Point3f::from_homogeneous_point(meet(p1, p2, p3));
+  auto const expected = Point3f{ 1, 1, 1 };
+  REQUIRE(result == expected);
 }
