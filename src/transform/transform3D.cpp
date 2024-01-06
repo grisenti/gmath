@@ -80,7 +80,22 @@ Transform3D Transform3D::reflect(NormalizedPlane const &plane)
 
 Transform3D Transform3D::inverse() const
 {
-  return { .matrix = ::inverse(matrix), .translation = -translation };
+  auto const a = matrix.column(0);
+  auto const b = matrix.column(1);
+  auto const c = matrix.column(2);
+  auto const d = translation;
+
+  auto const s = cross(a, b);
+  auto const t = cross(c, d);
+
+  auto const inv_det = 1._r / dot(s, c);
+
+  auto const inv_matrix = mat3f::from_row_vecs(
+      { cross(b, c) * inv_det, cross(c, a) * inv_det, s * inv_det });
+  auto const inv_translation
+      = Vec3f{ -dot(b, t), dot(a, t), -dot(d, s) } * inv_det;
+
+  return { .matrix = inv_matrix, .translation = inv_translation };
 }
 
 mat4f Transform3D::as_mat4() const

@@ -59,7 +59,19 @@ Transform2D Transform2D::skew(Radf angle, const UnitVec<Vec2f> &direction,
 
 Transform2D Transform2D::inverse() const
 {
-  return { .matrix = ::inverse(matrix), .translation = -translation };
+  auto const a = matrix.column(0);
+  auto const b = matrix.column(1);
+  auto const c = translation;
+
+  auto const inv_det = 1._r / det(matrix);
+  auto const r0 = Vec2f{ b.y, -b.x } * inv_det;
+  auto const r1 = Vec2f{ -a.y, a.x } * inv_det;
+
+  auto const inv_translation
+      = Vec2f{ b.x * c.y - b.y * c.x, c.x * a.y - a.x * c.y } * inv_det;
+
+  return { .matrix = mat2f::from_row_vecs({ r0, r1 }),
+    .translation = inv_translation };
 }
 
 mat3f Transform2D::as_mat3() const

@@ -82,12 +82,23 @@ TEST_CASE("Transform2D_combine_transformations_on_points")
   REQUIRE(result.y == Catch::Approx(20));
 }
 
-TEST_CASE("Transform2D_inverse")
+TEST_CASE("Transform2D_inverse_vector")
 {
   auto const transform = Transform2D::rotate(Degf{ 45 })
                          * Transform2D::translate({ 1, 1 })
                          * Transform2D::scale({ 3, 5 });
   auto const v = Vec2f{ 1, 1 };
+  auto const v1 = transform.inverse() * transform * v;
+  REQUIRE(v1.x == Catch::Approx(1));
+  REQUIRE(v1.y == Catch::Approx(1));
+}
+
+TEST_CASE("Transform2D_inverse_point")
+{
+  auto const transform = Transform2D::rotate(Degf{ 45 })
+                         * Transform2D::translate({ 1, 1 })
+                         * Transform2D::scale({ 3, 5 });
+  auto const v = Point2f{ 1, 1 };
   auto const v1 = transform.inverse() * transform * v;
   REQUIRE(v1.x == Catch::Approx(1));
   REQUIRE(v1.y == Catch::Approx(1));
@@ -226,13 +237,26 @@ TEST_CASE("Transform3D_combine_transformations_on_points")
   REQUIRE(result.z == Catch::Approx(28));
 }
 
-TEST_CASE("Transform3D_inverse")
+TEST_CASE("Transform3D_inverse_vector")
 {
   auto const transform
       = Transform3D::rotate(Degf{ 45 }, UVec3f::normalize(1.f, 1.f, 1.f))
         * Transform3D::translate({ 1, 1, 1 })
         * Transform3D::scale({ 3, 5, 7 });
   auto const v = Vec3f{ 1, 1, 1 };
+  auto const v1 = transform.inverse() * transform * v;
+  REQUIRE(v1.x == Catch::Approx(1));
+  REQUIRE(v1.y == Catch::Approx(1));
+  REQUIRE(v1.z == Catch::Approx(1));
+}
+
+TEST_CASE("Transform3D_inverse_point")
+{
+  auto const transform
+      = Transform3D::rotate(Degf{ 45 }, UVec3f::normalize(1.f, 1.f, 1.f))
+        * Transform3D::translate({ 1, 1, 1 })
+        * Transform3D::scale({ 3, 5, 7 });
+  auto const v = Point3f{ 1, 1, 1 };
   auto const v1 = transform.inverse() * transform * v;
   REQUIRE(v1.x == Catch::Approx(1));
   REQUIRE(v1.y == Catch::Approx(1));
