@@ -10,7 +10,7 @@ TEST_CASE("format_vectors")
 
 TEST_CASE("format_matrices")
 {
-  REQUIRE(std::format("{}", mat2f::from_rows({1, 2, 3, 4})) == "[[1, 2][3, 4]]");
+  REQUIRE(std::format("{}", Mat2f::from_rows({1, 2, 3, 4})) == "[[1, 2][3, 4]]");
 }
 
 TEST_CASE("format_lines")

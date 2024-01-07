@@ -1,7 +1,7 @@
 #include "transform3D.hpp"
 
 Transform3D const Transform3D::IDENTITY = Transform3D{
-  .matrix = mat3f::diagonal(1.f), .translation = Vec3f{0, 0, 0}
+  .matrix = Mat3f::diagonal(1.f), .translation = Vec3f{0, 0, 0}
 };
 
 Transform3D Transform3D::rotate(Radf const angle, UnitVec<Vec3f> const &u_axis)
@@ -12,7 +12,7 @@ Transform3D Transform3D::rotate(Radf const angle, UnitVec<Vec3f> const &u_axis)
   auto const s = std::sin(angle_v);
   auto const t = 1 - c;
   // clang-format off
-  auto const rotation_matrix = mat3f::from_rows({
+  auto const rotation_matrix = Mat3f::from_rows({
     c + t * pow2(axis.x), t * axis.x * axis.y - s * axis.z, t * axis.x * axis.z + s * axis.y,
     t * axis.x * axis.y + s * axis.z, c + t * pow2(axis.y), t * axis.y * axis.z - s * axis.x,
     t * axis.x * axis.z - s * axis.y, t * axis.y * axis.z + s * axis.x, c + t * pow2(axis.z)
@@ -27,20 +27,20 @@ Transform3D Transform3D::rotate(Radf const angle, UnitVec<Vec3f> const &u_axis)
 Transform3D Transform3D::scale(Vec3f const &scale)
 {
   return {
-    .matrix = mat3f::diagonal(scale), .translation = Vec3f{0, 0, 0}
+    .matrix = Mat3f::diagonal(scale), .translation = Vec3f{0, 0, 0}
   };
 }
 
 Transform3D Transform3D::scale(Real scale)
 {
   return {
-    .matrix = mat3f::diagonal(scale), .translation = Vec3f{0, 0, 0}
+    .matrix = Mat3f::diagonal(scale), .translation = Vec3f{0, 0, 0}
   };
 }
 
 Transform3D Transform3D::translate(Vec3f const &v)
 {
-  return { .matrix = mat3f::diagonal(1.0), .translation = v };
+  return { .matrix = Mat3f::diagonal(1.0), .translation = v };
 }
 
 Transform3D Transform3D::skew(Radf angle, const UnitVec<Vec3f> &direction,
@@ -53,7 +53,7 @@ Transform3D Transform3D::skew(Radf angle, const UnitVec<Vec3f> &direction,
   auto const y = b.y * t;
   auto const z = b.z * t;
   // clang-format off
-  auto const skew_matrix = mat3f::from_rows({
+  auto const skew_matrix = Mat3f::from_rows({
     a.x * x + 1, a.x * y, a.x * z,
     a.y * x, a.y * y + 1, a.y * z,
     a.z * x, a.z * y, a.z * z + 1
@@ -69,7 +69,7 @@ Transform3D Transform3D::reflect(NormalizedPlane const &plane)
   auto const &n = plane.normal.unwrap();
   auto const d = plane.d;
   // clang-format off
-  auto const reflection_matrix = mat3f::from_rows({
+  auto const reflection_matrix = Mat3f::from_rows({
       1 - 2 * pow2(n.x), -2 * n.x * n.y, -2 * n.x * n.z,
       -2 * n.y * n.x, 1 - 2 * pow2(n.y), -2 * n.y * n.z,
       -2 * n.z * n.x, -2 * n.z * n.y, 1 - 2 * pow2(n.z)
@@ -90,7 +90,7 @@ Transform3D Transform3D::inverse() const
 
   auto const inv_det = 1._r / dot(s, c);
 
-  auto const inv_matrix = mat3f::from_row_vecs(
+  auto const inv_matrix = Mat3f::from_row_vecs(
       { cross(b, c) * inv_det, cross(c, a) * inv_det, s * inv_det });
   auto const inv_translation
       = Vec3f{ -dot(b, t), dot(a, t), -dot(d, s) } * inv_det;

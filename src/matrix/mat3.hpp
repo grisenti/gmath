@@ -3,11 +3,11 @@
 #include "matrix.hpp"
 
 template <typename T>
-using mat3 = Matrix<3, 3, T>;
-using mat3f = mat3<Real>;
+using Mat3 = Matrix<3, 3, T>;
+using Mat3f = Mat3<Real>;
 
-Real det(mat3f const &M);
+Real det(Mat3f const &M);
 
-mat3f adj(mat3f const &M);
+Mat3f adj(Mat3f const &M);
 
-mat3f inverse(mat3f const &M);
+Mat3f inverse(Mat3f const &M);

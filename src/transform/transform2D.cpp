@@ -5,14 +5,14 @@
 #include "vec.hpp"
 
 Transform2D const Transform2D::IDENTITY = Transform2D{
-  .matrix = mat2f::diagonal(1.f), .translation = Vec2f{0, 0}
+  .matrix = Mat2f::diagonal(1.f), .translation = Vec2f{0, 0}
 };
 
 Transform2D Transform2D::rotate(Radf angle)
 {
   auto const angle_v = angle.value();
   // clang-format off
-  return { mat2f::from_rows({
+  return { Mat2f::from_rows({
       std::cos(angle_v), -std::sin(angle_v),
       std::sin(angle_v), std::cos(angle_v)
   }), Vec2f{0, 0}};
@@ -22,20 +22,20 @@ Transform2D Transform2D::rotate(Radf angle)
 Transform2D Transform2D::scale(Vec2f const &scale)
 {
   return {
-    .matrix = mat2f::diagonal(scale), .translation = Vec2f{0, 0}
+    .matrix = Mat2f::diagonal(scale), .translation = Vec2f{0, 0}
   };
 }
 
 Transform2D Transform2D::scale(Real scale)
 {
   return {
-    .matrix = mat2f::diagonal(scale), .translation = Vec2f{0, 0}
+    .matrix = Mat2f::diagonal(scale), .translation = Vec2f{0, 0}
   };
 }
 
 Transform2D Transform2D::translate(const Vec2f &v)
 {
-  return { .matrix = mat2f::diagonal(1.0), .translation = v };
+  return { .matrix = Mat2f::diagonal(1.0), .translation = v };
 }
 
 Transform2D Transform2D::skew(Radf angle, const UnitVec<Vec2f> &direction,
@@ -47,7 +47,7 @@ Transform2D Transform2D::skew(Radf angle, const UnitVec<Vec2f> &direction,
   auto const x = b.x * t;
   auto const y = b.y * t;
   // clang-format off
-  auto const skew_matrix = mat2f::from_rows({
+  auto const skew_matrix = Mat2f::from_rows({
     a.x * x + 1, a.x * y,
     a.y * x, a.y * y + 1
   });
@@ -70,14 +70,14 @@ Transform2D Transform2D::inverse() const
   auto const inv_translation
       = Vec2f{ b.x * c.y - b.y * c.x, c.x * a.y - a.x * c.y } * inv_det;
 
-  return { .matrix = mat2f::from_row_vecs({ r0, r1 }),
+  return { .matrix = Mat2f::from_row_vecs({ r0, r1 }),
     .translation = inv_translation };
 }
 
-mat3f Transform2D::as_mat3() const
+Mat3f Transform2D::as_mat3() const
 {
   // clang-format off
-  return mat3f::from_rows({
+  return Mat3f::from_rows({
       matrix[0, 0], matrix[0, 1], translation.x,
       matrix[0, 1], matrix[1, 1], translation.y,
       0, 0, 1

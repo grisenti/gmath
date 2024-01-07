@@ -11,7 +11,7 @@
 /// Affine 2D transformation
 struct Transform2D
 {
-  mat2f matrix = mat2f::diagonal(1._r);
+  Mat2f matrix = Mat2f::diagonal(1._r);
   Vec2f translation = Vec2f{ 0._r, 0._r };
 
   static Transform2D const IDENTITY;
@@ -24,7 +24,7 @@ struct Transform2D
       UnitVec<Vec2f> const &perpendicular);
 
   Transform2D inverse() const;
-  mat3f as_mat3() const;
+  Mat3f as_mat3() const;
 };
 
 /// Combines transformations, with rhs being applied first and lhs

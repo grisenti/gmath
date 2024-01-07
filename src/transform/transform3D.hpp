@@ -13,7 +13,7 @@
 /// affine 3D transformation
 struct Transform3D
 {
-  mat3f matrix;
+  Mat3f matrix;
   Vec3f translation;
 
   static Transform3D const IDENTITY;

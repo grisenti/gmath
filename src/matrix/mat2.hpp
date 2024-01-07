@@ -3,8 +3,8 @@
 #include "matrix.hpp"
 
 template <typename T>
-using mat2 = Matrix<2, 2, T>;
-using mat2f = mat2<Real>;
+using Mat2 = Matrix<2, 2, T>;
+using Mat2f = Mat2<Real>;
 
-Real det(mat2f const &M);
-mat2f inverse(mat2f const &M);
+Real det(Mat2f const &M);
+Mat2f inverse(Mat2f const &M);
