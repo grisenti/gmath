@@ -9,9 +9,9 @@ struct Vec3 : BaseColumnVector<3, T>
   T y;
   T z;
 
-  Vec3() = default;
+  constexpr Vec3() = default;
 
-  Vec3(T x, T y, T z) : x(x), y(y), z(z)
+  constexpr Vec3(T x, T y, T z) : x(x), y(y), z(z)
   {
   }
 

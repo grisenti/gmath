@@ -8,12 +8,12 @@ struct Vec2 : BaseColumnVector<2, T>
   T x;
   T y;
 
-  Vec2() = default;
+  constexpr Vec2() = default;
 
-  Vec2(T x, T y) : x(x), y(y)
+  constexpr Vec2(T x, T y) : x(x), y(y)
   {
   }
-  
+
   T operator[](size_t i) const
   {
     static_assert(std::is_standard_layout_v<Vec2<T>>,

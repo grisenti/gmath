@@ -10,9 +10,9 @@ struct Vec4 : BaseColumnVector<4, T>
   T z;
   T w;
 
-  Vec4() = default;
+  constexpr Vec4() = default;
 
-  Vec4(T x, T y, T z, T w) : x(x), y(y), z(z), w(w)
+  constexpr Vec4(T x, T y, T z, T w) : x(x), y(y), z(z), w(w)
   {
   }
 

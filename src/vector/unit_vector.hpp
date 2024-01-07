@@ -14,21 +14,21 @@ public:
   using ModifiableEquivalent = V;
 
   /// Creates a UnitVec assuming v is already normalized.
-  static UnitVec create_unchecked(auto &&...args)
+  static UnitVec constexpr create_unchecked(auto &&...args)
   {
     return UnitVec{ V(std::forward<decltype(args)>(args)...) };
   }
 
   /// creates a UnitVec from the given values, ensuring that the underlying
   /// vector is normalized.
-  static UnitVec normalize(auto &&...args)
+  static UnitVec constexpr normalize(auto &&...args)
   {
     return UnitVec{ ::normalize(V(std::forward<decltype(args)>(args)...)) };
   }
 
   // NOLINT: implicit conversion is intended. A UnitVec can be used everywhere
   // a standard Vector can.
-  operator V() const
+  constexpr operator V() const
   {
     return _value;
   }
@@ -45,7 +45,7 @@ public:
   }
 
 private:
-  UnitVec(V const &v) : _value{ v }
+  constexpr UnitVec(V const &v) : _value{ v }
   {
   }
 
@@ -54,7 +54,7 @@ private:
 };
 
 template <Vector V>
-UnitVec<V> operator-(UnitVec<V> const &v)
+UnitVec<V> constexpr operator-(UnitVec<V> const &v)
 {
   // negating a unit vector does not change its absolute length
   return UnitVec<V>::create_unchecked(-v.unwrap());
