@@ -41,7 +41,7 @@ VecN<5, T> extend(Vec4<T> const &v, T value = {})
 template <typename T>
 Vec4<T> truncate(VecN<5, T> const &v)
 {
-  return { v.x, v.y, v.z, v.w };
+  return { v[0], v[1], v[2], v[3] };
 }
 
 template <typename T, size_t N>
