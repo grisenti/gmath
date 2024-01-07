@@ -27,7 +27,7 @@ struct Normal3
              && (V1::SIZE == 3)
   static Normal3 cross(V1 const &lhs, V2 const &rhs)
   {
-    return ::cross(lhs, rhs);
+    return Normal3{ ::cross(lhs, rhs) };
   }
 
   Normal3() = default;
