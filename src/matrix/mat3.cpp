@@ -28,12 +28,16 @@ mat3f inverse(mat3f const &M)
   auto const a = M.column(0);
   auto const b = M.column(1);
   auto const c = M.column(2);
-  auto const d = det(M);
+
+  auto const r0 = cross(b, c);
+  auto const r1 = cross(c, a);
+  auto const r2 = cross(a, b);
+  auto const inv_det = 1._r / dot(r2, c);
   // clang-format off
   return mat3f::from_row_vecs({
-      cross(b, c) / d,
-      cross(c, a) / d,
-      cross(a, b) / d,
+    r0 * inv_det,
+    r1 * inv_det,
+    r2 * inv_det
   });
   // clang-format on
 }
