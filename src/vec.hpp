@@ -67,3 +67,7 @@ VecN<N - 1, T> truncate(VecN<N, T> const &v)
 using UVec2f = UnitVec<Vec2f>;
 using UVec3f = UnitVec<Vec3f>;
 using UVec4f = UnitVec<Vec4f>;
+
+static UVec3f constexpr X3f = UVec3f::create_unchecked(1, 0, 0);
+static UVec3f constexpr Y3f = UVec3f::create_unchecked(0, 1, 0);
+static UVec3f constexpr Z3f = UVec3f::create_unchecked(0, 0, 1);
