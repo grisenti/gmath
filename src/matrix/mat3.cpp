@@ -1,5 +1,5 @@
-#include "mat3.hpp"
-#include "vector/vec3.hpp"
+#include "gmath/matrix/mat3.hpp"
+#include "gmath/vector/vec3.hpp"
 
 Real det(Mat3f const &M)
 {

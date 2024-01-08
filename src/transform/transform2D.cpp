@@ -1,8 +1,6 @@
-#include "transform2D.hpp"
+#include "gmath/transform/transform2D.hpp"
 
 #include <cmath>
-
-#include "vec.hpp"
 
 Transform2D const Transform2D::IDENTITY = Transform2D{
   .matrix = Mat2f::diagonal(1.f), .translation = Vec2f{0, 0}

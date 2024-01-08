@@ -1,6 +1,6 @@
 #include "test.hpp"
 
-#include "geometry.hpp"
+#include "gmath/geometry.hpp"
 
 std::ostream &operator<<(std::ostream &os, Line const &l)
 {

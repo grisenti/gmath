@@ -1,6 +1,6 @@
 #include "test.hpp"
 
-#include "vec.hpp"
+#include "gmath/vec.hpp"
 
 TEST_CASE("vector_addition")
 {

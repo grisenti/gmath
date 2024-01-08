@@ -1,4 +1,4 @@
-#include "line.hpp"
+#include "gmath/geometry/line.hpp"
 
 NormalizedLine NormalizedLine::from_line_unchecked(const Line &line)
 {

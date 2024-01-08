@@ -1,11 +1,10 @@
 #pragma once
 
-#include "vec_base.hpp"
+#include "gmath/vector/vec_base.hpp"
 
 /// Type safe wrapper for a unit vector.
 template <Vector V>
-  requires(std::floating_point<ComponentT<V>>)
-class UnitVec
+requires(std::floating_point<ComponentT<V>>) class UnitVec
 {
 public:
   using TypeClass = typename V::TypeClass;
@@ -58,4 +57,10 @@ UnitVec<V> constexpr operator-(UnitVec<V> const &v)
 {
   // negating a unit vector does not change its absolute length
   return UnitVec<V>::create_unchecked(-v.unwrap());
+}
+
+template <Vector V>
+ComponentT<V> cos_theta(UnitVec<V> const &lhs, UnitVec<V> const &rhs)
+{
+  return dot(lhs, rhs);
 }

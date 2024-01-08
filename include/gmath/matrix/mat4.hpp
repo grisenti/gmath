@@ -1,6 +1,6 @@
 #pragma once
 
-#include "matrix.hpp"
+#include "gmath/matrix/matrix.hpp"
 
 template <typename T>
 using mat4 = Matrix<4, 4, T>;

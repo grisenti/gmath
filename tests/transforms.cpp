@@ -1,7 +1,7 @@
 #include "test.hpp"
 
-#include "transform/transform2D.hpp"
-#include "transform/transform3D.hpp"
+#include "gmath/transform/transform2D.hpp"
+#include "gmath/transform/transform3D.hpp"
 
 TEST_CASE("Transform2D_identity")
 {

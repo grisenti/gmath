@@ -1,7 +1,7 @@
 #pragma once
 
-#include "base.hpp"
-#include "matrix/matrix_base.hpp"
+#include "gmath/base.hpp"
+#include "gmath/matrix/matrix_base.hpp"
 #include <cmath>
 
 /// Marker type for column vectors
@@ -25,23 +25,23 @@ struct RowVectorTag : RowMatrixTag
 
 template <typename V>
 concept ModifiableColumnVector
-    = ModifiableColumnMatrix<V>
-      && std::derived_from<typename V::TypeClass, ColumnVectorTag>;
+    = ModifiableColumnMatrix<V> && std::derived_from<typename V::TypeClass,
+        ColumnVectorTag>;
 
 template <typename V>
 concept ConstColumnVector
-    = ConstColumnMatrix<V>
-      && std::derived_from<typename V::TypeClass, ColumnVectorTag>;
+    = ConstColumnMatrix<V> && std::derived_from<typename V::TypeClass,
+        ColumnVectorTag>;
 
 template <typename V>
 concept ModifiableRowVector
-    = ModifiableRowMatrix<V>
-      && std::derived_from<typename V::TypeClass, RowVectorTag>;
+    = ModifiableRowMatrix<V> && std::derived_from<typename V::TypeClass,
+        RowVectorTag>;
 
 template <typename V>
 concept ConstRowVector
-    = ConstRowMatrix<V>
-      && std::derived_from<typename V::TypeClass, RowVectorTag>;
+    = ConstRowMatrix<V> && std::derived_from<typename V::TypeClass,
+        RowVectorTag>;
 
 template <typename V>
 concept RowVector = ModifiableRowVector<V> || ConstRowVector<V>;
@@ -60,17 +60,17 @@ concept Vector = ModifiableVector<V> || ConstVector<V>;
 
 template <typename V1, typename V2>
 concept VectorCompatibleWeak
-    = Vector<V1> && Vector<V2> && std::same_as<ComponentT<V1>, ComponentT<V2>>
-      && (V1::SIZE == V2::SIZE);
+    = Vector<V1> && Vector<V2> && std::same_as<ComponentT<V1>,
+        ComponentT<V2>> &&(V1::SIZE == V2::SIZE);
 
 template <typename V1, typename V2>
 concept VectorCompatible
-    = VectorCompatibleWeak<V1, V2>
-      && std::same_as<typename V1::TypeClass, typename V2::TypeClass>
-      && std::same_as<ModifiableEquivalentT<V1>, ModifiableEquivalentT<V2>>;
+    = VectorCompatibleWeak<V1, V2> && std::same_as<typename V1::TypeClass,
+        typename V2::TypeClass> && std::same_as<ModifiableEquivalentT<V1>,
+        ModifiableEquivalentT<V2>>;
 
 template <Vector V>
-  requires std::equality_comparable<ComponentT<V>>
+requires std::equality_comparable<ComponentT<V>>
 bool constexpr operator==(V const &lhs, V const &rhs)
 {
   auto equal = true;
@@ -80,8 +80,8 @@ bool constexpr operator==(V const &lhs, V const &rhs)
 }
 
 template <ModifiableVector V1, Vector V2>
-  requires VectorCompatible<V1, V2>
-V1 constexpr &operator+=(V1 &lhs, V2 const &rhs)
+requires VectorCompatible<V1, V2> V1 constexpr &operator+=(
+    V1 &lhs, V2 const &rhs)
 {
   for (size_t i = 0; i < V1::SIZE; ++i)
     lhs[i] += rhs[i];
@@ -89,8 +89,8 @@ V1 constexpr &operator+=(V1 &lhs, V2 const &rhs)
 }
 
 template <ModifiableVector V1, Vector V2>
-  requires VectorCompatible<V1, V2>
-V1 constexpr &operator-=(V1 &lhs, V2 const &rhs)
+requires VectorCompatible<V1, V2> V1 constexpr &operator-=(
+    V1 &lhs, V2 const &rhs)
 {
   for (size_t i = 0; i < V1::SIZE; ++i)
     lhs[i] -= rhs[i];
@@ -151,8 +151,8 @@ ModifiableEquivalentT<V> constexpr operator/(
 }
 
 template <Vector V1, Vector V2>
-  requires VectorCompatible<V1, V2>
-ModifiableEquivalentT<V1> constexpr operator+(V1 const &lhs, V2 const &rhs)
+requires VectorCompatible<V1, V2> ModifiableEquivalentT<V1>
+constexpr operator+(V1 const &lhs, V2 const &rhs)
 {
   ModifiableEquivalentT<V1> ret;
   for (size_t i = 0; i < V1::SIZE; ++i)
@@ -161,8 +161,8 @@ ModifiableEquivalentT<V1> constexpr operator+(V1 const &lhs, V2 const &rhs)
 }
 
 template <Vector V1, Vector V2>
-  requires VectorCompatible<V1, V2>
-ModifiableEquivalentT<V1> constexpr operator-(V1 const &lhs, V2 const &rhs)
+requires VectorCompatible<V1, V2> ModifiableEquivalentT<V1>
+constexpr operator-(V1 const &lhs, V2 const &rhs)
 {
   ModifiableEquivalentT<V1> ret;
   for (size_t i = 0; i < V1::SIZE; ++i)
@@ -171,8 +171,8 @@ ModifiableEquivalentT<V1> constexpr operator-(V1 const &lhs, V2 const &rhs)
 }
 
 template <Vector V>
-  requires(std::floating_point<ComponentT<V>>)
-ComponentT<V> constexpr length(V const &v)
+requires(std::floating_point<ComponentT<V>>) ComponentT<V>
+constexpr length(V const &v)
 {
   ComponentT<V> ret = {};
   for (size_t i = 0; i < V::SIZE; ++i)
@@ -181,8 +181,7 @@ ComponentT<V> constexpr length(V const &v)
 }
 
 template <Vector V>
-  requires(std::floating_point<ComponentT<V>>)
-V constexpr normalize(V const &v)
+requires(std::floating_point<ComponentT<V>>) V constexpr normalize(V const &v)
 {
   auto const l = length(v);
   V ret;
@@ -195,8 +194,8 @@ V constexpr normalize(V const &v)
 /// two vectors have the same type class. It is used to implement dot product
 /// between vectors and normals.
 template <Vector V1, Vector V2>
-  requires VectorCompatibleWeak<V1, V2>
-ComponentT<V1> weak_dot(V1 const &lhs, V2 const &rhs)
+requires VectorCompatibleWeak<V1, V2> ComponentT<V1> weak_dot(
+    V1 const &lhs, V2 const &rhs)
 {
   ComponentT<V1> ret{ 0 };
   for (size_t i = 0; i < V1::SIZE; ++i)
@@ -205,10 +204,16 @@ ComponentT<V1> weak_dot(V1 const &lhs, V2 const &rhs)
 }
 
 template <Vector V1, Vector V2>
-  requires VectorCompatible<V1, V2>
-ComponentT<V1> constexpr dot(V1 const &lhs, V2 const &rhs)
+requires VectorCompatible<V1, V2> ComponentT<V1>
+constexpr dot(V1 const &lhs, V2 const &rhs)
 {
   return weak_dot(lhs, rhs);
+}
+
+template <Vector V>
+ComponentT<V> constexpr squared_length(V const &v)
+{
+  return dot(v, v);
 }
 
 template <Vector V>
@@ -221,29 +226,38 @@ bool constexpr in_range(V const &v, V const &a, V const &b)
 }
 
 template <Vector V1, Vector V2>
-  requires VectorCompatible<V1, V2> && std::floating_point<ComponentT<V1>>
+requires VectorCompatible<V1, V2> && std::floating_point<ComponentT<V1>>
 auto project(V1 const &a, V2 const &b)
 {
   return b * (dot(a, b) / dot(b, b));
 }
 
 template <Vector V1, Vector V2>
-  requires VectorCompatible<V1, V2> && std::floating_point<ComponentT<V1>>
+requires VectorCompatible<V1, V2> && std::floating_point<ComponentT<V1>>
 auto project_no_division(V1 const &a, V2 const &b)
 {
   return b * (dot(a, b));
 }
 
 template <Vector V1, Vector V2>
-  requires VectorCompatible<V1, V2> && std::floating_point<ComponentT<V1>>
+requires VectorCompatible<V1, V2> && std::floating_point<ComponentT<V1>>
 auto reject(V1 const &a, V2 const &b)
 {
   return a - project(a, b);
 }
 
 template <Vector V1, Vector V2>
-  requires VectorCompatible<V1, V2> && std::floating_point<ComponentT<V1>>
+requires VectorCompatible<V1, V2> && std::floating_point<ComponentT<V1>>
 auto reject_no_division(V1 const &a, V2 const &b)
 {
   return a - project_no_division(a, b);
+}
+
+template <Vector V>
+bool components_near_zero(V const &v, ComponentT<V> const eps = 1e-8_r)
+{
+  for (size_t i = 0; i < V::SIZE; ++i)
+    if (std::abs(v[i]) > eps)
+      return false;
+  return true;
 }

@@ -1,4 +1,4 @@
-#include "plane.hpp"
+#include "gmath/geometry/plane.hpp"
 
 std::optional<Point3f> intersection_point(
     Plane const &p1, Plane const &p2, Plane const &p3)

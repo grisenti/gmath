@@ -1,12 +1,11 @@
 #pragma once
 
-#include "matrix/matrix_base.hpp"
-#include "matrix/mat2.hpp"
-#include "matrix/mat3.hpp"
-#include "vector/vec2.hpp"
-#include "units.hpp"
-#include "geometry/point.hpp"
-#include "vector/unit_vector.hpp"
+#include "gmath/matrix/mat2.hpp"
+#include "gmath/matrix/mat3.hpp"
+#include "gmath/vector/vec2.hpp"
+#include "gmath/units.hpp"
+#include "gmath/geometry/point.hpp"
+#include "gmath/vector/unit_vector.hpp"
 
 /// Affine 2D transformation
 struct Transform2D

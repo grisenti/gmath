@@ -1,7 +1,8 @@
 #pragma once
 
-#include "normal3.hpp"
-#include "vector/unit_vector.hpp"
+#include "gmath/geometry/normal3.hpp"
+#include "gmath/vector/unit_vector.hpp"
+#include "gmath/vector/vec3.hpp"
 
 struct Line
 {

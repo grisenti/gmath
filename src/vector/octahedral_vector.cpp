@@ -1,4 +1,4 @@
-#include "octahedral_vector.hpp"
+#include "gmath/vector/octahedral_vector.hpp"
 
 namespace
 {

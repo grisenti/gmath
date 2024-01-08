@@ -1,8 +1,8 @@
 #include "test.hpp"
 
-#include "mat.hpp"
-#include "vec.hpp"
-#include "geometry/normal3.hpp"
+#include "gmath/mat.hpp"
+#include "gmath/vec.hpp"
+#include "gmath/geometry/normal3.hpp"
 
 static void is_identity(Mat3f const &M)
 {

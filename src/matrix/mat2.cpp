@@ -1,4 +1,4 @@
-#include "mat2.hpp"
+#include "gmath/matrix/mat2.hpp"
 
 Real det(Mat2f const &M)
 {

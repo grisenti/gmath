@@ -1,6 +1,6 @@
 #pragma once
 
-#include "matrix.hpp"
+#include "gmath/matrix/matrix.hpp"
 
 template <typename T>
 using Mat2 = Matrix<2, 2, T>;

@@ -2,9 +2,8 @@
 
 #include <cstdint>
 
-#include "base.hpp"
-#include "vec3.hpp"
-#include "unit_vector.hpp"
+#include "gmath/vector/vec3.hpp"
+#include "gmath/vector/unit_vector.hpp"
 
 /// More space efficient representation of a 3D unit vector. Implementation
 /// taken from Physically Based Rendering 4th ed.

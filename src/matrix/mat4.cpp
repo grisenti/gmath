@@ -1,6 +1,5 @@
-#include "mat4.hpp"
-#include "vector/vec3.hpp"
-#include "vec.hpp"
+#include "gmath/matrix/mat4.hpp"
+#include "gmath/vec.hpp"
 
 // Both implementations are taken from "Foundations of Game Engine Development
 // Volume 1 Mathematics" by Eric Lengyel.

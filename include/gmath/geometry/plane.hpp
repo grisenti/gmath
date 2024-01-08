@@ -2,9 +2,9 @@
 
 #include <optional>
 
-#include "normal3.hpp"
-#include "vector/unit_vector.hpp"
-#include "point.hpp"
+#include "gmath/geometry/normal3.hpp"
+#include "gmath/vector/unit_vector.hpp"
+#include "gmath/geometry/point.hpp"
 
 struct Plane
 {
@@ -36,8 +36,8 @@ struct NormalizedPlane
 
   bool operator==(NormalizedPlane const &rhs) const = default;
 
-  UnitVec<Normal3f> normal;
-  Real d;
+  UnitVec<Normal3f> normal = UnitVec<Normal3f>::create_unchecked(0, 0, 1);
+  Real d = 0;
 };
 
 Real signed_distance(NormalizedPlane const &plane, Point3f const &point);

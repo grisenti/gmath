@@ -1,8 +1,8 @@
 #include <catch2/catch_all.hpp>
 #include <iostream>
 
-#include "vec.hpp"
-#include "mat.hpp"
+#include "gmath/vec.hpp"
+#include "gmath/mat.hpp"
 
 template <Vector V>
 std::ostream &operator<<(std::ostream &out, V const &v)

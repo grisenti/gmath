@@ -1,14 +1,13 @@
 #pragma once
 
-#include "matrix/matrix_base.hpp"
-#include "matrix/mat3.hpp"
-#include "matrix/mat4.hpp"
-#include "vector/vec3.hpp"
-#include "geometry/normal3.hpp"
-#include "vector/unit_vector.hpp"
-#include "units.hpp"
-#include "geometry/point.hpp"
-#include "geometry/plane.hpp"
+#include "gmath/matrix/mat3.hpp"
+#include "gmath/matrix/mat4.hpp"
+#include "gmath/vector/vec3.hpp"
+#include "gmath/geometry/normal3.hpp"
+#include "gmath/vector/unit_vector.hpp"
+#include "gmath/units.hpp"
+#include "gmath/geometry/point.hpp"
+#include "gmath/geometry/plane.hpp"
 
 /// affine 3D transformation
 struct Transform3D
