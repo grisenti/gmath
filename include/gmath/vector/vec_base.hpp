@@ -1,6 +1,7 @@
 #pragma once
 
 #include "gmath/base.hpp"
+#include "gmath/utils.hpp"
 #include "gmath/matrix/matrix_base.hpp"
 #include <cmath>
 
