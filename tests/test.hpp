@@ -3,31 +3,18 @@
 
 #include "gmath/vec.hpp"
 #include "gmath/mat.hpp"
+#include "gmath/formatting.hpp"
 
 template <Vector V>
 std::ostream &operator<<(std::ostream &out, V const &v)
 {
-  out << "(";
-  if constexpr (V::SIZE > 0)
-  {
-    out << v[0];
-    for (size_t i = 1; i < V::SIZE; ++i)
-      out << ", " << v[i];
-    out << ")";
-  }
+  out << std::format("{}", v);
   return out;
 }
 
 template <typename T, size_t R, size_t C>
 std::ostream &operator<<(std::ostream &out, Matrix<R, C, T> const &mat)
 {
-  for (size_t i = 0; i < R; ++i)
-  {
-    for (size_t j = 0; j < C; ++j)
-    {
-      out << mat[i, j] << " ";
-    }
-    out << "\n";
-  }
+  out << std::format("{}", mat);
   return out;
 }
