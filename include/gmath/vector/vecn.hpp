@@ -28,30 +28,30 @@ struct VecN
 };
 
 template <size_t N, typename T>
-struct VectorOfT
+struct DefaultVectorOfT
 {
   using Type = VecN<N, T>;
 };
 
 template <typename T>
-struct VectorOfT<2, T>
+struct DefaultVectorOfT<2, T>
 {
   using Type = Vec2<T>;
 };
 
 template <typename T>
-struct VectorOfT<3, T>
+struct DefaultVectorOfT<3, T>
 {
   using Type = Vec3<T>;
 };
 
 template <typename T>
-struct VectorOfT<4, T>
+struct DefaultVectorOfT<4, T>
 {
   using Type = Vec4<T>;
 };
 
 template <size_t N, typename T>
-using VectorOf = VectorOfT<N, T>::Type;
+using DefaultVectorOf = DefaultVectorOfT<N, T>::Type;
 
 } // namespace gmath

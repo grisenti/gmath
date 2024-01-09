@@ -194,9 +194,9 @@ template <Point P, Vector V>
 }
 
 template <Point P>
-VectorOf<P::SIZE, ComponentT<P>> operator-(P const &lhs, P const &rhs)
+DefaultVectorOf<P::SIZE, ComponentT<P>> operator-(P const &lhs, P const &rhs)
 {
-  auto res = VectorOf<P::SIZE, ComponentT<P>>{};
+  auto res = DefaultVectorOf<P::SIZE, ComponentT<P>>{};
   for (size_t i = 0; i < P::SIZE; ++i)
     res[i] = lhs[i] - rhs[i];
   return res;

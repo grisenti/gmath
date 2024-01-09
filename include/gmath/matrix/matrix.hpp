@@ -10,8 +10,8 @@ namespace gmath
 template <size_t R, size_t C, typename T>
 struct Matrix
 {
-  using RowVec = VectorOf<C, T>;
-  using ColumnVec = VectorOf<R, T>;
+  using RowVec = DefaultVectorOf<C, T>;
+  using ColumnVec = DefaultVectorOf<R, T>;
 
   T values[R * C];
 
@@ -24,7 +24,7 @@ struct Matrix
     return res;
   }
 
-  static constexpr Matrix diagonal(VectorOf<std::min(R, C), T> diagonal)
+  static constexpr Matrix diagonal(DefaultVectorOf<std::min(R, C), T> diagonal)
   {
     auto res = Matrix{};
     for (size_t j = 0; j < C; ++j)
