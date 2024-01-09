@@ -1,5 +1,8 @@
 #include "gmath/transform/transform3D.hpp"
 
+namespace gmath
+{
+
 Transform3D const Transform3D::IDENTITY = Transform3D{
   .matrix = Mat3f::diagonal(1.f), .translation = Vec3f{0, 0, 0}
 };
@@ -135,3 +138,5 @@ Plane operator*(Plane const &lhs, Transform3D const &rhs)
 {
   return { lhs.normal * rhs.matrix, lhs.d + dot(lhs.normal, rhs.translation) };
 }
+
+} // namespace gmath

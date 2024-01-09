@@ -2,6 +2,9 @@
 
 #include "gmath/vector/vec3.hpp"
 
+namespace gmath
+{
+
 struct NormalTag : RowVectorTag
 {
 };
@@ -22,10 +25,10 @@ struct Normal3
   T z;
 
   template <Vector V1, Vector V2>
-  requires VectorCompatibleWeak<V1, V2> && std::same_as<ComponentT<V1>, T> &&(
-      V1::SIZE == 3) static Normal3 cross(V1 const &lhs, V2 const &rhs)
+    requires VectorCompatibleWeak<V1, V2> && std::same_as<ComponentT<V1>, T> &&(
+                 V1::SIZE == 3) static Normal3 cross(V1 const &lhs, V2 const &rhs)
   {
-    return Normal3{ ::cross(lhs, rhs) };
+    return Normal3{ ::gmath::cross(lhs, rhs) };
   }
 
   Normal3() = default;
@@ -62,9 +65,12 @@ Vec3<T> as_vec3(Normal3<T> const &n)
 }
 
 template <Vector V1, Vector V2>
-requires(Normal<V1> || Normal<V2>)
-    && VectorCompatibleWeak<V1, V2> ComponentT<V1> dot(
-        V1 const &lhs, V2 const &rhs)
+  requires(Normal<V1> || Normal<V2>)
+          && VectorCompatibleWeak<V1, V2> ComponentT<V1> dot(
+    V1 const &lhs, V2 const &rhs)
 {
   return weak_dot(lhs, rhs);
 }
+
+} // namespace gmath
+

@@ -6,6 +6,9 @@
 #include "gmath/vector/unit_vector.hpp"
 #include "gmath/geometry/point.hpp"
 
+namespace gmath
+{
+
 struct Plane
 {
   Normal3f normal;
@@ -41,3 +44,6 @@ struct NormalizedPlane
 };
 
 Real signed_distance(NormalizedPlane const &plane, Point3f const &point);
+
+} // namespace gmath
+

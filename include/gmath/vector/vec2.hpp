@@ -2,6 +2,9 @@
 
 #include "vec_base.hpp"
 
+namespace gmath
+{
+
 template <typename T>
 struct Vec2 : BaseColumnVector<2, T>
 {
@@ -32,3 +35,5 @@ struct Vec2 : BaseColumnVector<2, T>
 using Vec2f = Vec2<Real>;
 using Vec2i = Vec2<int>;
 using Vec2u = Vec2<unsigned>;
+
+} // namespace gmath

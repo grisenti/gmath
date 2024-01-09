@@ -2,6 +2,9 @@
 
 #include <cmath>
 
+namespace gmath
+{
+
 Transform2D const Transform2D::IDENTITY = Transform2D{
   .matrix = Mat2f::diagonal(1.f), .translation = Vec2f{0, 0}
 };
@@ -98,3 +101,5 @@ Point2f operator*(Transform2D const &lhs, Point2f const &rhs)
 {
   return lhs.matrix * rhs + lhs.translation;
 }
+
+} // namespace gmath

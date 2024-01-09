@@ -1,5 +1,8 @@
 #include "gmath/geometry/plane.hpp"
 
+namespace gmath
+{
+
 std::optional<Point3f> intersection_point(
     Plane const &p1, Plane const &p2, Plane const &p3)
 {
@@ -33,3 +36,5 @@ Real signed_distance(NormalizedPlane const &plane, Point3f const &point)
 {
   return dot(as_vec3(point), plane.normal) + plane.d;
 }
+
+} // namespace gmath

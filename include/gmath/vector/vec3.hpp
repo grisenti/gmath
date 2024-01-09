@@ -2,6 +2,9 @@
 
 #include "vec_base.hpp"
 
+namespace gmath
+{
+
 template <typename T>
 struct Vec3 : BaseColumnVector<3, T>
 {
@@ -55,3 +58,5 @@ ComponentT<V1> constexpr scalar_triple_product(
 {
   return dot(cross(a, b), c);
 }
+
+} // namespace gmath

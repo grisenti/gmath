@@ -3,6 +3,9 @@
 #include "base.hpp"
 #include <numbers>
 
+namespace gmath
+{
+
 template <typename T>
 class Unit
 {
@@ -94,3 +97,5 @@ inline Real tan(Radf rad)
 {
   return std::tan(rad.value());
 }
+
+} // namespace gmath

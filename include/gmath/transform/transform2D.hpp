@@ -7,6 +7,9 @@
 #include "gmath/geometry/point.hpp"
 #include "gmath/vector/unit_vector.hpp"
 
+namespace gmath
+{
+
 /// Affine 2D transformation
 struct Transform2D
 {
@@ -39,3 +42,5 @@ Vec2f operator*(Transform2D const &lhs, Vec2f const &rhs);
 
 /// Transforms point rhs by the transformation lhs.
 Point2f operator*(Transform2D const &lhs, Point2f const &rhs);
+
+} // namespace gmath

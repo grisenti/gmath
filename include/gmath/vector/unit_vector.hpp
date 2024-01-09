@@ -2,9 +2,13 @@
 
 #include "gmath/vector/vec_base.hpp"
 
+namespace gmath
+{
+
 /// Type safe wrapper for a unit vector.
 template <Vector V>
-requires(std::floating_point<ComponentT<V>>) class UnitVec
+  requires(std::floating_point<ComponentT<V>>)
+class UnitVec
 {
 public:
   using TypeClass = typename V::TypeClass;
@@ -22,7 +26,7 @@ public:
   /// vector is normalized.
   static UnitVec constexpr normalize(auto &&...args)
   {
-    return UnitVec{ ::normalize(V(std::forward<decltype(args)>(args)...)) };
+    return UnitVec{ ::gmath::normalize(V(std::forward<decltype(args)>(args)...)) };
   }
 
   // NOLINT: implicit conversion is intended. A UnitVec can be used everywhere
@@ -64,3 +68,5 @@ ComponentT<V> cos_theta(UnitVec<V> const &lhs, UnitVec<V> const &rhs)
 {
   return dot(lhs, rhs);
 }
+
+} // namespace gmath

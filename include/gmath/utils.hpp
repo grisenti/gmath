@@ -2,6 +2,9 @@
 
 #include "gmath/base.hpp"
 
+namespace gmath
+{
+
 template <Numeric T>
 T pow2(T const x)
 {
@@ -17,3 +20,5 @@ T constexpr clamp(T const x, T const a, T const b)
     return b;
   return x;
 }
+
+} // namespace gmath

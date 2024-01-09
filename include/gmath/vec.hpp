@@ -8,6 +8,9 @@
 #include "vector/unit_vector.hpp"
 #include "vector/octahedral_vector.hpp"
 
+namespace gmath
+{
+
 template <typename T>
 Vec3<T> extend(Vec2<T> const &v, T z = {})
 {
@@ -71,3 +74,5 @@ using UVec4f = UnitVec<Vec4f>;
 static UVec3f constexpr X3f = UVec3f::create_unchecked(1, 0, 0);
 static UVec3f constexpr Y3f = UVec3f::create_unchecked(0, 1, 0);
 static UVec3f constexpr Z3f = UVec3f::create_unchecked(0, 0, 1);
+
+} // namespace gmath

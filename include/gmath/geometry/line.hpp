@@ -4,6 +4,9 @@
 #include "gmath/vector/unit_vector.hpp"
 #include "gmath/vector/vec3.hpp"
 
+namespace gmath
+{
+
 struct Line
 {
   Vec3f direction;
@@ -33,3 +36,5 @@ struct NormalizedLine
   UnitVec<Vec3f> direction;
   Normal3f moment;
 };
+
+} // namespace gmath

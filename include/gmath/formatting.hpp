@@ -8,7 +8,7 @@
 #include "gmath/mat.hpp"
 #include "gmath/units.hpp"
 
-template <Matrix1D T>
+template <gmath::Matrix1D T>
 struct std::formatter<T>
 {
   constexpr auto parse(std::format_parse_context &ctx)
@@ -35,14 +35,14 @@ struct std::formatter<T>
 };
 
 template <typename T, size_t R, size_t C>
-struct std::formatter<Matrix<R, C, T>>
+struct std::formatter<gmath::Matrix<R, C, T>>
 {
   constexpr auto parse(std::format_parse_context &ctx)
   {
     return ctx.begin();
   }
 
-  auto format(Matrix<R, C, T> const &M, std::format_context &ctx) const
+  auto format(gmath::Matrix<R, C, T> const &M, std::format_context &ctx) const
   {
     auto res = std::string{ "[" };
     for (size_t i = 0; i < R; ++i)
@@ -61,29 +61,30 @@ struct std::formatter<Matrix<R, C, T>>
 };
 
 template <>
-struct std::formatter<Line>
+struct std::formatter<gmath::Line>
 {
   constexpr auto parse(std::format_parse_context &ctx)
   {
     return ctx.begin();
   }
 
-  auto format(Line const &l, std::format_context &ctx) const
+  auto format(gmath::Line const &l, std::format_context &ctx) const
   {
     return std::format_to(ctx.out(), "{{{} | {}}}", l.direction, l.moment);
   }
 };
 
 template <>
-struct std::formatter<Plane>
+struct std::formatter<gmath::Plane>
 {
   constexpr auto parse(std::format_parse_context &ctx)
   {
     return ctx.begin();
   }
 
-  auto format(Plane const &plane, std::format_context &ctx) const
+  auto format(gmath::Plane const &plane, std::format_context &ctx) const
   {
     return std::format_to(ctx.out(), "[{} | {}]", plane.normal, plane.d);
   }
 };
+

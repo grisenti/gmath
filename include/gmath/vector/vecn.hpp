@@ -4,6 +4,9 @@
 #include "vec3.hpp"
 #include "vec4.hpp"
 
+namespace gmath
+{
+
 template <size_t N, typename T>
 struct VecN
 {
@@ -50,3 +53,5 @@ struct VectorOfT<4, T>
 
 template <size_t N, typename T>
 using VectorOf = VectorOfT<N, T>::Type;
+
+} // namespace gmath

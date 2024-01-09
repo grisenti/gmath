@@ -9,6 +9,9 @@
 #include "gmath/geometry/point.hpp"
 #include "gmath/geometry/plane.hpp"
 
+namespace gmath
+{
+
 /// affine 3D transformation
 struct Transform3D
 {
@@ -43,3 +46,5 @@ Normal3f operator*(Normal3f const &lhs, Transform3D const &rhs);
 
 /// Transforms the plane @param rhs by the transformation @param lhs.
 Plane operator*(Plane const &lhs, Transform3D const &rhs);
+
+} // namespace gmath

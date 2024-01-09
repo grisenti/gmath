@@ -5,6 +5,8 @@
 #include "gmath/mat.hpp"
 #include "gmath/formatting.hpp"
 
+using namespace gmath;
+
 template <Vector V>
 std::ostream &operator<<(std::ostream &out, V const &v)
 {

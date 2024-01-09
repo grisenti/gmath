@@ -1,6 +1,9 @@
 #include "gmath/matrix/mat4.hpp"
 #include "gmath/vec.hpp"
 
+namespace gmath
+{
+
 // Both implementations are taken from "Foundations of Game Engine Development
 // Volume 1 Mathematics" by Eric Lengyel.
 
@@ -50,3 +53,5 @@ mat4f inverse(mat4f const &M)
     });
   // clang-format on
 }
+
+} // namespace gmath

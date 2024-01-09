@@ -1,5 +1,8 @@
 #include "gmath/matrix/mat2.hpp"
 
+namespace gmath
+{
+
 Real det(Mat2f const &M)
 {
   return M[0, 0] * M[1, 1] - M[0, 1] * M[1, 0];
@@ -15,3 +18,5 @@ Mat2f inverse(Mat2f const &M)
   });
   // clang-format on
 }
+
+} // namespace gmath

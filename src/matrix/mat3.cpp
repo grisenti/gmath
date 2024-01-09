@@ -1,6 +1,9 @@
 #include "gmath/matrix/mat3.hpp"
 #include "gmath/vector/vec3.hpp"
 
+namespace gmath
+{
+
 Real det(Mat3f const &M)
 {
   return M[0, 0] * M[1, 1] * M[2, 2] + M[0, 1] * M[1, 2] * M[2, 0]
@@ -41,3 +44,5 @@ Mat3f inverse(Mat3f const &M)
   });
   // clang-format on
 }
+
+} // namespace gmath

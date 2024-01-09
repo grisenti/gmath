@@ -1,5 +1,8 @@
 #include "gmath/vector/octahedral_vector.hpp"
 
+namespace gmath
+{
+
 namespace
 {
 
@@ -49,3 +52,5 @@ UnitVec<Vec3f> OctahedralVector::into_unit_vec3() const
   }
   return UnitVec<Vec3f>::normalize(x, y, z);
 }
+
+} // namespace gmath

@@ -3,6 +3,9 @@
 #include "gmath/matrix/matrix_base.hpp"
 #include "gmath/vector/vecn.hpp"
 
+namespace gmath
+{
+
 /// column major matrix
 template <size_t R, size_t C, typename T>
 struct Matrix
@@ -66,7 +69,8 @@ struct Matrix
     return res;
   }
 
-  Matrix constexpr &transpose() requires(R == C)
+  Matrix constexpr &transpose()
+    requires(R == C)
   {
     for (size_t i = 0; i < R; ++i)
       for (size_t j = i; j < R; ++j)
@@ -118,9 +122,9 @@ Matrix<R1, C2, T> constexpr operator*(
 }
 
 template <size_t R, size_t C, Numeric T, ColumnMatrix V>
-requires(V::SIZE == R)
-    && std::same_as<ComponentT<V>, T> ModifiableEquivalentT<V> constexpr
-    operator*(Matrix<R, C, T> const &lhs, V const &rhs)
+  requires(V::SIZE == R) && std::same_as<ComponentT<V>, T>
+ModifiableEquivalentT<V> constexpr operator*(
+    Matrix<R, C, T> const &lhs, V const &rhs)
 {
   auto res = ModifiableEquivalentT<V>{};
   for (size_t j = 0; j < C; ++j)
@@ -130,9 +134,9 @@ requires(V::SIZE == R)
 }
 
 template <size_t R, size_t C, Numeric T, RowMatrix V>
-requires(V::SIZE == C)
-    && std::same_as<ComponentT<V>, T> ModifiableEquivalentT<V> constexpr
-    operator*(V const &lhs, Matrix<R, C, T> const &rhs)
+  requires(V::SIZE == C) && std::same_as<ComponentT<V>, T>
+ModifiableEquivalentT<V> constexpr operator*(
+    V const &lhs, Matrix<R, C, T> const &rhs)
 {
   auto res = ModifiableEquivalentT<V>{};
   for (size_t j = 0; j < C; ++j)
@@ -150,3 +154,5 @@ Matrix<C, R, T> constexpr transpose(Matrix<R, C, T> const &mat)
       res[j, i] = mat[i, j];
   return res;
 }
+
+} // namespace gmath

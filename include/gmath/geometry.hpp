@@ -5,6 +5,9 @@
 #include "geometry/line.hpp"
 #include "geometry/plane.hpp"
 
+namespace gmath
+{
+
 inline Line join(Point3f const &p1, Point3f const &p2)
 {
   return { p2 - p1, Normal3f::cross(as_vec3(p1), as_vec3(p2)) };
@@ -66,3 +69,5 @@ inline HPoint3f meet(Plane const &p1, Plane const &p2, Plane const &p3)
 {
   return meet(meet(p1, p2), p3);
 }
+
+} // namespace gmath
