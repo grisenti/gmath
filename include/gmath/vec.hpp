@@ -13,7 +13,8 @@ namespace gmath
 
 template <Vector V>
   requires(V::SIZE > 1)
-DefaultVectorOf<V::SIZE + 1, ComponentT<V>> extend(V const &v, ComponentT<V> value = {})
+DefaultVectorOf<V::SIZE + 1, ComponentT<V>> extend(
+    V const &v, ComponentT<V> value = {})
 {
   DefaultVectorOf<V::SIZE + 1, ComponentT<V>> res;
   for (size_t i = 0; i < V::SIZE; ++i)
@@ -23,7 +24,7 @@ DefaultVectorOf<V::SIZE + 1, ComponentT<V>> extend(V const &v, ComponentT<V> val
 }
 
 template <Vector V>
-requires(V::SIZE > 1)
+  requires(V::SIZE > 1)
 DefaultVectorOf<V::SIZE - 1, ComponentT<V>> truncate(V const &v)
 {
   DefaultVectorOf<V::SIZE - 1, ComponentT<V>> res;

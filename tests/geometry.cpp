@@ -52,8 +52,8 @@ TEST_CASE("correct_creation_of_normalized_plane_from_plane")
   auto const normal = Normal3f{ 1, 1, 1 };
   Plane plane{ normal, 1 };
   auto const normalized_plane = NormalizedPlane::from_plane(plane);
-  REQUIRE(length(normalized_plane.normal) == Catch::Approx(1.0));
-  REQUIRE(normalized_plane.d == Catch::Approx(1.0 / length(normal)));
+  REQUIRE(magnitude(normalized_plane.normal) == Catch::Approx(1.0));
+  REQUIRE(normalized_plane.d == Catch::Approx(1.0 / magnitude(normal)));
 }
 
 TEST_CASE("distance_point_plane")
@@ -61,7 +61,7 @@ TEST_CASE("distance_point_plane")
   auto const normal = Normal3f{ 1, 1, 1 };
   Plane plane{ normal, 0 };
   auto const normalized_plane = NormalizedPlane::from_plane(plane);
-  auto const l = length(Vec3f{ 1, 1, 1 });
+  auto const l = magnitude(Vec3f{ 1, 1, 1 });
   REQUIRE(signed_distance(normalized_plane, { 1, 1, 1 }) == Catch::Approx(l));
   REQUIRE(
       signed_distance(normalized_plane, { -1, -1, -1 }) == Catch::Approx(-l));
@@ -109,12 +109,13 @@ TEST_CASE("non_intersecting_planes_do_not_intersect")
 TEST_CASE("normalized_line_from_line")
 {
   auto const dir = Vec3f{ 1, 1, 1 };
-  auto const l = length(dir);
+  auto const l = magnitude(dir);
   auto const moment = Normal3f{ 1, 1, 1 };
   auto const line = Line{ dir, moment };
   auto const normalized_line = NormalizedLine::from_line(line);
-  REQUIRE(length(normalized_line.direction) == Catch::Approx(1.0));
-  REQUIRE(length(normalized_line.moment) == Catch::Approx(length(moment) / l));
+  REQUIRE(magnitude(normalized_line.direction) == Catch::Approx(1.0));
+  REQUIRE(magnitude(normalized_line.moment)
+          == Catch::Approx(magnitude(moment) / l));
 }
 
 TEST_CASE("joint_two_points")

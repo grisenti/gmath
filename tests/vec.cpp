@@ -64,7 +64,7 @@ TEST_CASE("vector_cross_product")
 TEST_CASE("vector_length")
 {
   Vec3f v1{ 4, 9, 5 };
-  auto const result = length(v1);
+  auto const result = magnitude(v1);
   auto const expected = Catch::Approx(11.045361017);
   REQUIRE(result == expected);
 }
@@ -108,5 +108,5 @@ TEST_CASE("vector_extend")
 TEST_CASE("octahedral_vector_construction_and_access")
 {
   auto const v = OctahedralVector{ UVec3f::normalize(1, 1, 1) };
-  REQUIRE(length(v.into_unit_vec3().unwrap()) == Catch::Approx(1));
+  REQUIRE(magnitude(v.into_unit_vec3().unwrap()) == Catch::Approx(1));
 }

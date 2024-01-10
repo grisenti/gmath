@@ -27,13 +27,14 @@ NormalizedPlane NormalizedPlane::from_plane_unchecked(Plane const &plane)
 
 NormalizedPlane NormalizedPlane::from_plane(const Plane &plane)
 {
-  auto l = length(plane.normal);
+  auto l = magnitude(plane.normal);
   return { UnitVec<Normal3f>::create_unchecked(plane.normal / l),
     plane.d / l };
 }
 
 Real signed_distance(NormalizedPlane const &plane, Point3f const &point)
 {
+  static_assert(ConstRowVectorWrapper<UnitVec<Normal3f>>);
   return dot(as_vec3(point), plane.normal) + plane.d;
 }
 

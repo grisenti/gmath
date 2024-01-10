@@ -1,12 +1,12 @@
 #pragma once
 
-#include "vec_base.hpp"
+#include "geometric_vector.hpp"
 
 namespace gmath
 {
 
 template <typename T>
-struct Vec2 : BaseColumnVector<2, T>
+struct Vec2 : GeometricColumnVectorBase<2, T>
 {
   T x;
   T y;
@@ -31,6 +31,13 @@ struct Vec2 : BaseColumnVector<2, T>
     return (&x)[i];
   }
 };
+
+template <Array A>
+  requires(A::SIZE == 2)
+Vec2<ComponentT<A>> constexpr as_vec2(A const &a)
+{
+  return { a[0], a[1] };
+}
 
 using Vec2f = Vec2<Real>;
 using Vec2i = Vec2<int>;

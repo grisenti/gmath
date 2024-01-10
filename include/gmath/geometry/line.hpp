@@ -18,11 +18,11 @@ struct Line
 struct NormalizedLine
 {
   /// Creates a NormalizedLine from a Line without checking that the direction
-  /// has unitary length.
+  /// has unitary magnitude.
   static NormalizedLine from_line_unchecked(Line const &line);
 
   /// Creates a NormalizedLine from a Line dividing both the direction and
-  /// moment by the length of the direction.
+  /// moment by the magnitude of the direction.
   static NormalizedLine from_line(Line const &line);
 
   // NOLINT: normalized lines are lines

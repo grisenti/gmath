@@ -27,6 +27,15 @@ struct VecN
   }
 };
 
+template <Array A>
+VecN<A::SIZE, ComponentT<A>> constexpr as_vecn(A const &a)
+{
+  VecN<A::SIZE, ComponentT<A>> res;
+  for (size_t i = 0; i < A::SIZE; ++i)
+    res[i] = a[i];
+  return res;
+}
+
 template <size_t N, typename T>
 struct DefaultVectorOfT
 {

@@ -6,8 +6,10 @@ namespace gmath
 {
 
 template <typename T>
-struct Vec4 : BaseColumnVector<4, T>
+struct Vec4 : VectorBase<4, T>
 {
+  using TypeClass = ColumnVectorTag;
+
   T x;
   T y;
   T z;
@@ -33,6 +35,13 @@ struct Vec4 : BaseColumnVector<4, T>
     return (&x)[i];
   }
 };
+
+template <Array A>
+  requires(A::SIZE == 4)
+Vec4<ComponentT<A>> constexpr as_vec4(A const &a)
+{
+  return { a[0], a[1], a[2], a[3] };
+}
 
 using Vec4f = Vec4<Real>;
 using Vec4i = Vec4<int>;

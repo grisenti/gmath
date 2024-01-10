@@ -8,59 +8,60 @@
 namespace gmath
 {
 
-/// Marker type for column vectors
-struct ColumnVectorTag : ColumnMatrixTag
+struct VectorTag
 {
 };
 
+template <typename V>
+concept Vector = Array<V> && InheritsFrom<V, VectorTag>;
+
 /// Base class meant to remove duplicated code in the various Vector structs
 template <size_t N, typename T>
-struct BaseColumnVector
+struct VectorBase
 {
-  using TypeClass = ColumnVectorTag;
   using ComponentType = T;
   static constexpr size_t SIZE = N;
 };
 
-/// Marker type for row vectors
-struct RowVectorTag : RowMatrixTag
+template <typename V>
+concept ModifiableVector = Vector<V> && ModifiableArray<V>;
+
+template <typename V>
+concept ConstVectorWrapper = Vector<V> && ConstArrayWrapper<V>
+                             && SameTypeClass<V, ModifiableEquivalent<V>>;
+
+/// Marker type for column vectors
+struct ColumnVectorTag : ColumnMatrixTag, VectorTag
 {
 };
 
 template <typename V>
 concept ModifiableColumnVector
-    = ModifiableColumnMatrix<V>
-      && std::derived_from<typename V::TypeClass, ColumnVectorTag>;
+    = ModifiableColumnMatrix<V> && InheritsFrom<V, ColumnVectorTag>;
 
 template <typename V>
-concept ConstColumnVector
-    = ConstColumnMatrix<V>
-      && std::derived_from<typename V::TypeClass, ColumnVectorTag>;
+concept ConstColumnVectorWrapper
+    = ConstColumnMatrix<V> && InheritsFrom<V, ColumnVectorTag>;
+
+/// Marker type for row vectors
+struct RowVectorTag : RowMatrixTag, VectorTag
+{
+};
 
 template <typename V>
 concept ModifiableRowVector
-    = ModifiableRowMatrix<V>
-      && std::derived_from<typename V::TypeClass, RowVectorTag>;
+    = ModifiableRowMatrix<V> && InheritsFrom<V, RowVectorTag>;
 
 template <typename V>
-concept ConstRowVector
-    = ConstRowMatrix<V>
-      && std::derived_from<typename V::TypeClass, RowVectorTag>;
+concept ConstRowVectorWrapper
+    = ConstRowMatrix<V> && InheritsFrom<V, RowVectorTag>;
 
 template <typename V>
-concept RowVector = ModifiableRowVector<V> || ConstRowVector<V>;
+concept RowVector = ModifiableRowVector<V> || ConstRowVectorWrapper<V>;
 
 template <typename V>
-concept ColumnVector = ModifiableColumnVector<V> || ConstColumnVector<V>;
-
-template <typename V>
-concept ModifiableVector = ModifiableColumnVector<V> || ModifiableRowVector<V>;
-
-template <typename V>
-concept ConstVector = ConstColumnVector<V> || ConstRowVector<V>;
-
-template <typename V>
-concept Vector = ModifiableVector<V> || ConstVector<V>;
+concept ColumnVector
+    = ModifiableColumnVector<V> || ConstColumnVectorWrapper<V>;
 
 template <typename V1, typename V2>
 concept VectorCompatibleWeak
@@ -69,8 +70,7 @@ concept VectorCompatibleWeak
 
 template <typename V1, typename V2>
 concept VectorCompatible
-    = VectorCompatibleWeak<V1, V2>
-      && std::same_as<typename V1::TypeClass, typename V2::TypeClass>
+    = VectorCompatibleWeak<V1, V2> && SameTypeClass<V1, V2>
       && std::same_as<ModifiableEquivalentT<V1>, ModifiableEquivalentT<V2>>;
 
 template <Vector V>
@@ -174,27 +174,6 @@ ModifiableEquivalentT<V1> constexpr operator-(V1 const &lhs, V2 const &rhs)
   return ret;
 }
 
-template <Vector V>
-  requires(std::floating_point<ComponentT<V>>)
-ComponentT<V> constexpr length(V const &v)
-{
-  ComponentT<V> ret = {};
-  for (size_t i = 0; i < V::SIZE; ++i)
-    ret += pow2(v[i]);
-  return std::sqrt(ret);
-}
-
-template <Vector V>
-  requires(std::floating_point<ComponentT<V>>)
-V constexpr normalize(V const &v)
-{
-  auto const l = length(v);
-  V ret;
-  for (size_t i = 0; i < V::SIZE; ++i)
-    ret[i] = v[i] / l;
-  return ret;
-}
-
 /// @returns The dot product of the two vectors. It does not require that the
 /// two vectors have the same type class. It is used to implement dot product
 /// between vectors and normals.
@@ -208,54 +187,53 @@ ComponentT<V1> weak_dot(V1 const &lhs, V2 const &rhs)
   return ret;
 }
 
-template <Vector V1, Vector V2>
-  requires VectorCompatible<V1, V2>
-ComponentT<V1> constexpr dot(V1 const &lhs, V2 const &rhs)
+template <Vector V>
+ComponentT<V> constexpr dot(V const &lhs, V const &rhs)
 {
   return weak_dot(lhs, rhs);
 }
 
 template <Vector V>
-ComponentT<V> constexpr squared_length(V const &v)
+ComponentT<V> constexpr square_magnitude(V const &v)
 {
   return dot(v, v);
 }
 
 template <Vector V>
-bool constexpr in_range(V const &v, V const &a, V const &b)
+  requires(std::floating_point<ComponentT<V>>)
+ComponentT<V> constexpr magnitude(V const &v)
 {
-  bool ret = true;
-  for (size_t i = 0; i < V::SIZE; ++i)
-    ret = ret && in_range(v[i], a[i], b[i]);
+  return std::sqrt(square_magnitude(v));
+}
+
+template <Vector V>
+  requires(std::floating_point<ComponentT<V>>)
+V constexpr normalize(V const &v)
+{
+  auto const l = magnitude(v);
+  return v / l;
+}
+
+template <Vector V1, Vector V2>
+  requires VectorCompatible<V1, V2>
+ModifiableEquivalentT<V1> constexpr componentwise_mul(
+    V1 const &lhs, V2 const &v2)
+{
+  ModifiableEquivalentT<V1> ret{};
+  for (size_t i = 0; i < V1::SIZE; ++i)
+    ret[i] = lhs[i] * v2[i];
   return ret;
 }
 
 template <Vector V1, Vector V2>
-  requires VectorCompatible<V1, V2> && std::floating_point<ComponentT<V1>>
-auto project(V1 const &a, V2 const &b)
+  requires VectorCompatible<V1, V2>
+ModifiableEquivalentT<V1> constexpr componentwise_div(
+    V1 const &lhs, V2 const &v2)
 {
-  return b * (dot(a, b) / dot(b, b));
-}
-
-template <Vector V1, Vector V2>
-  requires VectorCompatible<V1, V2> && std::floating_point<ComponentT<V1>>
-auto project_no_division(V1 const &a, V2 const &b)
-{
-  return b * (dot(a, b));
-}
-
-template <Vector V1, Vector V2>
-  requires VectorCompatible<V1, V2> && std::floating_point<ComponentT<V1>>
-auto reject(V1 const &a, V2 const &b)
-{
-  return a - project(a, b);
-}
-
-template <Vector V1, Vector V2>
-  requires VectorCompatible<V1, V2> && std::floating_point<ComponentT<V1>>
-auto reject_no_division(V1 const &a, V2 const &b)
-{
-  return a - project_no_division(a, b);
+  ModifiableEquivalentT<V1> ret{};
+  for (size_t i = 0; i < V1::SIZE; ++i)
+    ret[i] = lhs[i] / v2[i];
+  return ret;
 }
 
 template <Vector V>
@@ -265,6 +243,15 @@ bool components_near_zero(V const &v, ComponentT<V> const eps = 1e-8_r)
     if (std::abs(v[i]) > eps)
       return false;
   return true;
+}
+
+template <Vector V>
+bool constexpr in_range(V const &v, V const &a, V const &b)
+{
+  bool ret = true;
+  for (size_t i = 0; i < V::SIZE; ++i)
+    ret = ret && in_range(v[i], a[i], b[i]);
+  return ret;
 }
 
 } // namespace gmath

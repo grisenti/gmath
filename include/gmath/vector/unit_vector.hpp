@@ -26,7 +26,8 @@ public:
   /// vector is normalized.
   static UnitVec constexpr normalize(auto &&...args)
   {
-    return UnitVec{ ::gmath::normalize(V(std::forward<decltype(args)>(args)...)) };
+    return UnitVec{ ::gmath::normalize(
+        V(std::forward<decltype(args)>(args)...)) };
   }
 
   // NOLINT: implicit conversion is intended. A UnitVec can be used everywhere
@@ -59,8 +60,20 @@ private:
 template <Vector V>
 UnitVec<V> constexpr operator-(UnitVec<V> const &v)
 {
-  // negating a unit vector does not change its absolute length
+  // negating a unit vector does not change its absolute magnitude
   return UnitVec<V>::create_unchecked(-v.unwrap());
+}
+
+template <GeometricVector V>
+auto project(V const &a, UnitVec<V> const &b)
+{
+  return b * dot(a, b);
+}
+
+template <GeometricVector V>
+auto reject(V const &a, UnitVec<V> const &b)
+{
+  return a - project(a, b);
 }
 
 template <Vector V>

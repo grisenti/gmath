@@ -1,12 +1,12 @@
 #pragma once
 
-#include "vec_base.hpp"
+#include "geometric_vector.hpp"
 
 namespace gmath
 {
 
 template <typename T>
-struct Vec3 : BaseColumnVector<3, T>
+struct Vec3 : GeometricColumnVectorBase<3, T>
 {
   T x;
   T y;
@@ -33,11 +33,18 @@ struct Vec3 : BaseColumnVector<3, T>
   }
 };
 
+template <Array A>
+  requires(A::SIZE == 3)
+Vec3<ComponentT<A>> constexpr as_vec3(A const &a)
+{
+  return { a[0], a[1], a[2] };
+}
+
 using Vec3f = Vec3<Real>;
 using Vec3i = Vec3<int>;
 using Vec3u = Vec3<unsigned>;
 
-template <Vector V1, Vector V2>
+template <GeometricVector V1, GeometricVector V2>
   requires VectorCompatibleWeak<V1, V2> && (V1::SIZE == 3)
 Vec3<ComponentT<V1>> constexpr cross(V1 const &lhs, V2 const &rhs)
 {
@@ -48,15 +55,6 @@ Vec3<ComponentT<V1>> constexpr cross(V1 const &lhs, V2 const &rhs)
     lhs[0] * rhs[1] - lhs[1] * rhs[0]
   };
   // clang-format on
-}
-
-template <Vector V1, Vector V2, Vector V3>
-  requires VectorCompatible<V1, V2> && VectorCompatible<V2, V3>
-           && (V1::SIZE == 3)
-ComponentT<V1> constexpr scalar_triple_product(
-    V1 const &a, V2 const &b, V3 const &c)
-{
-  return dot(cross(a, b), c);
 }
 
 } // namespace gmath
