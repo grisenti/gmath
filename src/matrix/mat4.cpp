@@ -7,7 +7,7 @@ namespace gmath
 // Both implementations are taken from "Foundations of Game Engine Development
 // Volume 1 Mathematics" by Eric Lengyel.
 
-Real det(mat4f const &M)
+Real det(Mat4f const &M)
 {
   auto const a = truncate(M.column(0));
   auto const b = truncate(M.column(1));
@@ -26,7 +26,7 @@ Real det(mat4f const &M)
   return dot(s, v) + dot(t, u);
 }
 
-mat4f inverse(mat4f const &M)
+Mat4f inverse(Mat4f const &M)
 {
   auto const a = truncate(M.column(0));
   auto const b = truncate(M.column(1));
@@ -45,7 +45,7 @@ mat4f inverse(mat4f const &M)
   auto const inv_det = 1.0f / (dot(s, v) + dot(t, u));
 
   // clang-format off
-    return mat4f::from_row_vecs({
+    return Mat4f::from_row_vecs({
       extend(cross(b, v) + y * t, -dot(b, t)) * inv_det,
       extend(cross(v, a) - x * t, dot(a, t)) * inv_det,
       extend(cross(d, u) + w * s, -dot(d, s)) * inv_det,

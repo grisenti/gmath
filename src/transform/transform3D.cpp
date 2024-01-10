@@ -101,10 +101,10 @@ Transform3D Transform3D::inverse() const
   return { .matrix = inv_matrix, .translation = inv_translation };
 }
 
-mat4f Transform3D::as_mat4() const
+Mat4f Transform3D::as_mat4() const
 {
   // clang-format off
-  return mat4f::from_rows({
+  return Mat4f::from_rows({
     matrix[0, 0], matrix[0, 1], matrix[0, 2], translation.x,
     matrix[0, 1], matrix[1, 1], matrix[1, 2], translation.y,
     matrix[0, 2], matrix[1, 2], matrix[2, 2], translation.z,

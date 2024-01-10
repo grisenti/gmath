@@ -18,7 +18,7 @@ static void is_identity(Mat3f const &M)
   REQUIRE_THAT((M[2, 2]), WithinAbs(1, 0.0001));
 }
 
-static void is_identity(mat4f const &M)
+static void is_identity(Mat4f const &M)
 {
   using Catch::Matchers::WithinAbs;
   REQUIRE_THAT((M[0, 0]), WithinAbs(1, 0.0001));
@@ -342,7 +342,7 @@ TEST_CASE("matrix_3x3_inverse")
 
 TEST_CASE("matrix_4x4_determinant")
 {
-  auto const m1 = mat4f::from_rows(
+  auto const m1 = Mat4f::from_rows(
       { 1, 2, 3, 4, -2, 1, -4, 3, 3, -4, -1, 2, 4, 3, -2, -1 });
   auto const result = det(m1);
   REQUIRE(result == Catch::Approx(900));
@@ -351,7 +351,7 @@ TEST_CASE("matrix_4x4_determinant")
 TEST_CASE("matrix_4x4_inverse")
 {
   auto const m1
-      = mat4f::from_rows({ 3, 3, 3, 1, 2, 4, 5, 2, 3, 4, 5, 1, 2, 2, 3, 4 });
+      = Mat4f::from_rows({ 3, 3, 3, 1, 2, 4, 5, 2, 3, 4, 5, 1, 2, 2, 3, 4 });
   auto const m2 = inverse(m1);
   is_identity(m1 * m2);
   is_identity(m2 * m1);

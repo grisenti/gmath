@@ -29,7 +29,7 @@ struct Transform3D
   static Transform3D reflect(NormalizedPlane const &plane);
 
   Transform3D inverse() const;
-  mat4f as_mat4() const;
+  Mat4f as_mat4() const;
 };
 
 /// combines transformations, with `rhs` being applied first and `lhs` second
