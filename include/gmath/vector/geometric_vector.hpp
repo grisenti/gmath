@@ -31,6 +31,12 @@ template <typename V>
 concept GeometricVector = Vector<V> && InheritsFrom<V, GeometricVectorTag>;
 
 template <GeometricVector V>
+auto square_length(V const &v)
+{
+  return square_magnitude(v);
+}
+
+template <GeometricVector V>
 auto length(V const &v)
 {
   return magnitude(v);
