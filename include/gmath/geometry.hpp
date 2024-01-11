@@ -28,11 +28,6 @@ inline Plane join(Point3f const &p, Line const &L)
   return join(L, p);
 }
 
-inline Plane join(Point3f const &p1, Point3f const &p2, Point3f const &p3)
-{
-  return join(join(p1, p2), p3);
-}
-
 inline Line meet(Plane const &f, Plane const &g)
 {
   return {
@@ -63,11 +58,6 @@ inline HPoint3f meet(Line const &L, Plane const &f)
 inline HPoint3f meet(Plane const &f, Line const &L)
 {
   return meet(L, f);
-}
-
-inline HPoint3f meet(Plane const &p1, Plane const &p2, Plane const &p3)
-{
-  return meet(meet(p1, p2), p3);
 }
 
 } // namespace gmath

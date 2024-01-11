@@ -11,10 +11,13 @@ namespace gmath
 
 struct Plane
 {
-  Normal3f normal;
-  Real d;
+  static Plane from_points(
+      Point3f const &p1, Point3f const &p2, Point3f const &p3);
 
   bool operator==(Plane const &rhs) const = default;
+
+  Normal3f normal;
+  Real d;
 };
 
 /// returns the intersection point between the three planes (if there is one).

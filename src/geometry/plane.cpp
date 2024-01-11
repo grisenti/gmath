@@ -3,6 +3,14 @@
 namespace gmath
 {
 
+Plane Plane::from_points(
+    const Point3f &p1, const Point3f &p2, const Point3f &p3)
+{
+  auto const n
+      = Normal3f::cross(as_vec3(p2) - as_vec3(p1), as_vec3(p3) - as_vec3(p1));
+  return { n, -dot(n, as_vec3(p1)) };
+}
+
 std::optional<Point3f> intersection_point(
     Plane const &p1, Plane const &p2, Plane const &p3)
 {
