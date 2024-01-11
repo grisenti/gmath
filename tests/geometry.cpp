@@ -173,7 +173,7 @@ TEST_CASE("meet_line_plane")
     0
   };
   auto const l = join(Point3f{ 1, 0, 0 }, Point3f{ 1, 0, 1 });
-  auto const result = Point3f::from_homogeneous_point(meet(l, p));
+  auto const result = Point3f::project(meet(l, p));
   auto const expected = Point3f{ 1, 0, 0 };
   REQUIRE(result == expected);
 }

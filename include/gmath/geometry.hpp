@@ -40,7 +40,7 @@ inline Line meet(Plane const &f, Plane const &g)
   };
 }
 
-inline HPoint3f meet(Line const &L, Plane const &f)
+inline Vec4f meet(Line const &L, Plane const &f)
 {
   auto const [fx, fy, fz] = f.normal;
   auto const [mx, my, mz] = L.moment;
@@ -55,7 +55,7 @@ inline HPoint3f meet(Line const &L, Plane const &f)
   // clang-format on
 }
 
-inline HPoint3f meet(Plane const &f, Line const &L)
+inline Vec4f meet(Plane const &f, Line const &L)
 {
   return meet(L, f);
 }
