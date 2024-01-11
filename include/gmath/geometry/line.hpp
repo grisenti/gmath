@@ -9,10 +9,10 @@ namespace gmath
 
 struct Line
 {
+  bool operator==(Line const &rhs) const = default;
+
   Vec3f direction;
   Normal3f moment;
-
-  bool operator==(Line const &rhs) const = default;
 };
 
 struct NormalizedLine
