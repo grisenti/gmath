@@ -94,9 +94,9 @@ TEST_CASE("square_matrix_from_row_values")
 TEST_CASE("square_matrix_from_row_vectors")
 {
   auto const m = Mat3<int>::from_row_vecs({
-      Vec3i{1,  2, 3},
-      Vec3i{ 4, 5, 6},
-      Vec3i{ 7, 8, 9}
+      Vec3i{ 1, 2, 3 },
+      Vec3i{ 4, 5, 6 },
+      Vec3i{ 7, 8, 9 }
   });
   REQUIRE(m[0, 0] == 1);
   REQUIRE(m[0, 1] == 2);
@@ -130,9 +130,9 @@ TEST_CASE("non_square_matrix_row_values")
 TEST_CASE("non_square_matrix_from_row_vectors")
 {
   auto const m = Matrix<3, 4, int>::from_row_vecs({
-      Vec4i{1,  2,  3, 4},
-      Vec4i{ 5, 6,  7, 8},
-      Vec4i{ 9, 10, 0, 0}
+      Vec4i{ 1, 2,  3, 4 },
+      Vec4i{ 5, 6,  7, 8 },
+      Vec4i{ 9, 10, 0, 0 }
   });
   REQUIRE(m[0, 0] == 1);
   REQUIRE(m[0, 1] == 2);
@@ -165,9 +165,9 @@ TEST_CASE("square_matrix_from_column_values")
 TEST_CASE("square_matrix_from_column_vectors")
 {
   auto const m = Mat3<int>::from_column_vecs({
-      Vec3i{1,  2, 3},
-      Vec3i{ 4, 5, 6},
-      Vec3i{ 7, 8, 9}
+      Vec3i{ 1, 2, 3 },
+      Vec3i{ 4, 5, 6 },
+      Vec3i{ 7, 8, 9 }
   });
   REQUIRE(m[0, 0] == 1);
   REQUIRE(m[0, 1] == 4);
@@ -201,10 +201,10 @@ TEST_CASE("non_square_matrix_from_column_values")
 TEST_CASE("non_square_matrix_from_column_vectors")
 {
   auto const m = Matrix<3, 4, int>::from_column_vecs({
-      Vec3i{1,   2,  3 },
-      Vec3i{ 4,  5,  6 },
-      Vec3i{ 7,  8,  9 },
-      Vec3i{ 10, 11, 12}
+      Vec3i{ 1,  2,  3  },
+      Vec3i{ 4,  5,  6  },
+      Vec3i{ 7,  8,  9  },
+      Vec3i{ 10, 11, 12 }
   });
   REQUIRE(m[0, 0] == 1);
   REQUIRE(m[1, 0] == 2);
