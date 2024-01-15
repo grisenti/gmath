@@ -10,7 +10,8 @@ constexpr Real u16_max = 65535._r;
 
 std::uint16_t encode(Real x)
 {
-  return std::round(clamp((x + 1) / 2, 0._r, 1._r) * u16_max);
+  return static_cast<std::uint16_t>(
+      std::round(clamp((x + 1) / 2, 0._r, 1._r) * u16_max));
 }
 
 float sign(Real x)

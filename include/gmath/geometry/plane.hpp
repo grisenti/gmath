@@ -42,7 +42,8 @@ struct NormalizedPlane
 
   bool operator==(NormalizedPlane const &rhs) const = default;
 
-  UnitVec<Normal3f> normal = UnitVec<Normal3f>::create_unchecked(0, 0, 1);
+  UnitVec<Normal3f> normal
+      = UnitVec<Normal3f>::create_unchecked(0._r, 0._r, 1._r);
   Real d = 0;
 };
 
