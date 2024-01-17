@@ -10,6 +10,27 @@ TEST_CASE("Transform2D_identity")
   REQUIRE(result == v);
 }
 
+TEST_CASE("Transform2D_as_mat3")
+{
+  auto const transform = Transform2D{
+    Mat2f::from_rows({ 1, 2, 3, 4 }
+    ), Vec2f{ 1, 2 }
+  };
+  auto const M = transform.as_mat3();
+
+  REQUIRE(M[0, 0] == 1);
+  REQUIRE(M[0, 1] == 2);
+  REQUIRE(M[0, 2] == 1);
+
+  REQUIRE(M[1, 0] == 3);
+  REQUIRE(M[1, 1] == 4);
+  REQUIRE(M[1, 2] == 2);
+
+  REQUIRE(M[2, 0] == 0);
+  REQUIRE(M[2, 1] == 0);
+  REQUIRE(M[2, 2] == 1);
+}
+
 TEST_CASE("Transform2D_rotation")
 {
   auto const transform = Transform2D::rotate(Degf{ 90 });
@@ -111,6 +132,35 @@ TEST_CASE("Transform3D_identity")
   REQUIRE(result == v);
 }
 
+TEST_CASE("Transform3D_as_mat4")
+{
+  auto const transform = Transform3D{
+    Mat3f::from_rows({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }
+    ), Vec3f{ 1, 2, 3 }
+  };
+  auto const M = transform.as_mat4();
+
+  REQUIRE(M[0, 0] == 1);
+  REQUIRE(M[0, 1] == 2);
+  REQUIRE(M[0, 2] == 3);
+  REQUIRE(M[0, 3] == 1);
+
+  REQUIRE(M[1, 0] == 4);
+  REQUIRE(M[1, 1] == 5);
+  REQUIRE(M[1, 2] == 6);
+  REQUIRE(M[1, 3] == 2);
+
+  REQUIRE(M[2, 0] == 7);
+  REQUIRE(M[2, 1] == 8);
+  REQUIRE(M[2, 2] == 9);
+  REQUIRE(M[2, 3] == 3);
+
+  REQUIRE(M[3, 0] == 0);
+  REQUIRE(M[3, 1] == 0);
+  REQUIRE(M[3, 2] == 0);
+  REQUIRE(M[3, 3] == 1);
+}
+
 TEST_CASE("Transform3D_x_axis_rotation")
 {
   auto const transform = Transform3D::rotate(
@@ -201,7 +251,7 @@ TEST_CASE("Transform3D_skew_vector")
 TEST_CASE("Transform3D_reflect_vector")
 {
   auto const plane = NormalizedPlane::from_plane(Plane{
-      {1, 1, 1},
+      { 1, 1, 1 },
       0
   });
   auto const transform = Transform3D::reflect(plane);

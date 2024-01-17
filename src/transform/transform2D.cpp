@@ -6,7 +6,7 @@ namespace gmath
 {
 
 Transform2D const Transform2D::IDENTITY = Transform2D{
-  .matrix = Mat2f::diagonal(1.f), .translation = Vec2f{0, 0}
+  .matrix = Mat2f::diagonal(1.f), .translation = Vec2f{ 0, 0 }
 };
 
 Transform2D Transform2D::rotate(Radf angle)
@@ -23,14 +23,14 @@ Transform2D Transform2D::rotate(Radf angle)
 Transform2D Transform2D::scale(Vec2f const &scale)
 {
   return {
-    .matrix = Mat2f::diagonal(scale), .translation = Vec2f{0, 0}
+    .matrix = Mat2f::diagonal(scale), .translation = Vec2f{ 0, 0 }
   };
 }
 
 Transform2D Transform2D::scale(Real scale)
 {
   return {
-    .matrix = Mat2f::diagonal(scale), .translation = Vec2f{0, 0}
+    .matrix = Mat2f::diagonal(scale), .translation = Vec2f{ 0, 0 }
   };
 }
 
@@ -54,7 +54,7 @@ Transform2D Transform2D::skew(Radf angle, const UnitVec<Vec2f> &direction,
   });
   // clang-format on
   return {
-    .matrix = skew_matrix, .translation = Vec2f{0, 0}
+    .matrix = skew_matrix, .translation = Vec2f{ 0, 0 }
   };
 }
 
@@ -80,7 +80,7 @@ Mat3f Transform2D::as_mat3() const
   // clang-format off
   return Mat3f::from_rows({
       matrix[0, 0], matrix[0, 1], translation.x,
-      matrix[0, 1], matrix[1, 1], translation.y,
+      matrix[1, 0], matrix[1, 1], translation.y,
       0, 0, 1
   });
   // clang-format on

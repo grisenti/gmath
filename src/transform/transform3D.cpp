@@ -4,7 +4,7 @@ namespace gmath
 {
 
 Transform3D const Transform3D::IDENTITY = Transform3D{
-  .matrix = Mat3f::diagonal(1.f), .translation = Vec3f{0, 0, 0}
+  .matrix = Mat3f::diagonal(1.f), .translation = Vec3f{ 0, 0, 0 }
 };
 
 Transform3D Transform3D::rotate(Radf const angle, UnitVec<Vec3f> const &u_axis)
@@ -23,21 +23,21 @@ Transform3D Transform3D::rotate(Radf const angle, UnitVec<Vec3f> const &u_axis)
   // clang-format on
 
   return {
-    .matrix = rotation_matrix, .translation = Vec3f{0, 0, 0}
+    .matrix = rotation_matrix, .translation = Vec3f{ 0, 0, 0 }
   };
 }
 
 Transform3D Transform3D::scale(Vec3f const &scale)
 {
   return {
-    .matrix = Mat3f::diagonal(scale), .translation = Vec3f{0, 0, 0}
+    .matrix = Mat3f::diagonal(scale), .translation = Vec3f{ 0, 0, 0 }
   };
 }
 
 Transform3D Transform3D::scale(Real scale)
 {
   return {
-    .matrix = Mat3f::diagonal(scale), .translation = Vec3f{0, 0, 0}
+    .matrix = Mat3f::diagonal(scale), .translation = Vec3f{ 0, 0, 0 }
   };
 }
 
@@ -63,7 +63,7 @@ Transform3D Transform3D::skew(Radf angle, const UnitVec<Vec3f> &direction,
   });
   // clang-format on
   return {
-    .matrix = skew_matrix, .translation = Vec3f{0, 0, 0}
+    .matrix = skew_matrix, .translation = Vec3f{ 0, 0, 0 }
   };
 }
 
@@ -106,8 +106,8 @@ Mat4f Transform3D::as_mat4() const
   // clang-format off
   return Mat4f::from_rows({
     matrix[0, 0], matrix[0, 1], matrix[0, 2], translation.x,
-    matrix[0, 1], matrix[1, 1], matrix[1, 2], translation.y,
-    matrix[0, 2], matrix[1, 2], matrix[2, 2], translation.z,
+    matrix[1, 0], matrix[1, 1], matrix[1, 2], translation.y,
+    matrix[2, 0], matrix[2, 1], matrix[2, 2], translation.z,
     0, 0, 0, 1
   });
   // clang-format on
