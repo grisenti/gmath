@@ -54,25 +54,25 @@ template <typename T>
 using ModifiableEquivalentT = ModifiableEquivalent<T>::Type;
 
 template <Array A>
-ComponentT<A> constexpr *begin(A &array)
+constexpr ComponentT<A> const *begin(A &array)
 {
   return &array[0];
 }
 
 template <Array A>
-ComponentT<A> constexpr *end(A &array)
+constexpr ComponentT<A> const *end(A &array)
 {
   return &array[0] + A::SIZE;
 }
 
 template <ModifiableArray A>
-ComponentT<A> *begin(A &array)
+constexpr ComponentT<A> *begin(A &array)
 {
   return &array[0];
 }
 
 template <ModifiableArray A>
-ComponentT<A> *end(A &array)
+constexpr ComponentT<A> *end(A &array)
 {
   return &array[0] + A::SIZE;
 }
