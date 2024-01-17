@@ -17,7 +17,7 @@ struct Vec2 : GeometricColumnVectorBase<2, T>
   {
   }
 
-  T operator[](size_t i) const
+  T const &operator[](size_t i) const
   {
     static_assert(std::is_standard_layout_v<Vec2<T>>,
         "Vec2 must be standard layout for operator[] to work");

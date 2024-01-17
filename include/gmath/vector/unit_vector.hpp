@@ -43,7 +43,7 @@ public:
     return _value;
   }
 
-  ComponentType operator[](size_t i) const
+  ComponentType const &operator[](size_t i) const
   {
     return _value[i];
   }

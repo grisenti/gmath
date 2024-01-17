@@ -41,7 +41,7 @@ struct Normal3
   {
   }
 
-  T operator[](size_t i) const
+  T const &operator[](size_t i) const
   {
     static_assert(std::is_standard_layout_v<Vec3<T>>,
         "Normal3 must be standard layout for operator[] to work");

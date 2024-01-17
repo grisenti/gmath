@@ -2,6 +2,16 @@
 
 #include "gmath/vec.hpp"
 
+TEST_CASE("vector_iteration")
+{
+  Vec3i v{ 1, 2, 3 };
+  for (size_t i = 0; auto const &x : v)
+  {
+    REQUIRE(x == v[i]);
+    i += 1;
+  }
+}
+
 TEST_CASE("vector_addition")
 {
   Vec3i v1{ 1, 2, 3 };

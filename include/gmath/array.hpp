@@ -2,14 +2,17 @@
 
 #include <concepts>
 
+namespace gmath
+{
+
 template <typename A>
 concept Array = requires(A const &array) {
   typename A::ComponentType;
   A::SIZE;
   {
     array[0]
-  } -> std::same_as<typename A::ComponentType>;
-};
+  } -> std::same_as<typename A::ComponentType const &>;
+} && (A::SIZE * sizeof(typename A::ComponentType) == sizeof(A));
 
 template <typename A>
 concept ModifiableArray = Array<A> && requires(A arr) {
@@ -49,3 +52,29 @@ struct ModifiableEquivalent<M>
 
 template <typename T>
 using ModifiableEquivalentT = ModifiableEquivalent<T>::Type;
+
+template <Array A>
+ComponentT<A> constexpr *begin(A &array)
+{
+  return &array[0];
+}
+
+template <Array A>
+ComponentT<A> constexpr *end(A &array)
+{
+  return &array[0] + A::SIZE;
+}
+
+template <ModifiableArray A>
+ComponentT<A> *begin(A &array)
+{
+  return &array[0];
+}
+
+template <ModifiableArray A>
+ComponentT<A> *end(A &array)
+{
+  return &array[0];
+}
+
+} // namespace gmath

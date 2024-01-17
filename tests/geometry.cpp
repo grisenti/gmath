@@ -2,6 +2,26 @@
 
 #include "gmath/geometry.hpp"
 
+TEST_CASE("point_iteration")
+{
+  Point3i p{ 1, 2, 3 };
+  for (size_t i = 0; auto const &x : p)
+  {
+    REQUIRE(x == p[i]);
+    i += 1;
+  }
+}
+
+TEST_CASE("normal_iteration")
+{
+  Normal3f n{ 1, 2, 3 };
+  for (size_t i = 0; auto const &x : n)
+  {
+    REQUIRE(x == n[i]);
+    i += 1;
+  }
+}
+
 TEST_CASE("direction_from_pair_of_points")
 {
   Point3i p1{ 1, 1, 1 };

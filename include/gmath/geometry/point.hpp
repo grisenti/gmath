@@ -37,7 +37,7 @@ struct Point2 : PointBase<2, T>
   {
   }
 
-  T operator[](size_t i) const
+  T const &operator[](size_t i) const
   {
     static_assert(std::is_standard_layout_v<Point2<T>>,
         "Point2 must be standard layout for operator[] to work");
@@ -82,7 +82,7 @@ struct Point3 : PointBase<3, T>
   {
   }
 
-  T operator[](size_t i) const
+  T const &operator[](size_t i) const
   {
     static_assert(std::is_standard_layout_v<Point3<T>>,
         "Point3 must be standard layout for operator[] to work");

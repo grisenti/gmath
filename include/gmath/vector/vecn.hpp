@@ -16,7 +16,7 @@ struct VecN
 
   T values[N];
 
-  T operator[](size_t i) const
+  T const &operator[](size_t i) const
   {
     return values[i];
   }
