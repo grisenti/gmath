@@ -74,7 +74,7 @@ ComponentT<A> *begin(A &array)
 template <ModifiableArray A>
 ComponentT<A> *end(A &array)
 {
-  return &array[0];
+  return &array[0] + A::SIZE;
 }
 
 } // namespace gmath
