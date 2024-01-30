@@ -208,7 +208,7 @@ ComponentT<V> constexpr magnitude(V const &v)
 
 template <Vector V>
   requires(std::floating_point<ComponentT<V>>)
-V constexpr normalize(V const &v)
+ModifiableEquivalentT<V> constexpr normalize(V const &v)
 {
   auto const l = magnitude(v);
   return v / l;
