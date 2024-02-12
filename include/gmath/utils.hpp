@@ -6,7 +6,7 @@ namespace gmath
 {
 
 template <Numeric T>
-T pow2(T const x)
+constexpr T pow2(T const x)
 {
   return x * x;
 }
