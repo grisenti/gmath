@@ -12,7 +12,7 @@ constexpr T pow2(T const x)
 }
 
 template <Numeric T>
-T constexpr clamp(T const x, T const a, T const b)
+constexpr T clamp(T const x, T const a, T const b)
 {
   if (x < a)
     return a;
