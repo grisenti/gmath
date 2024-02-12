@@ -21,4 +21,13 @@ constexpr T clamp(T const x, T const a, T const b)
   return x;
 }
 
+template <Numeric T>
+constexpr T wrapping_add(T const x, T const inc, T const a, T const b)
+{
+  auto const val = x + inc;
+  if (val >= b)
+    return a;
+  return val;
+}
+
 } // namespace gmath
