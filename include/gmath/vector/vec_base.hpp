@@ -237,15 +237,6 @@ ModifiableEquivalentT<V1> constexpr componentwise_div(
 }
 
 template <Vector V>
-bool components_near_zero(V const &v, ComponentT<V> const eps = 1e-8_r)
-{
-  for (size_t i = 0; i < V::SIZE; ++i)
-    if (std::abs(v[i]) > eps)
-      return false;
-  return true;
-}
-
-template <Vector V>
 bool constexpr in_range(V const &v, V const &a, V const &b)
 {
   bool ret = true;

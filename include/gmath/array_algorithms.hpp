@@ -54,4 +54,14 @@ ModifiableEquivalentT<A> abs(A const &array)
   return result;
 }
 
+template <Array A>
+  requires std::floating_point<ComponentT<A>>
+bool components_near_zero(A const &v, ComponentT<A> const eps = 1e-8_r)
+{
+  for (size_t i = 0; i < A::SIZE; ++i)
+    if (std::abs(v[i]) > eps)
+      return false;
+  return true;
+}
+
 }
