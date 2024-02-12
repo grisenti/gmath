@@ -16,6 +16,7 @@ add_executable(tests
         units.cpp
         vec.cpp
         array_algorithms.cpp
+        numeric_utils.cpp
 )
 enable_warnings(tests WARNINGS_AS_ERRORS_OFF)
 enable_sanitizers(tests ON ON ON OFF OFF)
