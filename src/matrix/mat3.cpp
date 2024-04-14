@@ -6,9 +6,12 @@ namespace gmath
 
 Real det(Mat3f const &M)
 {
-  return M[0, 0] * M[1, 1] * M[2, 2] + M[0, 1] * M[1, 2] * M[2, 0]
-         + M[0, 2] * M[1, 0] * M[2, 1] - M[0, 0] * M[1, 2] * M[2, 1]
-         - M[0, 1] * M[1, 0] * M[2, 2] - M[0, 2] * M[1, 1] * M[2, 0];
+  return M.entry(0, 0) * M.entry(1, 1) * M.entry(2, 2)
+         + M.entry(0, 1) * M.entry(1, 2) * M.entry(2, 0)
+         + M.entry(0, 2) * M.entry(1, 0) * M.entry(2, 1)
+         - M.entry(0, 0) * M.entry(1, 2) * M.entry(2, 1)
+         - M.entry(0, 1) * M.entry(1, 0) * M.entry(2, 2)
+         - M.entry(0, 2) * M.entry(1, 1) * M.entry(2, 0);
 }
 
 Mat3f adj(Mat3f const &M)

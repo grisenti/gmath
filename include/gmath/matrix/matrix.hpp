@@ -21,7 +21,7 @@ struct Matrix
     auto res = Matrix{};
     for (size_t j = 0; j < C; ++j)
       for (size_t i = 0; i < R; ++i)
-        res[i, j] = i == j ? diagonal : 0;
+        res.entry(i, j) = i == j ? diagonal : 0;
     return res;
   }
 
@@ -30,7 +30,7 @@ struct Matrix
     auto res = Matrix{};
     for (size_t j = 0; j < C; ++j)
       for (size_t i = 0; i < R; ++i)
-        res[i, j] = i == j ? diagonal[i] : 0;
+        res.entry(i, j) = i == j ? diagonal[i] : 0;
     return res;
   }
 
@@ -39,7 +39,7 @@ struct Matrix
     auto res = Matrix{};
     for (size_t i = 0; i < R; ++i)
       for (size_t j = 0; j < C; ++j)
-        res[i, j] = rows[i * C + j];
+        res.entry(i, j) = rows[i * C + j];
     return res;
   }
 
@@ -48,7 +48,7 @@ struct Matrix
     auto res = Matrix{};
     for (size_t i = 0; i < R; ++i)
       for (size_t j = 0; j < C; ++j)
-        res[i, j] = rows[i][j];
+        res.entry(i, j) = rows[i][j];
     return res;
   }
 
@@ -66,7 +66,7 @@ struct Matrix
     auto res = Matrix{};
     for (size_t i = 0; i < R; ++i)
       for (size_t j = 0; j < C; ++j)
-        res[i, j] = cols[j][i];
+        res.entry(i, j) = cols[j][i];
     return res;
   }
 
@@ -79,17 +79,31 @@ struct Matrix
     return *this;
   }
 
-  T constexpr &operator[](size_t i, size_t j)
+  T constexpr &entry(size_t i, size_t j)
   {
     GMATH_DEBUG_ASSERT(i < R && j < C);
     return values[i + j * R];
   }
 
-  T constexpr operator[](size_t i, size_t j) const
+  T constexpr entry(size_t i, size_t j) const
   {
     GMATH_DEBUG_ASSERT(i < R && j < C);
     return values[i + j * R];
   }
+
+#if __cpp_multidimensional_subscript
+
+  T constexpr &operator[](size_t i, size_t j)
+  {
+    return entry(i, j);
+  }
+
+  T constexpr operator[](size_t i, size_t j) const
+  {
+    return entry(i, j);
+  }
+
+#endif // __cpp_multidimensional_subscript
 
   RowVec constexpr row(size_t i) const
   {
@@ -117,7 +131,7 @@ Matrix<R1, C2, T> constexpr operator*(
     for (size_t j = 0; j < C2; ++j)
       for (size_t k = 0; k < C1; ++k)
       {
-        res[i, j] += lhs[i, k] * rhs[k, j];
+        res.entry(i, j) += lhs.entry(i, k) * rhs.entry(k, j);
       }
   return res;
 }
@@ -130,7 +144,7 @@ ModifiableEquivalentT<V> constexpr operator*(
   auto res = ModifiableEquivalentT<V>{};
   for (size_t j = 0; j < C; ++j)
     for (size_t i = 0; i < R; ++i)
-      res[i] += lhs[i, j] * rhs[j];
+      res[i] += lhs.entry(i, j) * rhs[j];
   return res;
 }
 
@@ -142,7 +156,7 @@ ModifiableEquivalentT<V> constexpr operator*(
   auto res = ModifiableEquivalentT<V>{};
   for (size_t j = 0; j < C; ++j)
     for (size_t i = 0; i < R; ++i)
-      res[j] += lhs[j] * rhs[i, j];
+      res[j] += lhs[j] * rhs.entry(i, j);
   return res;
 }
 
@@ -152,7 +166,7 @@ Matrix<C, R, T> constexpr transpose(Matrix<R, C, T> const &mat)
   auto res = Matrix<C, R, T>::diagonal(0);
   for (size_t j = 0; j < C; ++j)
     for (size_t i = 0; i < R; ++i)
-      res[j, i] = mat[i, j];
+      res.entry(j, i) = mat.entry(i, j);
   return res;
 }
 

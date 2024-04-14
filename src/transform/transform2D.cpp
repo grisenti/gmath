@@ -79,8 +79,8 @@ Mat3f Transform2D::as_mat3() const
 {
   // clang-format off
   return Mat3f::from_rows({
-      matrix[0, 0], matrix[0, 1], translation.x,
-      matrix[1, 0], matrix[1, 1], translation.y,
+      matrix.entry(0, 0), matrix.entry(0, 1), translation.x,
+      matrix.entry(1, 0), matrix.entry(1, 1), translation.y,
       0, 0, 1
   });
   // clang-format on

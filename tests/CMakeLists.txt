@@ -18,6 +18,7 @@ add_executable(tests
         array_algorithms.cpp
         numeric_utils.cpp
 )
+target_compile_features(tests PUBLIC cxx_std_23)
 enable_warnings(tests WARNINGS_AS_ERRORS_OFF)
 enable_sanitizers(tests ON ON ON OFF OFF)
 

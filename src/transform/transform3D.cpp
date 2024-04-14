@@ -105,9 +105,9 @@ Mat4f Transform3D::as_mat4() const
 {
   // clang-format off
   return Mat4f::from_rows({
-    matrix[0, 0], matrix[0, 1], matrix[0, 2], translation.x,
-    matrix[1, 0], matrix[1, 1], matrix[1, 2], translation.y,
-    matrix[2, 0], matrix[2, 1], matrix[2, 2], translation.z,
+    matrix.entry(0, 0), matrix.entry(0, 1), matrix.entry(0, 2), translation.x,
+    matrix.entry(1, 0), matrix.entry(1, 1), matrix.entry(1, 2), translation.y,
+    matrix.entry(2, 0), matrix.entry(2, 1), matrix.entry(2, 2), translation.z,
     0, 0, 0, 1
   });
   // clang-format on

@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef __cpp_lib_format
+
 #include <format>
 #include <algorithm>
 
@@ -88,3 +90,4 @@ struct std::formatter<gmath::Plane>
   }
 };
 
+#endif // __cpp_lib_format

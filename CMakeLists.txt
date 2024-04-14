@@ -6,7 +6,7 @@ include(cmake/warnings.cmake)
 
 add_library(gmath STATIC)
 target_include_directories(gmath PUBLIC include)
-target_compile_features(gmath PUBLIC cxx_std_23)
+target_compile_features(gmath PUBLIC cxx_std_20)
 target_sources(gmath PRIVATE
         include/gmath/geometry/line.hpp
         include/gmath/geometry/normal3.hpp
