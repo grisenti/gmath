@@ -1,6 +1,7 @@
 #pragma once
 
 #include "vec_base.hpp"
+#include "gmath/debug.hpp"
 
 namespace gmath
 {
@@ -19,12 +20,14 @@ struct Vec4 : VectorBase<4, T>
 
   constexpr Vec4(T x, T y, T z, T w) : x(x), y(y), z(z), w(w)
   {
+    GMATH_DEBUG_ASSERT(!contains_nan(*this));
   }
 
   T const &operator[](size_t i) const
   {
     static_assert(std::is_standard_layout_v<Vec4<T>>,
         "Vec4 must be standard layout for operator[] to work");
+    GMATH_DEBUG_ASSERT(i < Vec4::SIZE);
     return (&x)[i];
   }
 
@@ -32,6 +35,7 @@ struct Vec4 : VectorBase<4, T>
   {
     static_assert(std::is_standard_layout_v<Vec4<T>>,
         "Vec4 must be standard layout for operator[] to work");
+    GMATH_DEBUG_ASSERT(i < Vec4::SIZE);
     return (&x)[i];
   }
 };

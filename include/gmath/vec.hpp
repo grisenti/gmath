@@ -37,8 +37,8 @@ using UVec2f = UnitVec<Vec2f>;
 using UVec3f = UnitVec<Vec3f>;
 using UVec4f = UnitVec<Vec4f>;
 
-static UVec3f constexpr X3f = UVec3f::create_unchecked(1._r, 0._r, 0._r);
-static UVec3f constexpr Y3f = UVec3f::create_unchecked(0._r, 1._r, 0._r);
-static UVec3f constexpr Z3f = UVec3f::create_unchecked(0._r, 0._r, 1._r);
+static UVec3f const X3f = UVec3f::create_unchecked(1._r, 0._r, 0._r);
+static UVec3f const Y3f = UVec3f::create_unchecked(0._r, 1._r, 0._r);
+static UVec3f const Z3f = UVec3f::create_unchecked(0._r, 0._r, 1._r);
 
 } // namespace gmath

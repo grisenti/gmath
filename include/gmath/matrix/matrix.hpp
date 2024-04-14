@@ -2,6 +2,7 @@
 
 #include "gmath/matrix/matrix_base.hpp"
 #include "gmath/vector/vecn.hpp"
+#include "gmath/debug.hpp"
 
 namespace gmath
 {
@@ -80,13 +81,13 @@ struct Matrix
 
   T constexpr &operator[](size_t i, size_t j)
   {
-    assert(i < R && j < C);
+    GMATH_DEBUG_ASSERT(i < R && j < C);
     return values[i + j * R];
   }
 
   T constexpr operator[](size_t i, size_t j) const
   {
-    assert(i < R && j < C);
+    GMATH_DEBUG_ASSERT(i < R && j < C);
     return values[i + j * R];
   }
 

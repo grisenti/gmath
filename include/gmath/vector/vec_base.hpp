@@ -77,10 +77,10 @@ template <Vector V>
   requires std::equality_comparable<ComponentT<V>>
 bool constexpr operator==(V const &lhs, V const &rhs)
 {
-  auto equal = true;
   for (size_t i = 0; i < V::SIZE; ++i)
-    equal = equal && (lhs[i] == rhs[i]);
-  return equal;
+    if (!(lhs[i] == rhs[i]))
+      return false;
+  return true;
 }
 
 template <ModifiableVector V1, Vector V2>

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "gmath/vector/vec_base.hpp"
+#include "gmath/debug.hpp"
 
 namespace gmath
 {
@@ -51,6 +52,7 @@ public:
 private:
   constexpr UnitVec(V const &v) : _value{ v }
   {
+    GMATH_DEBUG_ASSERT(std::abs(magnitude(v) - 1._r) < 1e-6_r);
   }
 
   // invariant: the value is always normalized.

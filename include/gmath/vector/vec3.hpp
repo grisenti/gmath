@@ -1,6 +1,7 @@
 #pragma once
 
 #include "geometric_vector.hpp"
+#include "gmath/debug.hpp"
 
 namespace gmath
 {
@@ -16,12 +17,14 @@ struct Vec3 : GeometricColumnVectorBase<3, T>
 
   constexpr Vec3(T x, T y, T z) : x(x), y(y), z(z)
   {
+    GMATH_DEBUG_ASSERT(!contains_nan(*this));
   }
 
   T const &operator[](size_t i) const
   {
     static_assert(std::is_standard_layout_v<Vec3<T>>,
         "Vec3 must be standard layout for operator[] to work");
+    GMATH_DEBUG_ASSERT(i < Vec3::SIZE);
     return (&x)[i];
   }
 
@@ -29,6 +32,7 @@ struct Vec3 : GeometricColumnVectorBase<3, T>
   {
     static_assert(std::is_standard_layout_v<Vec3<T>>,
         "Vec3 must be standard layout for operator[] to work");
+    GMATH_DEBUG_ASSERT(i < Vec3::SIZE);
     return (&x)[i];
   }
 };
