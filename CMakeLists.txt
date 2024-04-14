@@ -40,7 +40,6 @@ target_sources(gmath PRIVATE
         include/gmath/units.hpp
         include/gmath/vec.hpp
 
-
         src/geometry/line.cpp
         src/geometry/plane.cpp
         src/matrix/mat2.cpp
