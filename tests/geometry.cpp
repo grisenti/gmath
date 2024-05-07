@@ -22,6 +22,16 @@ TEST_CASE("normal_iteration")
   }
 }
 
+TEST_CASE("point_three_way_comparison")
+{
+  Point3i p1{ 1, 2, 3 };
+  Point3i p2{ 1, 2, 3 };
+  REQUIRE(p1 <=> p2 == std::strong_ordering::equivalent);
+  Point3i p3{ 1, 2, 4 };
+  REQUIRE(p1 <=> p3 == std::strong_ordering::less);
+  REQUIRE(p3 <=> p1 == std::strong_ordering::greater);
+}
+
 TEST_CASE("direction_from_pair_of_points")
 {
   Point3i p1{ 1, 1, 1 };

@@ -18,7 +18,7 @@ struct PointBase
   using ComponentType = T;
   static constexpr size_t SIZE = N;
 
-  bool operator<=>(PointBase const &rhs) const = default;
+  auto operator<=>(PointBase const &rhs) const = default;
 };
 
 template <typename P>
@@ -51,7 +51,7 @@ struct Point2 : PointBase<2, T>
     return (&x)[i];
   }
 
-  bool operator<=>(Point2 const &rhs) const = default;
+  auto operator<=>(Point2 const &rhs) const = default;
 };
 
 using Point2f = Point2<Real>;
@@ -96,7 +96,7 @@ struct Point3 : PointBase<3, T>
     return (&x)[i];
   }
 
-  bool operator<=>(Point3 const &rhs) const = default;
+  auto operator<=>(Point3 const &rhs) const = default;
 };
 
 template <typename T>
