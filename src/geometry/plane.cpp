@@ -1,5 +1,7 @@
 #include "gmath/geometry/plane.hpp"
 
+#include <limits>
+
 namespace gmath
 {
 
