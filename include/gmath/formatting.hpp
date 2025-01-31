@@ -52,9 +52,9 @@ struct std::formatter<gmath::Matrix<R, C, T>>
       res += "[";
       for (size_t j = 0; j < C - 1; ++j)
       {
-        std::format_to(std::back_inserter(res), "{}, ", M[i, j]);
+        std::format_to(std::back_inserter(res), "{}, ", M.entry(i, j));
       }
-      std::format_to(std::back_inserter(res), "{}", M[i, C - 1]);
+      std::format_to(std::back_inserter(res), "{}", M.entry(i, C - 1));
       res += "]";
     }
     res += "]";
