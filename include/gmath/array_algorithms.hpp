@@ -64,4 +64,24 @@ bool components_near_zero(A const &v, ComponentT<A> const eps = 1e-8_r)
   return true;
 }
 
+template <Array A>
+ModifiableEquivalentT<A> constexpr componentwise_mul(
+    A const &lhs, A const &rhs)
+{
+  ModifiableEquivalentT<A> ret{};
+  for (size_t i = 0; i < A::SIZE; ++i)
+    ret[i] = lhs[i] * rhs[i];
+  return ret;
+}
+
+template <Array A>
+ModifiableEquivalentT<A> constexpr componentwise_div(
+    A const &lhs, A const &rhs)
+{
+  ModifiableEquivalentT<A> ret{};
+  for (size_t i = 0; i < A::SIZE; ++i)
+    ret[i] = lhs[i] / rhs[i];
+  return ret;
+}
+
 }

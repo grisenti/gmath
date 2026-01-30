@@ -214,35 +214,4 @@ ModifiableEquivalentT<V> constexpr normalize(V const &v)
   return v / l;
 }
 
-template <Vector V1, Vector V2>
-  requires VectorCompatible<V1, V2>
-ModifiableEquivalentT<V1> constexpr componentwise_mul(
-    V1 const &lhs, V2 const &v2)
-{
-  ModifiableEquivalentT<V1> ret{};
-  for (size_t i = 0; i < V1::SIZE; ++i)
-    ret[i] = lhs[i] * v2[i];
-  return ret;
-}
-
-template <Vector V1, Vector V2>
-  requires VectorCompatible<V1, V2>
-ModifiableEquivalentT<V1> constexpr componentwise_div(
-    V1 const &lhs, V2 const &v2)
-{
-  ModifiableEquivalentT<V1> ret{};
-  for (size_t i = 0; i < V1::SIZE; ++i)
-    ret[i] = lhs[i] / v2[i];
-  return ret;
-}
-
-template <Vector V>
-bool constexpr in_range(V const &v, V const &a, V const &b)
-{
-  bool ret = true;
-  for (size_t i = 0; i < V::SIZE; ++i)
-    ret = ret && in_range(v[i], a[i], b[i]);
-  return ret;
-}
-
 } // namespace gmath

@@ -56,3 +56,19 @@ TEST_CASE("abs")
   };
   REQUIRE(abs(v2) == v2_abs);
 }
+
+TEST_CASE("componentwise_mul")
+{
+  auto const v1 = Vec3i{ 1, 1, 1 };
+  auto const v2 = Vec3i{ 2, 3, 4 };
+  auto const res = componentwise_mul(v1, v2);
+  REQUIRE(res == Vec3i{2, 3, 4});
+}
+
+TEST_CASE("componentwise_div")
+{
+  auto const v1 = Vec3i{ 4, 6, 20 };
+  auto const v2 = Vec3i{ 2, 3, 4 };
+  auto const res = componentwise_div(v1, v2);
+  REQUIRE(res == Vec3i{2, 2, 5});
+}
