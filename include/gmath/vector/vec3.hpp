@@ -38,7 +38,7 @@ struct Vec3 : GeometricColumnVectorBase<3, T>
 };
 
 template <Array A>
-  requires(A::SIZE == 3)
+  requires(A::SIZE >= 3)
 Vec3<ComponentT<A>> constexpr as_vec3(A const &a)
 {
   return { a[0], a[1], a[2] };

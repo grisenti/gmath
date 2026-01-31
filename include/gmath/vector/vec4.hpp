@@ -41,7 +41,7 @@ struct Vec4 : VectorBase<4, T>
 };
 
 template <Array A>
-  requires(A::SIZE == 4)
+  requires(A::SIZE >= 4)
 Vec4<ComponentT<A>> constexpr as_vec4(A const &a)
 {
   return { a[0], a[1], a[2], a[3] };

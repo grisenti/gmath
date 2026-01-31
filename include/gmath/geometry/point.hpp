@@ -58,7 +58,7 @@ using Point2f = Point2<Real>;
 using Point2i = Point2<int>;
 
 template <Matrix1D M>
-  requires(M::SIZE == 2)
+  requires(M::SIZE >= 2)
 Point2<ComponentT<M>> constexpr as_point2(M const &m)
 {
   return { m[0], m[1] };
@@ -106,7 +106,7 @@ Vec3<T> constexpr as_vec3(Point3<T> const &p)
 }
 
 template <Matrix1D M>
-  requires(M::SIZE == 3)
+  requires(M::SIZE >= 3)
 Point3<ComponentT<M>> constexpr as_point3(M const &m)
 {
   return { m[0], m[1], m[2] };

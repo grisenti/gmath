@@ -37,7 +37,7 @@ struct Vec2 : GeometricColumnVectorBase<2, T>
 };
 
 template <Array A>
-  requires(A::SIZE == 2)
+  requires(A::SIZE >= 2)
 Vec2<ComponentT<A>> constexpr as_vec2(A const &a)
 {
   return { a[0], a[1] };
