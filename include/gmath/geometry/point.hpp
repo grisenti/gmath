@@ -82,10 +82,6 @@ struct Point3 : PointBase<3, T>
   {
   }
 
-  constexpr Point3(Point2<T> const &p, float z) : x(p.x), y(p.y), z(z)
-  {
-  }
-
   T const &operator[](size_t i) const
   {
     static_assert(std::is_standard_layout_v<Point3<T>>,
@@ -114,6 +110,12 @@ template <Matrix1D M>
 Point3<ComponentT<M>> constexpr as_point3(M const &m)
 {
   return { m[0], m[1], m[2] };
+}
+
+template <typename T>
+Point3<T> extend(Point2f const &p, T z)
+{
+  return Point3<T>(p.x, p.y, z);
 }
 
 using Point3f = Point3<Real>;
