@@ -50,4 +50,32 @@ Normal3f operator*(Normal3f const &lhs, Transform3D const &rhs);
 /// Transforms the plane @param rhs by the transformation @param lhs.
 Plane operator*(Plane const &lhs, Transform3D const &rhs);
 
+struct ProjectiveTransform
+{
+  Mat4f matrix;
+
+  static ProjectiveTransform perspective(Radf fovy, Real near, Real far);
+
+  ProjectiveTransform inverse() const;
+};
+
+/// combines transformations, with `rhs` being applied first and `lhs` second
+ProjectiveTransform operator*(ProjectiveTransform const &lhs,
+    ProjectiveTransform const &rhs);
+
+/// combines transformations, with `rhs` being applied first and `lhs` second
+ProjectiveTransform operator*(ProjectiveTransform const &lhs,
+    Transform3D const &rhs);
+
+/// combines transformations, with `rhs` being applied first and `lhs` second
+ProjectiveTransform operator*(Transform3D const &lhs,
+    ProjectiveTransform const &rhs);
+
+/// transforms vector `rhs` by the transformation `lhs`
+Vec3f operator*(ProjectiveTransform const &lhs, Vec3f const &rhs);
+
+/// Transforms point @param rhs by the transformation @param lhs.
+Point3f operator*(ProjectiveTransform const &lhs, Point3f const &rhs);
+
+
 } // namespace gmath

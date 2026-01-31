@@ -1,4 +1,5 @@
 #include "gmath/transform/transform3D.hpp"
+#include "gmath/vec.hpp"
 
 namespace gmath
 {
@@ -88,12 +89,12 @@ Transform3D Transform3D::orthographic(float left, float right, float bottom,
   auto const m = Mat3f::from_rows({
     2.f / (right - left), 0, 0,
     0, 2.f / (top - bottom), 0,
-    0, 0, 2.f / (near - far)
+    0, 0, 1.f / (far - near)
   });
   auto const t = Vec3f(
   -(right + left) / (right - left),
   -(top + bottom) / (top - bottom),
-  -(far + near) / (far - near)
+  near / (far - near)
   );
   //clang-format on
   return { m, t };
@@ -134,7 +135,7 @@ Mat4f Transform3D::as_mat4() const
 Transform3D operator*(Transform3D const &lhs, Transform3D const &rhs)
 {
   return { .matrix = lhs.matrix * rhs.matrix,
-    .translation = lhs.translation + lhs.matrix * rhs.translation };
+           .translation = lhs.translation + lhs.matrix * rhs.translation };
 }
 
 Vec3f operator*(Transform3D const &lhs, Vec3f const &rhs)
@@ -155,6 +156,58 @@ Normal3f operator*(Normal3f const &lhs, Transform3D const &rhs)
 Plane operator*(Plane const &lhs, Transform3D const &rhs)
 {
   return { lhs.normal * rhs.matrix, lhs.d + dot(lhs.normal, rhs.translation) };
+}
+
+ProjectiveTransform ProjectiveTransform::perspective(Radf fovy, Real near,
+    Real far)
+{
+  // based on: Foundations of Game Engine Development, Volume 2: Rendering
+  // by Eric Lengyel.
+  auto const g = 1.f / std::tan(fovy.value() / 2.f);
+  auto const k = far / (near - far);
+  // clang-format off
+  auto const m = Mat4f::from_rows({
+    g, 0.f, 0.f, 0.f,
+    0.f, g, 0.f, 0.f,
+    0.f, 0.f, k, -near * k,
+    0.f, 0.f, 1.f, 0.f
+  });
+  // clang-format on
+  return { m };
+}
+
+ProjectiveTransform ProjectiveTransform::inverse() const
+{
+  return { ::gmath::inverse(matrix) };
+}
+
+ProjectiveTransform operator*(ProjectiveTransform const &lhs,
+    ProjectiveTransform const &rhs)
+{
+  return { lhs.matrix * rhs.matrix };
+}
+
+ProjectiveTransform operator*(ProjectiveTransform const &lhs,
+    Transform3D const &rhs)
+{
+  return { lhs.matrix * rhs.as_mat4() };
+}
+
+ProjectiveTransform operator*(Transform3D const &lhs,
+    ProjectiveTransform const &rhs)
+{
+  return { lhs.as_mat4() * rhs.matrix };
+}
+
+Vec3f operator*(ProjectiveTransform const &lhs, Vec3f const &rhs)
+{
+  return as_vec3(lhs.matrix * extend(rhs, 0.f));
+}
+
+Point3f operator*(ProjectiveTransform const &lhs, Point3f const &rhs)
+{
+  auto const ph = lhs.matrix * extend(as_vec3(rhs), 1.f);
+  return as_point3(ph / ph.w);
 }
 
 } // namespace gmath
