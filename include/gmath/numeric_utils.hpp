@@ -30,4 +30,10 @@ constexpr T wrapping_add(T const x, T const inc, T const a, T const b)
   return val;
 }
 
+template <Numeric T>
+constexpr bool in_range(T const x, T const a, T const b)
+{
+  return x > a && x < b;
+}
+
 } // namespace gmath
