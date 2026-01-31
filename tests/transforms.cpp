@@ -327,3 +327,27 @@ TEST_CASE("Transform3D_normals")
   REQUIRE(n_res.y == Catch::Approx(v_res.y));
   REQUIRE(n_res.z == Catch::Approx(v_res.z));
 }
+
+TEST_CASE("Transform3D_orthographic")
+{
+  auto const transform = Transform3D::orthographic(-2.0f, 2.0f, -1.0f, 1.0f,
+      1.0f, 5.0f);
+
+  auto const near_top_left = Point3f{ -2, 1, -1 };
+  auto const result1 = transform * near_top_left;
+  REQUIRE(result1.x == Catch::Approx(-1));
+  REQUIRE(result1.y == Catch::Approx(1));
+  REQUIRE(result1.z == Catch::Approx(-1));
+
+  auto const far_bottom_right = Point3f{ 2, -1, -5 };
+  auto const result2 = transform * far_bottom_right;
+  REQUIRE(result2.x == Catch::Approx(1));
+  REQUIRE(result2.y == Catch::Approx(-1));
+  REQUIRE(result2.z == Catch::Approx(1));
+
+  auto const center = Point3f{ 0, 0, -3 };
+  auto const result3 = transform * center;
+  REQUIRE(result3.x == Catch::Approx(0));
+  REQUIRE(result3.y == Catch::Approx(0));
+  REQUIRE(result3.z == Catch::Approx(0));
+}

@@ -27,6 +27,9 @@ struct Transform3D
   static Transform3D skew(Radf angle, UnitVec<Vec3f> const &direction,
       UnitVec<Vec3f> const &perpendicular);
   static Transform3D reflect(NormalizedPlane const &plane);
+  static Transform3D orthographic(float left, float right, float top,
+      float bottom, float near,
+      float far);
 
   Transform3D inverse() const;
   Mat4f as_mat4() const;

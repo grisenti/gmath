@@ -81,6 +81,24 @@ Transform3D Transform3D::reflect(NormalizedPlane const &plane)
   return { .matrix = reflection_matrix, .translation = as_vec3(-2 * d * n) };
 }
 
+Transform3D Transform3D::orthographic(float left, float right, float bottom,
+    float top, float near, float far)
+{
+  //clang-format off
+  auto const m = Mat3f::from_rows({
+    2.f / (right - left), 0, 0,
+    0, 2.f / (top - bottom), 0,
+    0, 0, 2.f / (near - far)
+  });
+  auto const t = Vec3f(
+  -(right + left) / (right - left),
+  -(top + bottom) / (top - bottom),
+  -(far + near) / (far - near)
+  );
+  //clang-format on
+  return { m, t };
+}
+
 Transform3D Transform3D::inverse() const
 {
   auto const a = matrix.column(0);
