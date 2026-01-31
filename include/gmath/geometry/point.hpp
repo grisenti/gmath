@@ -82,6 +82,10 @@ struct Point3 : PointBase<3, T>
   {
   }
 
+  constexpr Point3(Point2<T> const &p, float z) : x(p.x), y(p.y), z(z)
+  {
+  }
+
   T const &operator[](size_t i) const
   {
     static_assert(std::is_standard_layout_v<Point3<T>>,
