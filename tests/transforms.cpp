@@ -331,13 +331,13 @@ TEST_CASE("Transform3D_normals")
 TEST_CASE("Transform3D_orthographic")
 {
   auto const transform = Transform3D::orthographic(-2.0f, 2.0f, -1.0f, 1.0f,
-      1.0f, 5.0f);
+      -1.0f, -5.0f);
 
   auto const near_top_left = Point3f{ -2, 1, -1 };
   auto const result1 = transform * near_top_left;
   REQUIRE(result1.x == Catch::Approx(-1));
   REQUIRE(result1.y == Catch::Approx(1));
-  REQUIRE(result1.z == Catch::Approx(-1));
+  REQUIRE(result1.z == Catch::Approx(0));
 
   auto const far_bottom_right = Point3f{ 2, -1, -5 };
   auto const result2 = transform * far_bottom_right;
@@ -349,5 +349,5 @@ TEST_CASE("Transform3D_orthographic")
   auto const result3 = transform * center;
   REQUIRE(result3.x == Catch::Approx(0));
   REQUIRE(result3.y == Catch::Approx(0));
-  REQUIRE(result3.z == Catch::Approx(0));
+  REQUIRE(result3.z == Catch::Approx(0.5));
 }

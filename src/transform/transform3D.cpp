@@ -94,7 +94,7 @@ Transform3D Transform3D::orthographic(float left, float right, float bottom,
   auto const t = Vec3f(
   -(right + left) / (right - left),
   -(top + bottom) / (top - bottom),
-  near / (far - near)
+  -near / (far - near)
   );
   //clang-format on
   return { m, t };
