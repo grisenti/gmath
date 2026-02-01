@@ -54,6 +54,17 @@ struct ProjectiveTransform
 {
   Mat4f matrix;
 
+  ProjectiveTransform() = default;
+
+  ProjectiveTransform(Mat4f const &m) : matrix(m)
+  {
+  }
+
+  ProjectiveTransform(Transform3D const &transform_3d) : matrix(
+      transform_3d.as_mat4())
+  {
+  }
+
   static ProjectiveTransform perspective(Radf fovy, Real near, Real far);
 
   ProjectiveTransform inverse() const;
