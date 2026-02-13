@@ -18,14 +18,14 @@ public:
   using ModifiableEquivalent = V;
 
   /// Creates a UnitVec assuming v is already normalized.
-  static UnitVec constexpr create_unchecked(auto &&...args)
+  static UnitVec constexpr create_unchecked(auto &&... args)
   {
     return UnitVec{ V(std::forward<decltype(args)>(args)...) };
   }
 
   /// creates a UnitVec from the given values, ensuring that the underlying
   /// vector is normalized.
-  static UnitVec constexpr normalize(auto &&...args)
+  static UnitVec constexpr normalize(auto &&... args)
   {
     return UnitVec{ ::gmath::normalize(
         V(std::forward<decltype(args)>(args)...)) };
@@ -42,6 +42,11 @@ public:
   V const &unwrap() const
   {
     return _value;
+  }
+
+  V const *operator->() const
+  {
+    return &_value;
   }
 
   ComponentType const &operator[](size_t i) const
