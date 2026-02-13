@@ -1,6 +1,7 @@
 #pragma once
 
 #include "gmath/vector/vec3.hpp"
+#include "gmath/vector/unit_vector.hpp"
 
 namespace gmath
 {
@@ -57,5 +58,6 @@ struct Normal3
 };
 
 using Normal3f = Normal3<Real>;
+using UNormal3f = UnitVec<Normal3f>;
 
 } // namespace gmath
