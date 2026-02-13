@@ -16,15 +16,7 @@ struct VecN
 
   T values[N];
 
-  T const &operator[](size_t i) const
-  {
-    return values[i];
-  }
-
-  T &operator[](size_t i)
-  {
-    return values[i];
-  }
+  GMATH_MODIFIABLE_ARRAY_MEMBER_ACCESS(values, T)
 };
 
 template <Array A>

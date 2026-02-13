@@ -19,21 +19,7 @@ struct Vec2 : GeometricColumnVectorBase<2, T>
     GMATH_DEBUG_ASSERT(!contains_nan(*this));
   }
 
-  T const &operator[](size_t i) const
-  {
-    static_assert(std::is_standard_layout_v<Vec2<T>>,
-        "Vec2 must be standard layout for operator[] to work");
-    GMATH_DEBUG_ASSERT(i < Vec2::SIZE);
-    return (&x)[i];
-  }
-
-  T &operator[](size_t i)
-  {
-    static_assert(std::is_standard_layout_v<Vec2<T>>,
-        "Vec2 must be standard layout for operator[] to work");
-    GMATH_DEBUG_ASSERT(i < Vec2::SIZE);
-    return (&x)[i];
-  }
+  GMATH_ARRAY_MEMBER_ACCESS_FOR_STANDARD_LAYOUT(Vec2<T>, (&x), T)
 };
 
 template <Array A>

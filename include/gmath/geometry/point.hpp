@@ -37,19 +37,7 @@ struct Point2 : PointBase<2, T>
   {
   }
 
-  T const &operator[](size_t i) const
-  {
-    static_assert(std::is_standard_layout_v<Point2<T>>,
-        "Point2 must be standard layout for operator[] to work");
-    return (&x)[i];
-  }
-
-  T &operator[](size_t i)
-  {
-    static_assert(std::is_standard_layout_v<Point2<T>>,
-        "Point2 must be standard layout for operator[] to work");
-    return (&x)[i];
-  }
+  GMATH_ARRAY_MEMBER_ACCESS_FOR_STANDARD_LAYOUT(Point2<T>, (&x), T)
 
   auto operator<=>(Point2 const &rhs) const = default;
 };
@@ -82,19 +70,7 @@ struct Point3 : PointBase<3, T>
   {
   }
 
-  T const &operator[](size_t i) const
-  {
-    static_assert(std::is_standard_layout_v<Point3<T>>,
-        "Point3 must be standard layout for operator[] to work");
-    return (&x)[i];
-  }
-
-  T &operator[](size_t i)
-  {
-    static_assert(std::is_standard_layout_v<Point3<T>>,
-        "Point3 must be standard layout for operator[] to work");
-    return (&x)[i];
-  }
+  GMATH_ARRAY_MEMBER_ACCESS_FOR_STANDARD_LAYOUT(Point3<T>, (&x), T)
 
   auto operator<=>(Point3 const &rhs) const = default;
 };

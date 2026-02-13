@@ -42,19 +42,7 @@ struct Normal3
   {
   }
 
-  T const &operator[](size_t i) const
-  {
-    static_assert(std::is_standard_layout_v<Vec3<T>>,
-        "Normal3 must be standard layout for operator[] to work");
-    return (&x)[i];
-  }
-
-  T &operator[](size_t i)
-  {
-    static_assert(std::is_standard_layout_v<Vec3<T>>,
-        "Normal3 must be standard layout for operator[] to work");
-    return (&x)[i];
-  }
+  GMATH_ARRAY_MEMBER_ACCESS_FOR_STANDARD_LAYOUT(Normal3<T>, (&x), T)
 };
 
 using Normal3f = Normal3<Real>;

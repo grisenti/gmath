@@ -23,21 +23,7 @@ struct Vec4 : VectorBase<4, T>
     GMATH_DEBUG_ASSERT(!contains_nan(*this));
   }
 
-  T const &operator[](size_t i) const
-  {
-    static_assert(std::is_standard_layout_v<Vec4<T>>,
-        "Vec4 must be standard layout for operator[] to work");
-    GMATH_DEBUG_ASSERT(i < Vec4::SIZE);
-    return (&x)[i];
-  }
-
-  T &operator[](size_t i)
-  {
-    static_assert(std::is_standard_layout_v<Vec4<T>>,
-        "Vec4 must be standard layout for operator[] to work");
-    GMATH_DEBUG_ASSERT(i < Vec4::SIZE);
-    return (&x)[i];
-  }
+  GMATH_ARRAY_MEMBER_ACCESS_FOR_STANDARD_LAYOUT(Vec4<T>, (&x), T)
 };
 
 template <Array A>

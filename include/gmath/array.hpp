@@ -1,6 +1,7 @@
 #pragma once
 
 #include <concepts>
+#include <type_traits>
 
 namespace gmath
 {
@@ -78,3 +79,28 @@ constexpr ComponentT<A> *end(A &array)
 }
 
 } // namespace gmath
+
+#define GMATH_CONST_ARRAY_MEMBER_ACCESS(array, ret_type) \
+  ret_type const &operator[](size_t i) const \
+  { \
+  return array[i]; \
+  }
+
+#define GMATH_MODIFIABLE_ARRAY_MEMBER_ACCESS(array, ret_type) \
+  GMATH_CONST_ARRAY_MEMBER_ACCESS(array, ret_type)\
+  ret_type &operator[](size_t i) \
+  { \
+  return array[i];\
+  }
+
+#define GMATH_ARRAY_MEMBER_ACCESS_FOR_STANDARD_LAYOUT(T, array, ret_type) \
+  ret_type const &operator[](size_t i) const \
+  { \
+    static_assert(::std::is_standard_layout_v<T>, #T " must be standard layout for operator[] to work"); \
+    return array[i]; \
+  } \
+  ret_type &operator[](size_t i) \
+  { \
+    static_assert(::std::is_standard_layout_v<T>, #T " must be standard layout for operator[] to work"); \
+    return array[i];\
+  }
