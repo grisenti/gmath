@@ -15,8 +15,8 @@ namespace gmath
 /// affine 3D transformation
 struct Transform3D
 {
-  Mat3f matrix;
-  Vec3f translation;
+  Mat3f matrix = Mat3f::diagonal(1._r);
+  Vec3f translation = Vec3f{ 0._r, 0._r, 0._r };
 
   static Transform3D const IDENTITY;
 
