@@ -80,7 +80,7 @@ using Radf = Radians<Real>;
 
 Radf constexpr operator""_rad(long double x)
 {
-  return Degf(static_cast<Real>(x));
+  return Radf(static_cast<Real>(x));
 }
 
 inline Real sin(Radf rad)
