@@ -85,6 +85,8 @@ Transform3D Transform3D::reflect(NormalizedPlane const &plane)
 Transform3D Transform3D::orthographic(float left, float right, float bottom,
     float top, float near, float far)
 {
+  // Expects view space to be right-handed with y up and the view
+  // direction in negative z
   //clang-format off
   auto const m = Mat3f::from_rows({
     2.f / (right - left), 0, 0,
@@ -98,6 +100,19 @@ Transform3D Transform3D::orthographic(float left, float right, float bottom,
   );
   //clang-format on
   return { m, t };
+}
+
+Transform3D Transform3D::look_at(Point3f const &position,
+    Point3f const &target,
+    Vec3f const &up)
+{
+  // view space is right-handed with y up looking in negative z
+  auto const z_c = -normalize(target - position);
+  auto const x_c = cross(normalize(up), z_c);
+  auto const y_c = cross(z_c, x_c);
+  auto const m = Mat3f::from_row_vecs({ x_c, y_c, z_c });
+  return Transform3D(m, Vec3f(0, 0, 0)) * translate(
+             -as_vec3(position));
 }
 
 Transform3D Transform3D::inverse() const
@@ -163,6 +178,8 @@ ProjectiveTransform ProjectiveTransform::perspective(Radf fovy, Real near,
 {
   // based on: Foundations of Game Engine Development, Volume 2: Rendering
   // by Eric Lengyel.
+  // Expects view space to be right-handed with y up and the view
+  // direction in negative z
   auto const g = 1.f / std::tan(fovy.value() / 2.f);
   auto const k = far / (near - far);
   // clang-format off

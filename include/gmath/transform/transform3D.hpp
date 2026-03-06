@@ -30,6 +30,8 @@ struct Transform3D
   static Transform3D orthographic(float left, float right, float bottom,
       float top, float near,
       float far);
+  static Transform3D look_at(Point3f const &position, Point3f const &target,
+      Vec3f const &up);
 
   Transform3D inverse() const;
   Mat4f as_mat4() const;
