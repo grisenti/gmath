@@ -27,9 +27,15 @@ struct Transform3D
   static Transform3D skew(Radf angle, UnitVec<Vec3f> const &direction,
       UnitVec<Vec3f> const &perpendicular);
   static Transform3D reflect(NormalizedPlane const &plane);
+  // from right-handed view space with y-up and the camera looking in the
+  // negative z axis to left-handed ndc with y-up and positive z axis going
+  // into the screen, with zs in [-near, -far] being mapped to [0, 1].
+  // `near` and `far` should be positive values
   static Transform3D orthographic(float left, float right, float bottom,
       float top, float near,
       float far);
+  // from right-handed world space to right-handed view space with y-up and
+  // the camera looking in the negative z axis
   static Transform3D look_at(Point3f const &position, Point3f const &target,
       Vec3f const &up);
 
@@ -56,7 +62,9 @@ struct ProjectiveTransform
 {
   Mat4f matrix;
 
-  ProjectiveTransform() = default;
+  ProjectiveTransform() : matrix(Mat4f::diagonal(1))
+  {
+  }
 
   ProjectiveTransform(Mat4f const &m) : matrix(m)
   {
@@ -67,7 +75,12 @@ struct ProjectiveTransform
   {
   }
 
-  static ProjectiveTransform perspective(Radf fovy, Real near, Real far);
+  // from right-handed view space with y-up and the camera looking in the
+  // negative z axis to left-handed ndc with y-up and positive z axis going
+  // into the screen, and with zs in [-near, -far] being mapped to [0, 1].
+  // `near` and `far` should be positive values
+  static ProjectiveTransform perspective(Radf fovy, Real aspect_ratio,
+      Real near, Real far);
 
   ProjectiveTransform inverse() const;
 };

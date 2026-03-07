@@ -85,13 +85,11 @@ Transform3D Transform3D::reflect(NormalizedPlane const &plane)
 Transform3D Transform3D::orthographic(float left, float right, float bottom,
     float top, float near, float far)
 {
-  // Expects view space to be right-handed with y up and the view
-  // direction in negative z
   //clang-format off
   auto const m = Mat3f::from_rows({
     2.f / (right - left), 0, 0,
     0, 2.f / (top - bottom), 0,
-    0, 0, 1.f / (far - near)
+    0, 0, -1.f / (far - near) // negative since the camera is looking in -z
   });
   auto const t = Vec3f(
   -(right + left) / (right - left),
@@ -106,7 +104,6 @@ Transform3D Transform3D::look_at(Point3f const &position,
     Point3f const &target,
     Vec3f const &up)
 {
-  // view space is right-handed with y up looking in negative z
   auto const z_c = -normalize(target - position);
   auto const x_c = cross(normalize(up), z_c);
   auto const y_c = cross(z_c, x_c);
@@ -173,21 +170,18 @@ Plane operator*(Plane const &lhs, Transform3D const &rhs)
   return { lhs.normal * rhs.matrix, lhs.d + dot(lhs.normal, rhs.translation) };
 }
 
-ProjectiveTransform ProjectiveTransform::perspective(Radf fovy, Real near,
+ProjectiveTransform ProjectiveTransform::perspective(Radf fovy,
+    Real aspect_ratio, Real near,
     Real far)
 {
-  // based on: Foundations of Game Engine Development, Volume 2: Rendering
-  // by Eric Lengyel.
-  // Expects view space to be right-handed with y up and the view
-  // direction in negative z
   auto const g = 1.f / std::tan(fovy.value() / 2.f);
-  auto const k = far / (near - far);
+  auto const k = far / (far - near);
   // clang-format off
   auto const m = Mat4f::from_rows({
-    g, 0.f, 0.f, 0.f,
+    g / aspect_ratio, 0.f, 0.f, 0.f,
     0.f, g, 0.f, 0.f,
-    0.f, 0.f, k, -near * k,
-    0.f, 0.f, 1.f, 0.f
+    0.f, 0.f, -k, -near * k,
+    0.f, 0.f, -1.f, 0.f // flip z since we're going from left-handed to right-handed
   });
   // clang-format on
   return { m };

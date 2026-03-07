@@ -328,10 +328,21 @@ TEST_CASE("Transform3D_normals")
   REQUIRE(n_res.z == Catch::Approx(v_res.z));
 }
 
+TEST_CASE("Transform3D_look_at")
+{
+  // ensure that right-handedness is preserved
+  auto const transform = Transform3D::look_at({ 0, 0, 0 }, { 0, 0, 1 },
+      { 0, 1, 0 });
+  auto const p = transform * Point3f(1, 2, 3);
+  REQUIRE(p.x == Catch::Approx(-1));
+  REQUIRE(p.y == Catch::Approx(2));
+  REQUIRE(p.z == Catch::Approx(-3));
+}
+
 TEST_CASE("Transform3D_orthographic")
 {
   auto const transform = Transform3D::orthographic(-2.0f, 2.0f, -1.0f, 1.0f,
-      -1.0f, -5.0f);
+      1.0f, 5.0f);
 
   auto const near_top_left = Point3f{ -2, 1, -1 };
   auto const result1 = transform * near_top_left;
@@ -350,4 +361,20 @@ TEST_CASE("Transform3D_orthographic")
   REQUIRE(result3.x == Catch::Approx(0));
   REQUIRE(result3.y == Catch::Approx(0));
   REQUIRE(result3.z == Catch::Approx(0.5));
+}
+
+TEST_CASE("Transform3D_perspective")
+{
+  auto const transform = ProjectiveTransform::perspective(45_deg, 0.5, 0.1,
+      100);
+
+  auto const result1 = transform * Point3f{ 0, 0, -100 };
+  REQUIRE(result1.x == Catch::Approx(0));
+  REQUIRE(result1.y == Catch::Approx(0));
+  REQUIRE(result1.z == Catch::Approx(1));
+
+  auto const result2 = transform * Point3f{ 0, 0, -0.1 };
+  REQUIRE(result2.x == Catch::Approx(0));
+  REQUIRE(result2.y == Catch::Approx(0));
+  REQUIRE(result2.z == Catch::Approx(0));
 }
