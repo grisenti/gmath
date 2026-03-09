@@ -56,7 +56,8 @@ ModifiableEquivalentT<A> abs(A const &array)
 
 template <Array A>
   requires std::floating_point<ComponentT<A>>
-bool components_near_zero(A const &v, ComponentT<A> const eps = 1e-8_r)
+bool components_near_zero(A const &v,
+    ComponentT<A> const eps = ComponentT<A>(1e-8))
 {
   for (size_t i = 0; i < A::SIZE; ++i)
     if (std::abs(v[i]) > eps)
@@ -82,6 +83,37 @@ ModifiableEquivalentT<A> constexpr componentwise_div(
   for (size_t i = 0; i < A::SIZE; ++i)
     ret[i] = lhs[i] / rhs[i];
   return ret;
+}
+
+template <Array A>
+ModifiableEquivalentT<A> constexpr componentwise_min(
+    A const &lhs, A const &rhs)
+{
+  using namespace std;
+  ModifiableEquivalentT<A> ret{};
+  for (size_t i = 0; i < A::SIZE; ++i)
+    ret[i] = min(lhs[i], rhs[i]);
+  return ret;
+}
+
+template <Array A>
+ModifiableEquivalentT<A> constexpr componentwise_max(
+    A const &lhs, A const &rhs)
+{
+  using namespace std;
+  ModifiableEquivalentT<A> ret{};
+  for (size_t i = 0; i < A::SIZE; ++i)
+    ret[i] = max(lhs[i], rhs[i]);
+  return ret;
+}
+
+template <ModifiableArray A>
+A constexpr splat(ComponentT<A> val)
+{
+  A result;
+  for (size_t i = 0; i < A::SIZE; ++i)
+    result[i] = val;
+  return result;
 }
 
 }
