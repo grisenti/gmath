@@ -7,7 +7,8 @@ namespace gmath
 {
 
 template <typename A>
-concept Array = requires(A const &array) {
+concept Array = requires(A const &array)
+{
   typename A::ComponentType;
   A::SIZE;
   {
@@ -16,11 +17,12 @@ concept Array = requires(A const &array) {
 } && (A::SIZE * sizeof(typename A::ComponentType) == sizeof(A));
 
 template <typename A>
-concept ModifiableArray = Array<A> && requires(A arr) {
+concept ModifiableArray = Array<A> && requires(A arr)
+{
   {
     arr[0]
   } -> std::same_as<typename A::ComponentType &>;
-};
+} && std::is_default_constructible_v<A>;
 
 template <Array A>
 using ComponentT = typename A::ComponentType;
@@ -31,7 +33,7 @@ concept ConstArrayWrapper
       && Array<A> && Array<typename A::ModifiableEquivalent>
       && ModifiableArray<typename A::ModifiableEquivalent>
       && std::same_as<ComponentT<A>,
-          ComponentT<typename A::ModifiableEquivalent>>
+        ComponentT<typename A::ModifiableEquivalent>>
       && (A::SIZE == A::ModifiableEquivalent::SIZE);
 
 template <Array M>
