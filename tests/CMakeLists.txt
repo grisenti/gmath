@@ -19,8 +19,7 @@ add_executable(tests
         numeric_utils.cpp
 )
 target_compile_features(tests PUBLIC cxx_std_23)
-enable_warnings(tests WARNINGS_AS_ERRORS_OFF)
-enable_sanitizers(tests ON ON ON OFF OFF)
+enable_warnings(tests)
 
 target_link_libraries(tests PRIVATE gmath Catch2::Catch2WithMain)
 

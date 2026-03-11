@@ -49,7 +49,8 @@ target_sources(gmath PRIVATE
         src/transform/transform3D.cpp
         src/vector/octahedral_vector.cpp
 )
-enable_warnings(gmath WARNINGS_AS_ERRORS_ON)
+enable_warnings(gmath)
+treat_warnings_as_errors(gmath)
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DGMATH_DEBUG")
 
