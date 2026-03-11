@@ -52,7 +52,10 @@ target_sources(gmath PRIVATE
 enable_warnings(gmath)
 treat_warnings_as_errors(gmath)
 
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DGMATH_DEBUG")
+option(GMATH_DEBUG "enables debug assertions inside the library")
+if (GMATH_DEBUG)
+    target_compile_definitions(gmath PUBLIC GMATH_DEBUG)
+endif ()
 
 if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     include(CTest)

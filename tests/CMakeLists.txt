@@ -18,6 +18,7 @@ add_executable(tests
         array_algorithms.cpp
         numeric_utils.cpp
 )
+target_compile_definitions(tests PRIVATE GMATH_DEBUG)
 target_compile_features(tests PUBLIC cxx_std_23)
 enable_warnings(tests)
 
