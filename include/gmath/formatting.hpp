@@ -32,7 +32,10 @@ struct std::formatter<T>
       result += ")";
       return std::ranges::copy(result, ctx.out()).out;
     }
-    return ctx.out();
+    else
+    {
+      return ctx.out();
+    }
   }
 };
 
