@@ -39,7 +39,7 @@ constexpr bool contains_inf(A const &a)
 
 }
 
-#ifndef GMATH_DEBUG
+#ifdef GMATH_DEBUG
 
 #ifndef GMATH_DEBUG_ASSERT
 #include <cassert>
