@@ -16,7 +16,6 @@ target_sources(gmath PRIVATE
         include/gmath/matrix/mat3.hpp
         include/gmath/matrix/mat4.hpp
         include/gmath/matrix/matrix.hpp
-        include/gmath/matrix/matrix_base.hpp
         include/gmath/transform/transform2D.hpp
         include/gmath/transform/transform3D.hpp
         include/gmath/vector/geometric_vector.hpp
@@ -39,6 +38,8 @@ target_sources(gmath PRIVATE
         include/gmath/quaternion.hpp
         include/gmath/units.hpp
         include/gmath/vec.hpp
+        include/gmath/gmath.hpp
+        include/gmath/transforms.hpp
 
         src/geometry/line.cpp
         src/geometry/plane.cpp
