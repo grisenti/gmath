@@ -35,7 +35,7 @@ concept ModifiableMatrix1D
 
 template <typename M>
 concept ConstMatrix1DWrapper
-    = ConstArrayWrapper<M> && InheritsFrom<M, Matrix1DTag>
+    = ConstArray<M> && InheritsFrom<M, Matrix1DTag>
       && SameTypeClass<M, ModifiableEquivalentT<M>>;
 
 template <typename M>

@@ -27,7 +27,7 @@ template <typename V>
 concept ModifiableVector = Vector<V> && ModifiableArray<V>;
 
 template <typename V>
-concept ConstVectorWrapper = Vector<V> && ConstArrayWrapper<V>
+concept ConstVectorWrapper = Vector<V> && ConstArray<V>
                              && SameTypeClass<V, ModifiableEquivalent<V>>;
 
 /// Marker type for column vectors
