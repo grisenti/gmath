@@ -13,7 +13,7 @@ struct VectorTag
 };
 
 template <typename V>
-concept Vector = Array<V> && InheritsFrom<V, VectorTag>;
+concept Vector = Array<V> && IsOfTypeClass<V, VectorTag>;
 
 /// Base class meant to remove duplicated code in the various Vector structs
 template <size_t N, typename T>
@@ -37,11 +37,11 @@ struct ColumnVectorTag : ColumnMatrixTag, VectorTag
 
 template <typename V>
 concept ModifiableColumnVector
-    = ModifiableColumnMatrix<V> && InheritsFrom<V, ColumnVectorTag>;
+    = ModifiableColumnMatrix<V> && IsOfTypeClass<V, ColumnVectorTag>;
 
 template <typename V>
 concept ConstColumnVectorWrapper
-    = ConstColumnMatrix<V> && InheritsFrom<V, ColumnVectorTag>;
+    = ConstColumnMatrix<V> && IsOfTypeClass<V, ColumnVectorTag>;
 
 /// Marker type for row vectors
 struct RowVectorTag : RowMatrixTag, VectorTag
@@ -50,11 +50,11 @@ struct RowVectorTag : RowMatrixTag, VectorTag
 
 template <typename V>
 concept ModifiableRowVector
-    = ModifiableRowMatrix<V> && InheritsFrom<V, RowVectorTag>;
+    = ModifiableRowMatrix<V> && IsOfTypeClass<V, RowVectorTag>;
 
 template <typename V>
 concept ConstRowVectorWrapper
-    = ConstRowMatrix<V> && InheritsFrom<V, RowVectorTag>;
+    = ConstRowMatrix<V> && IsOfTypeClass<V, RowVectorTag>;
 
 template <typename V>
 concept RowVector = ModifiableRowVector<V> || ConstRowVectorWrapper<V>;

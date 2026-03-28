@@ -11,7 +11,7 @@ struct NormalTag : GeometricRowVectorTag
 };
 
 template <typename N>
-concept Normal = RowVector<N> && InheritsFrom<N, NormalTag>;
+concept Normal = RowVector<N> && IsOfTypeClass<N, NormalTag>;
 
 template <typename T>
 struct Normal3

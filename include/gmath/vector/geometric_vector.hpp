@@ -28,7 +28,7 @@ struct GeometricColumnVectorBase
 };
 
 template <typename V>
-concept GeometricVector = Vector<V> && InheritsFrom<V, GeometricVectorTag>;
+concept GeometricVector = Vector<V> && IsOfTypeClass<V, GeometricVectorTag>;
 
 template <GeometricVector V>
 auto square_length(V const &v)

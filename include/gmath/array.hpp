@@ -73,6 +73,23 @@ constexpr ComponentT<A> *end(A &array)
   return &array[0] + A::SIZE;
 }
 
+template <typename T>
+concept TypeClassed = requires(T t) { typename T::TypeClass; };
+
+template <typename T, typename U>
+concept SameTypeClass
+    = TypeClassed<T> && TypeClassed<U>
+      && std::same_as<typename T::TypeClass, typename U::TypeClass>;
+
+template <TypeClassed T, typename C>
+struct IsOfTypeClassT
+{
+  static constexpr bool VALUE = std::is_base_of_v<C, typename T::TypeClass>;
+};
+
+template <typename T, typename C>
+concept IsOfTypeClass = IsOfTypeClassT<T, C>::VALUE;
+
 } // namespace gmath
 
 #define GMATH_CONST_ARRAY_MEMBER_ACCESS(array, ret_type)                      \
