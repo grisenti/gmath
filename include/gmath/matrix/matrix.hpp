@@ -1,6 +1,6 @@
 #pragma once
 
-#include "gmath/matrix/matrix_base.hpp"
+#include <array>
 #include "gmath/vector/vecn.hpp"
 #include "gmath/debug.hpp"
 
@@ -136,7 +136,7 @@ Matrix<R1, C2, T> constexpr operator*(
   return res;
 }
 
-template <size_t R, size_t C, Numeric T, ColumnMatrix V>
+template <size_t R, size_t C, Numeric T, ColumnVector V>
   requires(V::SIZE == R) && std::same_as<ComponentT<V>, T>
 ModifiableEquivalentT<V> constexpr operator*(
     Matrix<R, C, T> const &lhs, V const &rhs)
@@ -148,7 +148,7 @@ ModifiableEquivalentT<V> constexpr operator*(
   return res;
 }
 
-template <size_t R, size_t C, Numeric T, RowMatrix V>
+template <size_t R, size_t C, Numeric T, RowVector V>
   requires(V::SIZE == C) && std::same_as<ComponentT<V>, T>
 ModifiableEquivalentT<V> constexpr operator*(
     V const &lhs, Matrix<R, C, T> const &rhs)

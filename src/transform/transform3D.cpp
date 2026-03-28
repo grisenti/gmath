@@ -82,34 +82,28 @@ Transform3D Transform3D::reflect(NormalizedPlane const &plane)
   return { .matrix = reflection_matrix, .translation = as_vec3(-2 * d * n) };
 }
 
-Transform3D Transform3D::orthographic(float left, float right, float bottom,
-    float top, float near, float far)
+Transform3D Transform3D::orthographic(
+    float left, float right, float bottom, float top, float near, float far)
 {
   //clang-format off
   auto const m = Mat3f::from_rows({
-    2.f / (right - left), 0, 0,
-    0, 2.f / (top - bottom), 0,
-    0, 0, -1.f / (far - near) // negative since the camera is looking in -z
+      2.f / (right - left), 0, 0, 0, 2.f / (top - bottom), 0, 0, 0,
+      -1.f / (far - near) // negative since the camera is looking in -z
   });
-  auto const t = Vec3f(
-  -(right + left) / (right - left),
-  -(top + bottom) / (top - bottom),
-  -near / (far - near)
-  );
+  auto const t = Vec3f(-(right + left) / (right - left),
+      -(top + bottom) / (top - bottom), -near / (far - near));
   //clang-format on
   return { m, t };
 }
 
-Transform3D Transform3D::look_at(Point3f const &position,
-    Point3f const &target,
-    Vec3f const &up)
+Transform3D Transform3D::look_at(
+    Point3f const &position, Point3f const &target, Vec3f const &up)
 {
   auto const z_c = -normalize(target - position);
   auto const x_c = cross(normalize(up), z_c);
   auto const y_c = cross(z_c, x_c);
   auto const m = Mat3f::from_row_vecs({ x_c, y_c, z_c });
-  return Transform3D(m, Vec3f(0, 0, 0)) * translate(
-             -as_vec3(position));
+  return Transform3D(m, Vec3f(0, 0, 0)) * translate(-as_vec3(position));
 }
 
 Transform3D Transform3D::inverse() const
@@ -147,7 +141,7 @@ Mat4f Transform3D::as_mat4() const
 Transform3D operator*(Transform3D const &lhs, Transform3D const &rhs)
 {
   return { .matrix = lhs.matrix * rhs.matrix,
-           .translation = lhs.translation + lhs.matrix * rhs.translation };
+    .translation = lhs.translation + lhs.matrix * rhs.translation };
 }
 
 Vec3f operator*(Transform3D const &lhs, Vec3f const &rhs)
@@ -157,7 +151,7 @@ Vec3f operator*(Transform3D const &lhs, Vec3f const &rhs)
 
 Point3f operator*(Transform3D const &lhs, Point3f const &rhs)
 {
-  return lhs.matrix * rhs + lhs.translation;
+  return as_point3(lhs.matrix * as_vec3(rhs)) + lhs.translation;
 }
 
 Normal3f operator*(Normal3f const &lhs, Transform3D const &rhs)
@@ -170,9 +164,8 @@ Plane operator*(Plane const &lhs, Transform3D const &rhs)
   return { lhs.normal * rhs.matrix, lhs.d + dot(lhs.normal, rhs.translation) };
 }
 
-ProjectiveTransform ProjectiveTransform::perspective(Radf fovy,
-    Real aspect_ratio, Real near,
-    Real far)
+ProjectiveTransform ProjectiveTransform::perspective(
+    Radf fovy, Real aspect_ratio, Real near, Real far)
 {
   auto const g = 1.f / std::tan(fovy.value() / 2.f);
   auto const k = far / (far - near);
@@ -192,20 +185,20 @@ ProjectiveTransform ProjectiveTransform::inverse() const
   return { ::gmath::inverse(matrix) };
 }
 
-ProjectiveTransform operator*(ProjectiveTransform const &lhs,
-    ProjectiveTransform const &rhs)
+ProjectiveTransform operator*(
+    ProjectiveTransform const &lhs, ProjectiveTransform const &rhs)
 {
   return { lhs.matrix * rhs.matrix };
 }
 
-ProjectiveTransform operator*(ProjectiveTransform const &lhs,
-    Transform3D const &rhs)
+ProjectiveTransform operator*(
+    ProjectiveTransform const &lhs, Transform3D const &rhs)
 {
   return { lhs.matrix * rhs.as_mat4() };
 }
 
-ProjectiveTransform operator*(Transform3D const &lhs,
-    ProjectiveTransform const &rhs)
+ProjectiveTransform operator*(
+    Transform3D const &lhs, ProjectiveTransform const &rhs)
 {
   return { lhs.as_mat4() * rhs.matrix };
 }

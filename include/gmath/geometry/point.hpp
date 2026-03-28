@@ -1,13 +1,12 @@
 #pragma once
 
-#include "gmath/matrix/matrix_base.hpp"
 #include "gmath/vector/vec4.hpp"
 #include "gmath/vector/vecn.hpp"
 
 namespace gmath
 {
 
-struct PointTag : ColumnMatrixTag
+struct PointTag
 {
 };
 
@@ -22,8 +21,7 @@ struct PointBase
 };
 
 template <typename P>
-concept Point = ModifiableMatrix1D<P>
-                && std::is_base_of_v<PointTag, typename P::TypeClass>;
+concept Point = Array<P> && IsOfTypeClass<P, PointTag>;
 
 template <typename T>
 struct Point2 : PointBase<2, T>
@@ -45,9 +43,9 @@ struct Point2 : PointBase<2, T>
 using Point2f = Point2<Real>;
 using Point2i = Point2<int>;
 
-template <Matrix1D M>
-  requires(M::SIZE >= 2)
-Point2<ComponentT<M>> constexpr as_point2(M const &m)
+template <Array A>
+  requires(A::SIZE >= 2)
+Point2<ComponentT<A>> constexpr as_point2(A const &m)
 {
   return { m[0], m[1] };
 }
@@ -81,9 +79,9 @@ Vec3<T> constexpr as_vec3(Point3<T> const &p)
   return Vec3<T>{ p.x, p.y, p.z };
 }
 
-template <Matrix1D M>
-  requires(M::SIZE >= 3)
-Point3<ComponentT<M>> constexpr as_point3(M const &m)
+template <Array A>
+  requires(A::SIZE >= 3)
+Point3<ComponentT<A>> constexpr as_point3(A const &m)
 {
   return { m[0], m[1], m[2] };
 }

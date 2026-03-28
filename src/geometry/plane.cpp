@@ -44,7 +44,7 @@ NormalizedPlane NormalizedPlane::from_plane(const Plane &plane)
 
 Real signed_distance(NormalizedPlane const &plane, Point3f const &point)
 {
-  static_assert(ConstRowVectorWrapper<UnitVec<Normal3f>>);
+  static_assert(ConstRowVector<UnitVec<Normal3f>>);
   return dot(as_vec3(point), plane.normal) + plane.d;
 }
 

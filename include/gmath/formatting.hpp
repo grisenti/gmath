@@ -10,7 +10,7 @@
 #include "gmath/mat.hpp"
 #include "gmath/units.hpp"
 
-template <gmath::Matrix1D T>
+template <gmath::Array T>
 struct std::formatter<T>
 {
   constexpr auto parse(std::format_parse_context &ctx)

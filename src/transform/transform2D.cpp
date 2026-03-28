@@ -99,7 +99,7 @@ Vec2f operator*(Transform2D const &lhs, Vec2f const &rhs)
 
 Point2f operator*(Transform2D const &lhs, Point2f const &rhs)
 {
-  return lhs.matrix * rhs + lhs.translation;
+  return as_point2(lhs.matrix * as_vec2(rhs)) + lhs.translation;
 }
 
 } // namespace gmath

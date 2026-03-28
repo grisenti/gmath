@@ -2,7 +2,7 @@
 
 #include "gmath/base.hpp"
 #include "gmath/numeric_utils.hpp"
-#include "gmath/matrix/matrix_base.hpp"
+#include "gmath/array.hpp"
 #include <cmath>
 
 namespace gmath
@@ -27,41 +27,39 @@ template <typename V>
 concept ModifiableVector = Vector<V> && ModifiableArray<V>;
 
 template <typename V>
-concept ConstVectorWrapper = Vector<V> && ConstArray<V>
-                             && SameTypeClass<V, ModifiableEquivalent<V>>;
+concept ConstVectorWrapper
+    = Vector<V> && ConstArray<V> && SameTypeClass<V, ModifiableEquivalent<V>>;
 
 /// Marker type for column vectors
-struct ColumnVectorTag : ColumnMatrixTag, VectorTag
+struct ColumnVectorTag : VectorTag
 {
 };
 
 template <typename V>
 concept ModifiableColumnVector
-    = ModifiableColumnMatrix<V> && IsOfTypeClass<V, ColumnVectorTag>;
+    = ModifiableArray<V> && IsOfTypeClass<V, ColumnVectorTag>;
 
 template <typename V>
-concept ConstColumnVectorWrapper
-    = ConstColumnMatrix<V> && IsOfTypeClass<V, ColumnVectorTag>;
+concept ConstColumnVector
+    = ModifiableArray<V> && IsOfTypeClass<V, ColumnVectorTag>;
 
 /// Marker type for row vectors
-struct RowVectorTag : RowMatrixTag, VectorTag
+struct RowVectorTag : VectorTag
 {
 };
 
 template <typename V>
 concept ModifiableRowVector
-    = ModifiableRowMatrix<V> && IsOfTypeClass<V, RowVectorTag>;
+    = ModifiableVector<V> && IsOfTypeClass<V, RowVectorTag>;
 
 template <typename V>
-concept ConstRowVectorWrapper
-    = ConstRowMatrix<V> && IsOfTypeClass<V, RowVectorTag>;
+concept ConstRowVector = ConstArray<V> && IsOfTypeClass<V, RowVectorTag>;
 
 template <typename V>
-concept RowVector = ModifiableRowVector<V> || ConstRowVectorWrapper<V>;
+concept RowVector = ModifiableRowVector<V> || ConstRowVector<V>;
 
 template <typename V>
-concept ColumnVector
-    = ModifiableColumnVector<V> || ConstColumnVectorWrapper<V>;
+concept ColumnVector = ModifiableColumnVector<V> || ConstColumnVector<V>;
 
 template <typename V1, typename V2>
 concept VectorCompatibleWeak

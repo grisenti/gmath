@@ -8,7 +8,7 @@
 namespace gmath
 {
 
-template <Matrix1D V>
+template <Array V>
 std::ostream &operator<<(std::ostream &out, V const &v)
 {
   return out << std::format("{}", v);
