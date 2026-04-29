@@ -40,8 +40,7 @@ concept ModifiableColumnVector
     = ModifiableArray<V> && IsOfTypeClass<V, ColumnVectorTag>;
 
 template <typename V>
-concept ConstColumnVector
-    = ModifiableArray<V> && IsOfTypeClass<V, ColumnVectorTag>;
+concept ConstColumnVector = ConstArray<V> && IsOfTypeClass<V, ColumnVectorTag>;
 
 /// Marker type for row vectors
 struct RowVectorTag : VectorTag
