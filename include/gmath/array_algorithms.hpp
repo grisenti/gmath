@@ -56,8 +56,8 @@ ModifiableEquivalentT<A> abs(A const &array)
 
 template <Array A>
   requires std::floating_point<ComponentT<A>>
-bool components_near_zero(A const &v,
-    ComponentT<A> const eps = ComponentT<A>(1e-8))
+bool components_near_zero(
+    A const &v, ComponentT<A> const eps = ComponentT<A>(1e-8))
 {
   for (size_t i = 0; i < A::SIZE; ++i)
     if (std::abs(v[i]) > eps)
@@ -114,6 +114,17 @@ A constexpr splat(ComponentT<A> val)
   for (size_t i = 0; i < A::SIZE; ++i)
     result[i] = val;
   return result;
+}
+
+template <Array A>
+bool constexpr components_equal_to(A const &arr, ComponentT<A> k)
+{
+  for (size_t i = 0; i < A::SIZE; ++i)
+  {
+    if (arr[i] != k)
+      return false;
+  }
+  return true;
 }
 
 }
