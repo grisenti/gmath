@@ -1,5 +1,7 @@
 #include "test.hpp"
 
+#include <functional>
+
 #include "gmath/array_algorithms.hpp"
 #include "gmath/vec.hpp"
 
@@ -71,4 +73,11 @@ TEST_CASE("componentwise_div")
   auto const v2 = Vec3i{ 2, 3, 4 };
   auto const res = componentwise_div(v1, v2);
   REQUIRE(res == Vec3i{2, 2, 5});
+}
+
+TEST_CASE("compare_equal_to")
+{
+  auto const v1 = Vec3i{ 1, 1, 1 };
+  REQUIRE(all_equal_to(v1, 1));
+  REQUIRE_FALSE(all_equal_to(v1, 0));
 }

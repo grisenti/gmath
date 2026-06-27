@@ -107,6 +107,23 @@ ModifiableEquivalentT<A> constexpr componentwise_max(
   return ret;
 }
 
+template <Array A, std::invocable<ComponentT<A>, ComponentT<A>> F>
+bool constexpr compare_all_to(A const &arr, ComponentT<A> k, F &&comp)
+{
+  for (size_t i = 0; i < A::SIZE; ++i)
+  {
+    if (!std::invoke(std::forward<F>(comp), arr[i], k))
+      return false;
+  }
+  return true;
+}
+
+template <Array A>
+bool constexpr all_equal_to(A const &arr, ComponentT<A> k)
+{
+  return compare_all_to(arr, k, std::equal_to{});
+}
+
 template <ModifiableArray A>
 A constexpr splat(ComponentT<A> val)
 {
@@ -114,17 +131,6 @@ A constexpr splat(ComponentT<A> val)
   for (size_t i = 0; i < A::SIZE; ++i)
     result[i] = val;
   return result;
-}
-
-template <Array A>
-bool constexpr components_equal_to(A const &arr, ComponentT<A> k)
-{
-  for (size_t i = 0; i < A::SIZE; ++i)
-  {
-    if (arr[i] != k)
-      return false;
-  }
-  return true;
 }
 
 }
