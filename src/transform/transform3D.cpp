@@ -99,7 +99,7 @@ Transform3D Transform3D::orthographic(
 Transform3D Transform3D::look_at(
     Point3f const &position, Point3f const &target, Vec3f const &up)
 {
-  auto const z_c = -normalize(target - position);
+  auto const z_c = normalize(position - target);
   auto const x_c = cross(normalize(up), z_c);
   auto const y_c = cross(z_c, x_c);
   auto const m = Mat3f::from_row_vecs({ x_c, y_c, z_c });
