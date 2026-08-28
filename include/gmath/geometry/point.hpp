@@ -42,6 +42,7 @@ struct Point2 : PointBase<2, T>
 
 using Point2f = Point2<Real>;
 using Point2i = Point2<int>;
+using Point2u = Point2<unsigned>;
 
 template <Array A>
   requires(A::SIZE >= 2)
@@ -94,6 +95,7 @@ Point3<T> extend(Point2f const &p, T z)
 
 using Point3f = Point3<Real>;
 using Point3i = Point3<int>;
+using Point3u = Point3<unsigned>;
 
 template <Point P, Vector V>
   requires(P::SIZE == V::SIZE) && std::same_as<ComponentT<P>, ComponentT<V>>
