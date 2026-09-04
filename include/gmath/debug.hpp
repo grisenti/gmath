@@ -41,16 +41,17 @@ constexpr bool contains_inf(A const &a)
 
 #ifdef GMATH_DEBUG
 
-#ifndef GMATH_DEBUG_ASSERT
+#ifndef GMATH_DEBUG_ASSERT_HANDLER
 #include <cassert>
 
-#define GMATH_DEBUG_ASSERT(x) assert(x)
-#endif // GMATH_DEBUG_ASSERT
+#define GMATH_DEBUG_ASSERT_HANDLER(x) assert(x)
+
+#endif // GMATH_DEBUG_ASSERT_HANDLER
+
+#define GMATH_DEBUG_ASSERT(x) GMATH_DEBUG_ASSERT_HANDLER(x)
 
 #else
 
-#ifndef GMATH_DEBUG_ASSERT
 #define GMATH_DEBUG_ASSERT(x)
-#endif // GMATH_DEBUG_ASSERT
 
 #endif // GMATH_DEBUG
